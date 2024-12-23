@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum AppRole {
+  ADMIN
+  USER
+}
+
+enum Category {
+  CRYPTO
+  FORENSICS
+  WEB
+  REV
+  PWN
+  MISC
+}
+
+model Repository {
+  id               String      @id @unique @default(uuid()) @db.Uuid
+  name             String
+  sourceLink       String
+  organization     String
+  organizationLink String
+  challenges       Challenge[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("repository")
+}
+
+model Challenge {
+  id          String   @id @unique @default(uuid()) @db.Uuid
+  name        String   @unique
+  description String
+  category    Category
+  answer      String
+  authors     String[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  repositoryId String  @db.Uuid
+  imageId      String? @db.Uuid
+
+  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  image      Image?     @relation(fields: [imageId], references: [id], onDelete: SetNull)
+
+  @@map("challenge")
+}
+
+model Image {
+  id         String      @id @unique @default(uuid()) @db.Uuid
+  image      String      @unique
+  challenges Challenge[]
+  port       Int
+
+  @@map("image")
+}
+
+model User_Role {
+  id   String  @id @unique @db.Uuid
+  role AppRole @default(USER)
+
+  @@map("user_role")
+}
