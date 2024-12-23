@@ -1,0 +1,39 @@
+ingress:
+  rules:
+    - component:
+        name: dohack-me
+      match:
+        path:
+          prefix: /
+name: dohackme
+region: sgp
+services:
+  - environment_slug: node-js
+    envs:
+      - key: PUBLIC_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://dohackme.diffusehyperion.com
+      - key: SUPABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:fAj8ePUK4Akfh0nf+H5qF1KVv3WOM/sw:83OMR8sgeUMHTl1Ob8rBwo5/ZRHNPF0B7LhTnziBrFr83he9E8HZ5xIKAnH4e8XuOfu2vjgjQcQ=]
+      - key: SUPABASE_ANON_KEY
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:vTYd4cC68ezpa7Hjw28b2Q5OixTa1t3D:aG+iStOmlDzSKeiAREV3N9Hh8j+DkFSulp9Lrbmz6rhegC3jzWlwI0NAruxEy9AJ7+gvjisnLVgjqjXMYHhwXfwuv96LWh8kAYRWCdS1/tWFnAHyIjdRsx9dEjXg814MDUFLGvtfHcz0JtKa4MHOvZkEJJEoJyfvBvfnLVHbbk6VxHmvgtMUYLRHv/DJTpyF2kcqMj+gNNK3WWbF1J8D1GZpbRUXaheunagYPSvy3XHc6oLsPDVtmmoi9y/9RIcZzxowYnLwJyRrz+5NhCBkSwTvDCB88NR6WCzFkYxz0/U=]
+      - key: DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:imnHLet3RJgsXm8bsBB0hp8fIbG2xEd4:ZnoVuO7y5rCUIXTqw0FjAW2hm0P3qEB2MWZ4cZTaDgua3b5w020+CM7xhLkwWSvWlUaEOVxcKpV26uDbqnc94TUPtcKeuwis94ft+abeqb1qf7Uo+so/O2MaBWxMp+pueQI14Q36K+Zl4IsEY94DPUrHaTMpp85Ahx4jp5CZMWRC+TERcBoKHm3YCTeLET33Xg==]
+      - key: DIRECT_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:NfChIFbZji5KIcWzl/JkxWIt2VoefLc0:1K2oUrcKkQtZ5xwgk1O0JPV0bpPgM99TvgJUji58ltdF7y/ai1DNSJnMKJ4OUzg9Cmed3IUTPUSOReeXOUfufMrmM6FjTaDAx6hCfh6RIxcPg28JGCD0ohD6HEydcos8ir4JEEhsP/pPebLLgxhfuPXZhN25sgCnhJy8b7f93WKUgA==]
+    github:
+      branch: master
+      deploy_on_push: true
+      repo: dohack-me/dohack.me
+    http_port: 8080
+    instance_count: 1
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    name: dohack-me
