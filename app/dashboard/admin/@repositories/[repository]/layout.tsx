@@ -1,6 +1,6 @@
 import React, {Suspense} from "react";
 import {Card, CardContent} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import AdminChallengeLoading from "@/app/dashboard/admin/@repositories/[repository]/loading";
 import {isAdmin} from "@/lib/auth";
