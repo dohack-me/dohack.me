@@ -1,14 +1,26 @@
-import {BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
+import {BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import React from "react";
+import {readRepository} from "@/lib/database/repository";
+
+function isUUID(text: string): boolean {
+    return text.match(new RegExp("^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$")) != null;
+}
 
 export default async function BreadcrumbsSlot({ params }: { params: Promise<{ paths: string[] }>}) {
     const paths = (await params).paths
 
-    function getBreadcrumbItem(path: string, index: number) {
+    async function getBreadcrumbItem(path: string, index: number) {
+        let name
+        if (isUUID(path)) {
+            name = (await readRepository(path)).name
+        } else {
+            name = path
+        }
+
         if (index === paths.length - 1) {
             return (
                 <BreadcrumbItem key={path}>
-                    <BreadcrumbPage className={"capitalize"}>{path}</BreadcrumbPage>
+                    <BreadcrumbPage className={"capitalize"}>{name}</BreadcrumbPage>
                 </BreadcrumbItem>
             )
         }
@@ -21,7 +33,7 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
         return (
             <>
                 <BreadcrumbItem key={path}>
-                    <BreadcrumbLink href={href} className={"capitalize"}>{path}</BreadcrumbLink>
+                    <BreadcrumbLink href={href} className={"capitalize"}>{name}</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator key={path + "-separator"} />
             </>
@@ -29,8 +41,8 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
     }
 
     return (
-        <BreadcrumbList>
+        <>
             { paths.map((path, i) => getBreadcrumbItem(path, i))}
-        </BreadcrumbList>
+        </>
     )
 }

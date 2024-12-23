@@ -1,8 +1,8 @@
 import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {cookies} from "next/headers";
 import {Separator} from "@/components/ui/separator";
-import {Breadcrumb} from "@/components/ui/breadcrumb";
-import React from "react";
+import {Breadcrumb, BreadcrumbList} from "@/components/ui/breadcrumb";
+import React, {Suspense} from "react";
 import Link from "next/link";
 import {AppWindow, Home, LogOut, Settings, Swords} from "lucide-react";
 import {ModeToggle} from "@/components/mode-toggle";
@@ -10,6 +10,7 @@ import {logOut} from "@/app/auth-actions";
 import {getServerClient} from "@/lib/supabase/server";
 import {prisma} from "@/app/prisma";
 import {AppRole} from "@prisma/client";
+import {Skeleton} from "@/components/ui/skeleton";
 
 const topitems = [
     {
@@ -104,12 +105,16 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                 </SidebarFooter>
             </Sidebar>
             <main className={"h-full w-full flex flex-col"}>
-                <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row space-x-4 items-center"}>
+                <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center"}>
                     <SidebarTrigger/>
                     <Separator orientation={"vertical"}/>
-                    <Breadcrumb>
-                        {breadcrumbs}
-                    </Breadcrumb>
+                    <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
+                        <Breadcrumb className={"h-full w-full"}>
+                            <BreadcrumbList className={"h-full w-full"}>
+                                {breadcrumbs}
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </Suspense>
                 </div>
                 <div className={"flex-1 h-full w-full"}>
                     {children}
