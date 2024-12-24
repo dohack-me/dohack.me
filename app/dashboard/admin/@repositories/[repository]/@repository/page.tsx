@@ -9,6 +9,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {ChevronLeftIcon} from "lucide-react";
+import EditRepositoryForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/details-form";
 
 export default async function AdminRepositoryOverviewPage({ params }: { params: Promise<{ repository: string }>}) {
     const repositoryId = (await params).repository
@@ -32,6 +33,7 @@ export default async function AdminRepositoryOverviewPage({ params }: { params: 
                     </Button>
                 </CardHeader>
             </Card>
+            <EditRepositoryForm repository={repository} />
             <Card>
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>

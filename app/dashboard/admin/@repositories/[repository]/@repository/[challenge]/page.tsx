@@ -1,16 +1,18 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon} from "lucide-react";
 import {redirect} from "next/navigation";
+import EditChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/details-form";
+import { readRepository } from "@/lib/database/repository";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
     const paramsObj = await params
     const repositoryId = paramsObj.repository
     const challengeId = paramsObj.challenge
-    // const repository = await readRepository(repositoryId)
+    const repository = await readRepository(repositoryId)
     const challenge = await readChallenge(challengeId)
 
     if (!challenge) {
@@ -33,12 +35,7 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                     </Button>
                 </CardHeader>
             </Card>
-            <Card>
-                <CardHeader className={"flex flex-row justify-between"}>
-                </CardHeader>
-                <CardContent>
-                </CardContent>
-            </Card>
+            <EditChallengeForm repository={repository} challenge={challenge} />
         </div>
     )
 }

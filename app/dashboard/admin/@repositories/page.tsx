@@ -18,7 +18,7 @@ export default async function AdminRepositoriesPage() {
                 <CreateRepositoryForm/>
             </CardHeader>
             <CardContent>
-                <div className={"h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}>
+                <div className={"h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-8"}>
                     {repositories.map((repository) => (
                         <Card key={repository.id}>
                             <CardHeader>

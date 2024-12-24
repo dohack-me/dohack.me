@@ -29,6 +29,9 @@ services:
         scope: RUN_AND_BUILD_TIME
         type: SECRET
         value: EV[1:NfChIFbZji5KIcWzl/JkxWIt2VoefLc0:1K2oUrcKkQtZ5xwgk1O0JPV0bpPgM99TvgJUji58ltdF7y/ai1DNSJnMKJ4OUzg9Cmed3IUTPUSOReeXOUfufMrmM6FjTaDAx6hCfh6RIxcPg28JGCD0ohD6HEydcos8ir4JEEhsP/pPebLLgxhfuPXZhN25sgCnhJy8b7f93WKUgA==]
+      - key: NODE_ENV
+        scope: RUN_AND_BUILD_TIME
+        value: production
     github:
       branch: master
       deploy_on_push: true

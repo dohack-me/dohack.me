@@ -6,11 +6,11 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {createRepository} from "@/lib/database/repository";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
-import {PlusIcon} from "lucide-react";
-import {useState} from "react";
+import {Repository, updateRepository} from "@/lib/database/repository";
 import {useRouter} from "next/navigation";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {SaveIcon} from "lucide-react";
+import React from "react";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -27,39 +27,40 @@ const formSchema = z.object({
     }).url()
 })
 
-export default function CreateRepositoryForm() {
+export default function EditRepositoryForm({repository}: {repository: Repository}) {
     const router = useRouter()
-    const [open, setOpen] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        mode: "onChange"
+        mode: "onChange",
+        defaultValues: {
+            name: repository.name,
+            sourceLink: repository.sourceLink,
+            organization: repository.organization,
+            organizationLink: repository.organizationLink,
+        }
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createRepository(values)
-        setOpen(false)
+        await updateRepository(repository.id, values)
         router.refresh()
-
     }
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button>
-                    <PlusIcon/>
-                    Create Repository
-                </Button>
-            </SheetTrigger>
-            <SheetContent>
-                <SheetHeader>
-                    <SheetTitle>Creating Repository</SheetTitle>
-                    <SheetDescription>
-                        Fill in the repository details as required
-                    </SheetDescription>
-                </SheetHeader>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                <Card>
+                    <CardHeader className={"flex flex-row justify-between"}>
+                        <div className={"flex flex-col gap-y-1.5"}>
+                            <CardTitle>Organization Details</CardTitle>
+                            <CardDescription>Edit repository details here</CardDescription>
+                        </div>
+                        <Button type={"submit"}>
+                            <SaveIcon />
+                            Save
+                        </Button>
+                    </CardHeader>
+                    <CardContent className={"flex flex-col gap-y-4"}>
                         <FormField
                             control={form.control}
                             name={"name"}
@@ -124,10 +125,10 @@ export default function CreateRepositoryForm() {
                                 </FormItem>
                             )}
                         />
-                        <Button type={"submit"}>Submit</Button>
-                    </form>
-                </Form>
-            </SheetContent>
-        </Sheet>
+                    </CardContent>
+                </Card>
+            </form>
+        </Form>
+
     )
 }

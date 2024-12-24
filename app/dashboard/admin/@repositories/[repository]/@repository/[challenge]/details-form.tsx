@@ -6,16 +6,16 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {Repository} from "@/lib/database/repository";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
-import {PlusIcon, XIcon} from "lucide-react";
-import {useState} from "react";
-import {createChallenge} from "@/lib/database/challenge";
-import {Textarea} from "@/components/ui/textarea";
-import { cn } from "@/lib/utils"
-import {Category} from "@prisma/client";
-import {Select, SelectContent, SelectTrigger, SelectItem, SelectValue} from "@/components/ui/select";
 import {useRouter} from "next/navigation";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {PlusIcon, SaveIcon, XIcon} from "lucide-react";
+import React from "react";
+import {Category} from "@prisma/client";
+import {Challenge, updateChallenge} from "@/lib/database/challenge";
+import {Textarea} from "@/components/ui/textarea";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {cn} from "@/lib/utils";
+import {Repository} from "@/lib/database/repository";
 
 const categories = Object.keys(Category)
 
@@ -44,25 +44,23 @@ const formSchema = z.object({
     })
 })
 
-export default function CreateChallengeForm({repository}: {repository: Repository}) {
+export default function EditChallengeForm({repository, challenge}: {repository: Repository, challenge: Challenge}) {
     const router = useRouter()
-    const [open, setOpen] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         mode: "onChange",
         defaultValues: {
-            authors: [{value: ""}]
+            name: challenge.name,
+            description: challenge.description,
+            category: challenge.category as Category,
+            answer: challenge.answer,
+            authors: challenge.authors.map((author) => ({value: author})),
         }
     })
 
-    const { fields, append, remove } = useFieldArray({
-        control: form.control,
-        name: "authors"
-    });
-
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createChallenge({
+        await updateChallenge(challenge.id, {
             name: values.name,
             description: values.description,
             category: values.category as Category,
@@ -71,27 +69,29 @@ export default function CreateChallengeForm({repository}: {repository: Repositor
             repository: repository,
             imageId: null // TODO: Add container image functionality
         })
-        setOpen(false)
         router.refresh()
     }
 
+    const { fields, append, remove } = useFieldArray({
+        control: form.control,
+        name: "authors"
+    });
+
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button>
-                    <PlusIcon/>
-                    Create Challenge
-                </Button>
-            </SheetTrigger>
-            <SheetContent>
-                <SheetHeader>
-                    <SheetTitle>Creating Challenge</SheetTitle>
-                    <SheetDescription>
-                        Fill in the challenge details as required
-                    </SheetDescription>
-                </SheetHeader>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                <Card>
+                    <CardHeader className={"flex flex-row justify-between"}>
+                        <div className={"flex flex-col gap-y-1.5"}>
+                            <CardTitle>Challenge Details</CardTitle>
+                            <CardDescription>Edit challenge details here</CardDescription>
+                        </div>
+                        <Button type={"submit"}>
+                            <SaveIcon />
+                            Save
+                        </Button>
+                    </CardHeader>
+                    <CardContent className={"flex flex-col gap-y-4"}>
                         <FormField
                             control={form.control}
                             name="name"
@@ -178,10 +178,18 @@ export default function CreateChallengeForm({repository}: {repository: Repositor
                                         name={`authors.${index}.value`}
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel className={cn(index !== 0 && "sr-only")}>Challenge Authors</FormLabel>
-                                                <FormDescription className={cn(index !== 0 && "sr-only")}>
-                                                    The authors of this challenge.
-                                                </FormDescription>
+                                                <div className={`flex flex-row justify-between ${cn(index !== 0 && "sr-only")}`}>
+                                                    <div>
+                                                        <FormLabel>Challenge Authors</FormLabel>
+                                                        <FormDescription>
+                                                            The authors of this challenge.
+                                                        </FormDescription>
+                                                    </div>
+                                                    <Button onClick={() => append({value: ""})} type={"button"}>
+                                                        <PlusIcon/>
+                                                        Add Author
+                                                    </Button>
+                                                </div>
                                                 <FormControl>
                                                     <div className={"flex flex-row gap-x-3"}>
                                                         <Input {...field}/>
@@ -196,16 +204,11 @@ export default function CreateChallengeForm({repository}: {repository: Repositor
                                     />
                                 ))}
                             </div>
-                            <Button onClick={() => append({value: ""})} type={"button"}>
-                                <PlusIcon/>
-                                Add Author
-                            </Button>
                         </div>
-                        <Button type="submit">Submit</Button>
-                    </form>
-                </Form>
-            </SheetContent>
-        </Sheet>
+                    </CardContent>
+                </Card>
+            </form>
+        </Form>
 
     )
 }
