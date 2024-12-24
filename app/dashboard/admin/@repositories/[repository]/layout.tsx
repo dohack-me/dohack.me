@@ -9,7 +9,7 @@ import {Category} from "@prisma/client";
 import {InfoIcon} from "lucide-react";
 import {Card, CardHeader} from "@/components/ui/card";
 import {readChallenges} from "@/lib/database/challenge";
-import {CollapsibleButton} from "@/app/dashboard/admin/@repositories/[repository]/clients";
+import {CollapsibleButton} from "@/components/CollapsibleButton";
 
 export default async function AdminChallengeLayout({ params, repository }: { params: Promise<{repository: string}>, repository: React.ReactNode }) {
     if (!await isAdmin()) {

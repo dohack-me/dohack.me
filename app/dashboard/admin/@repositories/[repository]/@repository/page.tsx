@@ -1,8 +1,8 @@
-import {deleteRepository, readRepository} from "@/lib/database/repository";
+import {readRepository} from "@/lib/database/repository";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import React from "react";
 import CreateChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/form";
-import {readChallenges} from "@/lib/database/challenge";
+import {deleteChallenge, readChallenges} from "@/lib/database/challenge";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {Category} from "@prisma/client";
 import {Button} from "@/components/ui/button";
@@ -10,6 +10,7 @@ import Link from "next/link";
 import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {ChevronLeftIcon} from "lucide-react";
 import EditRepositoryForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/details-form";
+import {DeleteButton} from "@/components/DeleteButton";
 
 export default async function AdminRepositoryOverviewPage({ params }: { params: Promise<{ repository: string }>}) {
     const repositoryId = (await params).repository
@@ -74,17 +75,13 @@ export default async function AdminRepositoryOverviewPage({ params }: { params: 
                                                     <DialogContent>
                                                         <DialogHeader>
                                                             <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                                            <DialogDescription>{`This action cannot be undone. This will permanently delete "${repository.name}" and all associated challenges.`}</DialogDescription>
+                                                            <DialogDescription>{`This action cannot be undone. This will permanently delete "${challenge.name}".`}</DialogDescription>
                                                         </DialogHeader>
                                                         <DialogFooter>
-                                                            <form action={async () => {
-                                                                'use server' // required for nextjs to not throw an error bruh
-                                                                await deleteRepository(repository.id)
-                                                            }}>
-                                                                <DialogClose asChild>
-                                                                    <Button variant={"destructive"} type={"submit"}>Delete</Button>
-                                                                </DialogClose>
-                                                            </form>
+                                                            <DeleteButton callback={async() => {
+                                                                'use server'
+                                                                await deleteChallenge(challenge.id)
+                                                            }}/>
                                                             <DialogClose asChild>
                                                                 <Button >Close</Button>
                                                             </DialogClose>

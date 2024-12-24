@@ -40,7 +40,6 @@ export default function CreateRepositoryForm() {
         await createRepository(values)
         setOpen(false)
         router.refresh()
-
     }
 
     return (

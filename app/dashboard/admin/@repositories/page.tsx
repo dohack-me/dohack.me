@@ -4,6 +4,8 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose} from "@/components/ui/dialog"
 import CreateRepositoryForm from "@/app/dashboard/admin/@repositories/form";
+import {DeleteButton} from "@/components/DeleteButton";
+import React from "react";
 
 export default async function AdminRepositoriesPage() {
     const repositories = await readRepositories()
@@ -43,14 +45,10 @@ export default async function AdminRepositoriesPage() {
                                             <DialogDescription>{`This action cannot be undone. This will permanently delete "${repository.name}" and all associated challenges.`}</DialogDescription>
                                         </DialogHeader>
                                         <DialogFooter>
-                                            <form action={async () => {
-                                                'use server' // required for nextjs to not throw an error bruh
+                                            <DeleteButton callback={async() => {
+                                                'use server'
                                                 await deleteRepository(repository.id)
-                                            }}>
-                                                <DialogClose asChild>
-                                                    <Button variant={"destructive"} type={"submit"}>Delete</Button>
-                                                </DialogClose>
-                                            </form>
+                                            }}/>
                                             <DialogClose asChild>
                                                 <Button >Close</Button>
                                             </DialogClose>
