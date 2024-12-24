@@ -56,8 +56,8 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                             <CardDescription>Edit repository details here</CardDescription>
                         </div>
                         <Button type={"submit"}>
-                            <SaveIcon />
-                            Save
+                            <SaveIcon/>
+                            <p className={"hidden sm:block"}>Save</p>
                         </Button>
                     </CardHeader>
                     <CardContent className={"flex flex-col gap-y-4"}>

@@ -9,7 +9,7 @@ import {Input} from "@/components/ui/input"
 import {createRepository} from "@/lib/database/repository";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import {PlusIcon} from "lucide-react";
-import {useState} from "react";
+import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 
 const formSchema = z.object({
@@ -47,7 +47,8 @@ export default function CreateRepositoryForm() {
             <SheetTrigger asChild>
                 <Button>
                     <PlusIcon/>
-                    Create Repository
+                    <p className={"hidden lg:block"}>Create Repository</p>
+                    <p className={"hidden sm:block lg:hidden"}>Create</p>
                 </Button>
             </SheetTrigger>
             <SheetContent>

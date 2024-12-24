@@ -28,19 +28,22 @@ export default async function AdminRepositoryOverviewPage({ params }: { params: 
                     </div>
                     <Button asChild>
                         <Link href={`/dashboard/admin`}>
-                            <ChevronLeftIcon />
-                            Back to Repositories View
+                            <ChevronLeftIcon/>
+                            <p className={"hidden lg:block"}>Back to Repositories</p>
+                            <p className={"hidden sm:block lg:hidden"}>Back</p>
                         </Link>
                     </Button>
                 </CardHeader>
             </Card>
-            <EditRepositoryForm repository={repository} />
+            <EditRepositoryForm repository={repository}/>
             <Card>
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Challenges</CardTitle>
-                        <CardDescription>Challenges make up the bulk of repositories, where users must solve puzzles for an
-                            answer to submit.</CardDescription>
+                        <CardDescription>
+                            Challenges make up the bulk of repositories, where users must solve puzzles for an
+                            answer to submit.
+                        </CardDescription>
                     </div>
                     <CreateChallengeForm repository={repository} />
                 </CardHeader>

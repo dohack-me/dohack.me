@@ -9,7 +9,7 @@ import {Input} from "@/components/ui/input"
 import {Repository} from "@/lib/database/repository";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import {PlusIcon, XIcon} from "lucide-react";
-import {useState} from "react";
+import React, {useState} from "react";
 import {createChallenge} from "@/lib/database/challenge";
 import {Textarea} from "@/components/ui/textarea";
 import { cn } from "@/lib/utils"
@@ -80,11 +80,12 @@ export default function CreateChallengeForm({repository}: {repository: Repositor
             <SheetTrigger asChild>
                 <Button>
                     <PlusIcon/>
-                    Create Challenge
+                    <p className={"hidden lg:block"}>Create Challenge</p>
+                    <p className={"hidden sm:block lg:hidden"}>Create</p>
                 </Button>
             </SheetTrigger>
             <SheetContent>
-                <SheetHeader>
+            <SheetHeader>
                     <SheetTitle>Creating Challenge</SheetTitle>
                     <SheetDescription>
                         Fill in the challenge details as required

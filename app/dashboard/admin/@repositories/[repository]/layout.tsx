@@ -22,7 +22,7 @@ export default async function AdminChallengeLayout({ params, repository }: { par
 
     return (
         <div className={"h-full flex flex-row justify-between gap-x-10"}>
-            <Card className={"h-full w-[30%] flex flex-col gap-y-1"}>
+            <Card className={"h-full w-[30%] hidden lg:flex flex-col gap-y-1"}>
                 <CardHeader>
                     <Button variant={"ghost"} asChild>
                         <Link href={`/dashboard/admin/${repositoryId}`} className={"flex flex-row justify-between"}>
