@@ -89,9 +89,7 @@ export async function readChallenge(id: string) {
         }
     })
 
-    if (!result) {
-        return null
-    }
+    if (result == null) return null
 
     return {
         id: result.id,
