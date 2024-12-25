@@ -3,7 +3,7 @@ import {Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter} f
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose} from "@/components/ui/dialog"
-import CreateRepositoryForm from "@/app/dashboard/admin/@repositories/form";
+import CreateRepositoryForm from "@/app/dashboard/admin/@repositories/forms/create";
 import {DeleteButton} from "@/components/DeleteButton";
 import React from "react";
 import {redirect} from "next/navigation";
@@ -16,7 +16,7 @@ export default async function AdminRepositoriesPage() {
     }
 
     return (
-        <Card className={"h-full"}>
+        <Card className={"flex-grow"}>
             <CardHeader className={"flex flex-row justify-between"}>
                 <div className={"flex flex-col gap-y-1.5"}>
                     <CardTitle>Repositories</CardTitle>
@@ -25,7 +25,7 @@ export default async function AdminRepositoriesPage() {
                 <CreateRepositoryForm/>
             </CardHeader>
             <CardContent>
-                <div className={"h-full w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-8"}>
+                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-8"}>
                     {repositories.map((repository) => (
                         <Card key={repository.id}>
                             <CardHeader>

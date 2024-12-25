@@ -1,4 +1,4 @@
-import {BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import React from "react";
 import {readRepository} from "@/lib/database/repository";
 import {readChallenge} from "@/lib/database/challenge";
@@ -47,8 +47,10 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
     }
 
     return (
-        <>
-            { paths.map((path, i) => getBreadcrumbItem(path, i))}
-        </>
+        <Breadcrumb>
+            <BreadcrumbList>
+                { paths.map((path, i) => getBreadcrumbItem(path, i))}
+            </BreadcrumbList>
+        </Breadcrumb>
     )
 }

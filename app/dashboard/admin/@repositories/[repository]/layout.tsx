@@ -20,54 +20,51 @@ export default async function AdminChallengeLayout({ params, repository }: { par
     }
     const challenges = allChallenges.filter((challenge) => challenge.repository.id === repositoryId)
 
-    // flex flex-row justify-between gap-x-10
     return (
-        <div className={"h-full"}>
-            <ResizablePanelGroup direction={"horizontal"}>
-                <ResizablePanel defaultSize={22.5}>
-                    <Card className={"h-full w-full flex flex-col gap-y-1"}>
-                        <CardHeader>
-                            <Button variant={"ghost"} asChild>
-                                <Link href={`/dashboard/admin/${repositoryId}`} className={"flex flex-row justify-between"}>
-                                    Overview
-                                    <InfoIcon/>
-                                </Link>
-                            </Button>
-                            <Collapsible className={"group/collapsible"}>
-                                <CollapsibleButton title={"Challenges"}/>
-                                <CollapsibleContent>
-                                    <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
-                                        {categories.map((category) => (
-                                            <Collapsible key={category}>
-                                                <CollapsibleTrigger asChild className={"w-full"}>
-                                                    <CollapsibleButton title={category}/>
-                                                </CollapsibleTrigger>
-                                                <CollapsibleContent>
-                                                    <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
-                                                        {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
-                                                            <Button key={challenge.id} variant={"ghost"} asChild>
-                                                                <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-between"}>
-                                                                    {challenge.name}
-                                                                </Link>
-                                                            </Button>
-                                                        ))}
-                                                    </div>
-                                                </CollapsibleContent>
-                                            </Collapsible>
-                                        ))}
-                                    </div>
-                                </CollapsibleContent>
-                            </Collapsible>
-                        </CardHeader>
-                    </Card>
-                </ResizablePanel>
-                <ResizableHandle className={"mx-4"}/>
-                <ResizablePanel defaultSize={77.5}>
-                    <Suspense fallback={<AdminViewLoading />}>
-                        {repository}
-                    </Suspense>
-                </ResizablePanel>
-            </ResizablePanelGroup>
-        </div>
+        <ResizablePanelGroup direction={"horizontal"}>
+            <ResizablePanel defaultSize={22.5}>
+                <Card className={"h-full w-full flex flex-col gap-y-1"}>
+                    <CardHeader>
+                        <Button variant={"ghost"} asChild>
+                            <Link href={`/dashboard/admin/${repositoryId}`} className={"flex flex-row justify-between"}>
+                                Overview
+                                <InfoIcon/>
+                            </Link>
+                        </Button>
+                        <Collapsible className={"group/collapsible"}>
+                            <CollapsibleButton title={"Challenges"}/>
+                            <CollapsibleContent>
+                                <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
+                                    {categories.map((category) => (
+                                        <Collapsible key={category}>
+                                            <CollapsibleTrigger asChild className={"w-full"}>
+                                                <CollapsibleButton title={category}/>
+                                            </CollapsibleTrigger>
+                                            <CollapsibleContent>
+                                                <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
+                                                    {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
+                                                        <Button key={challenge.id} variant={"ghost"} asChild>
+                                                            <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-between"}>
+                                                                {challenge.name}
+                                                            </Link>
+                                                        </Button>
+                                                    ))}
+                                                </div>
+                                            </CollapsibleContent>
+                                        </Collapsible>
+                                    ))}
+                                </div>
+                            </CollapsibleContent>
+                        </Collapsible>
+                    </CardHeader>
+                </Card>
+            </ResizablePanel>
+            <ResizableHandle className={"mx-4"}/>
+            <ResizablePanel defaultSize={77.5}>
+                <Suspense fallback={<AdminViewLoading />}>
+                    {repository}
+                </Suspense>
+            </ResizablePanel>
+        </ResizablePanelGroup>
     )
 }

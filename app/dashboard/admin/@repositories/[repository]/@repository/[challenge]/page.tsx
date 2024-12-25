@@ -1,12 +1,15 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ChevronLeftIcon, PlusIcon} from "lucide-react";
+import {ChevronLeftIcon} from "lucide-react";
 import {redirect} from "next/navigation";
-import EditChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/details-form";
+import EditChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/forms/edit";
 import { readRepository } from "@/lib/database/repository";
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable";
+import UploadChallengeFilesForm
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/forms/upload";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
     const paramsObj = await params
@@ -45,14 +48,20 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                         <CardTitle>{"Distributed Files"}</CardTitle>
                         <CardDescription>{"Distributed files are available to all users, used in order to solve challenges"}</CardDescription>
                     </div>
-                    <Button asChild>
-                        <Link href={`/dashboard/admin/${repositoryId}`}>
-                            <PlusIcon/>
-                            <p className={"hidden lg:block"}>Add files</p>
-                            <p className={"hidden sm:block lg:hidden"}>Add</p>
-                        </Link>
-                    </Button>
                 </CardHeader>
+                <CardContent>
+                    <Card className={"min-h-96 flex flex-col"}>
+                        <ResizablePanelGroup direction={"horizontal"} className={"flex-1"}>
+                            <ResizablePanel defaultSize={20}>
+                                <UploadChallengeFilesForm repository={repository} challenge={challenge}/>
+                            </ResizablePanel>
+                            <ResizableHandle/>
+                            <ResizablePanel defaultSize={80}>
+                                <p>test</p>
+                            </ResizablePanel>
+                        </ResizablePanelGroup>
+                    </Card>
+                </CardContent>
             </Card>
         </div>
     )

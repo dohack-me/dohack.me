@@ -1,14 +1,14 @@
 import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
 import {cookies} from "next/headers";
 import {Separator} from "@/components/ui/separator";
-import {Breadcrumb, BreadcrumbList} from "@/components/ui/breadcrumb";
 import React, {Suspense} from "react";
 import Link from "next/link";
 import {AppWindow, Home, LogOut, Settings, Swords} from "lucide-react";
 import {ModeToggle} from "@/components/mode-toggle";
 import {logOut} from "@/app/auth-actions";
-import {Skeleton} from "@/components/ui/skeleton";
 import {isAdmin, requireUser} from "@/lib/auth";
+import DashboardLoadingPage from "@/app/dashboard/loading";
+import BreadcrumbsLoading from "@/app/dashboard/@breadcrumbs/loading";
 
 const topitems = [
     {
@@ -31,7 +31,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
         const admin = await isAdmin()
 
         return (
-            <SidebarProvider defaultOpen={defaultOpen} className={"h-full w-full"}>
+            <SidebarProvider defaultOpen={defaultOpen} className={"flex-grow"}>
                 <Sidebar>
                     <SidebarContent>
                         <SidebarGroup>
@@ -90,20 +90,18 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                         </SidebarGroup>
                     </SidebarFooter>
                 </Sidebar>
-                <main className={"h-full w-full flex flex-col"}>
+                <main className={"flex-grow flex flex-col"}>
                     <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center"}>
                         <SidebarTrigger/>
                         <Separator orientation={"vertical"}/>
-                        <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
-                            <Breadcrumb className={"h-full w-full"}>
-                                <BreadcrumbList className={"h-full w-full"}>
-                                    {breadcrumbs}
-                                </BreadcrumbList>
-                            </Breadcrumb>
+                        <Suspense fallback={<BreadcrumbsLoading/>}>
+                            {breadcrumbs}
                         </Suspense>
                     </div>
-                    <div className={"flex-1 h-full w-full"}>
-                        {children}
+                    <div className={"flex-grow flex flex-col"}>
+                        <Suspense fallback={<DashboardLoadingPage/>}>
+                            {children}
+                        </Suspense>
                     </div>
                 </main>
             </SidebarProvider>

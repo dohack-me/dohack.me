@@ -5,7 +5,7 @@ import {requireUser} from "@/lib/auth";
 export default async function DashboardPage() {
     return await requireUser(async(data) => {
         return (
-            <div className={"flex flex-col py-4 px-8 gap-y-8"}>
+            <div className={"flex-grow flex flex-col py-4 px-8 gap-y-8"}>
                 <div>
                     <h1 className={"text-2xl"}>Welcome, {data.user_metadata["preferred_username"]}</h1>
                 </div>

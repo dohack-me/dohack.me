@@ -6,14 +6,14 @@ import {requireAdmin} from "@/lib/auth";
 export default async function Layout({ repositories }: { repositories: React.ReactNode }) {
     return await requireAdmin(async() => {
         return (
-            <div className={"h-full flex flex-col py-4 px-8 gap-y-4"}>
+            <div className={"flex-grow flex flex-col py-4 px-8 gap-y-4"}>
                 <Card className={"flex flex-col"}>
                     <CardHeader>
                         <CardTitle>Admin Panel</CardTitle>
                         <CardDescription>yippee</CardDescription>
                     </CardHeader>
                 </Card>
-                <div className={"flex-1 h-full"}>
+                <div className={"flex-grow flex flex-col"}>
                     <Suspense fallback={<AdminRepositoriesLoading/>}>
                         {repositories}
                     </Suspense>

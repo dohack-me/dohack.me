@@ -33,7 +33,13 @@ export default function CreateRepositoryForm() {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        mode: "onChange"
+        mode: "onChange",
+        defaultValues: {
+            name: "",
+            sourceLink: "",
+            organization: "",
+            organizationLink: "",
+        }
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {

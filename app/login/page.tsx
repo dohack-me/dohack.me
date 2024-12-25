@@ -18,7 +18,11 @@ const formSchema = z.object({
 
 export default function LoginPage() {
     const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema)
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            email: "",
+            password: ""
+        },
     })
 
     async function onLogin(values: z.infer<typeof formSchema>) {
@@ -26,13 +30,13 @@ export default function LoginPage() {
     }
 
     return (
-        <div className={"flex items-center justify-center w-full h-full"}>
-            <Card className={"w-[30%]"}>
-                <CardHeader>
+        <div className={"flex-grow flex flex-col items-center justify-center"}>
+            <Card className={"flex flex-col items-center justify-center w-full rounded-none lg:rounded-xl lg:w-[40%] flex-grow lg:flex-grow-0"}>
+                <CardHeader className={"w-full"}>
                     <CardTitle className={"text-center"}>Welcome back</CardTitle>
                     <CardDescription className={"text-center"}>Ready to get started?</CardDescription>
                 </CardHeader>
-                <CardContent className={"flex flex-col gap-y-6"}>
+                <CardContent className={"w-full flex flex-col gap-y-6"}>
                     <div className={"flex flex-col gap-y-4"}>
                         <Button onClick={() => oauthLogin("github")} className={"w-full"}>
                             <SiGithub />
@@ -84,7 +88,7 @@ export default function LoginPage() {
                         </form>
                     </Form>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className={"w-full"}>
                     <p className="w-full text-center">Don&apos;t have an account? Sign up{" "}
                         <Link href={"/signup"} className={"underline"}>here</Link>
                     </p>

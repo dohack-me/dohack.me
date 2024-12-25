@@ -77,8 +77,7 @@ function RepositoryCard({repository}: {repository: Repository}) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>{repository.name}</CardTitle>
-                <CardDescription><Link href={repository.source} className={"underline"}>{repository.source}</Link></CardDescription>
+                <CardTitle><Link href={repository.source} className={"underline"}>{repository.name}</Link></CardTitle>
             </CardHeader>
             <CardContent>
                 <Button className={"w-full"} asChild>

@@ -52,6 +52,10 @@ export default function CreateChallengeForm({repository}: {repository: Repositor
         resolver: zodResolver(formSchema),
         mode: "onChange",
         defaultValues: {
+            name: "",
+            description: "",
+            category: "",
+            answer: "",
             authors: [{value: ""}]
         }
     })

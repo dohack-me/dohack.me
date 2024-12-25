@@ -1,7 +1,7 @@
 import {readRepository} from "@/lib/database/repository";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import React from "react";
-import CreateChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/form";
+import CreateChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/forms/create";
 import {deleteChallenge, readChallenges} from "@/lib/database/challenge";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {Category} from "@prisma/client";
@@ -9,7 +9,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
 import {ChevronLeftIcon} from "lucide-react";
-import EditRepositoryForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/details-form";
+import EditRepositoryForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/forms/edit";
 import {DeleteButton} from "@/components/DeleteButton";
 import {redirect} from "next/navigation";
 

@@ -1,10 +1,14 @@
-import {BreadcrumbItem, BreadcrumbPage} from "@/components/ui/breadcrumb";
+import {Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage} from "@/components/ui/breadcrumb";
 import React from "react";
 
-export default function Default() {
+export default async function DefaultBreadcrumbsSlot() {
     return (
-        <BreadcrumbItem key={"dashboard"}>
-            <BreadcrumbPage className={"capitalize"}>Dashboard</BreadcrumbPage>
-        </BreadcrumbItem>
+        <Breadcrumb>
+            <BreadcrumbList>
+                <BreadcrumbItem key={"dashboard"}>
+                    <BreadcrumbPage className={"capitalize"}>Dashboard</BreadcrumbPage>
+                </BreadcrumbItem>
+            </BreadcrumbList>
+        </Breadcrumb>
     )
 }
