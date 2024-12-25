@@ -11,11 +11,24 @@ import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Dia
 import {ChevronLeftIcon} from "lucide-react";
 import EditRepositoryForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/details-form";
 import {DeleteButton} from "@/components/DeleteButton";
+import {redirect} from "next/navigation";
+import {isAdmin} from "@/lib/auth";
 
 export default async function AdminRepositoryOverviewPage({ params }: { params: Promise<{ repository: string }>}) {
+    if (!await isAdmin()) {
+        redirect("/dashboard");
+    }
+
     const repositoryId = (await params).repository
     const repository = await readRepository(repositoryId)
-    const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId)
+    if (!repository) {
+        redirect("/dashboard");
+    }
+    const allChallenges = await readChallenges()
+    if (!allChallenges) {
+        redirect("/dashboard");
+    }
+    const challenges = allChallenges.filter((challenge) => challenge.repository.id === repositoryId)
     const categories = Object.keys(Category)
 
     return (

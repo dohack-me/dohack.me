@@ -19,7 +19,11 @@ export default async function AdminChallengeLayout({ params, repository }: { par
 
     const repositoryId = (await params).repository
     const categories = Object.keys(Category)
-    const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId)
+    const allChallenges = await readChallenges()
+    if (!allChallenges) {
+        redirect("/dashboard");
+    }
+    const challenges = allChallenges.filter((challenge) => challenge.repository.id === repositoryId)
 
     // flex flex-row justify-between gap-x-10
     return (

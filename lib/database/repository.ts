@@ -1,6 +1,7 @@
 'use server'
 
 import {prisma} from "@/app/prisma";
+import {isAdmin, isLoggedIn} from "@/lib/auth";
 
 export type Repository = {
     id: string
@@ -20,6 +21,10 @@ export type EditableRepository = {
 }
 
 export async function createRepository(data: EditableRepository) {
+    if (!await isAdmin()) {
+        return null
+    }
+
     return (await prisma.repository.create({
         data: {
             name: data.name,
@@ -31,10 +36,18 @@ export async function createRepository(data: EditableRepository) {
 }
 
 export async function readRepositories() {
+    if (!await isLoggedIn()) {
+        return null
+    }
+
     return (await prisma.repository.findMany()) as Repository[]
 }
 
 export async function readRepository(id: string) {
+    if (!await isLoggedIn()) {
+        return null
+    }
+
     return (await prisma.repository.findUnique({
         where: {
             id: id
@@ -43,6 +56,10 @@ export async function readRepository(id: string) {
 }
 
 export async function updateRepository(id: string, data: EditableRepository) {
+    if (!await isAdmin()) {
+        return null
+    }
+
     return (await prisma.repository.update({
         where: {
             id: id
@@ -57,6 +74,10 @@ export async function updateRepository(id: string, data: EditableRepository) {
 }
 
 export async function deleteRepository(id: string) {
+    if (!await isAdmin()) {
+        return null
+    }
+
     return (await prisma.repository.delete({
         where: {
             id: id

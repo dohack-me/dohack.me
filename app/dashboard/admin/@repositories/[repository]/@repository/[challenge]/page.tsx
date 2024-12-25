@@ -7,16 +7,23 @@ import {ChevronLeftIcon} from "lucide-react";
 import {redirect} from "next/navigation";
 import EditChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/details-form";
 import { readRepository } from "@/lib/database/repository";
+import {isAdmin} from "@/lib/auth";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
+    if (!await isAdmin()) {
+        redirect("/dashboard");
+    }
+
     const paramsObj = await params
     const repositoryId = paramsObj.repository
     const challengeId = paramsObj.challenge
     const repository = await readRepository(repositoryId)
     const challenge = await readChallenge(challengeId)
-
+    if (!repository) {
+        redirect("/dashboard")
+    }
     if (!challenge) {
-        redirect("/error")
+        redirect("/dashboard")
     }
 
     return (
