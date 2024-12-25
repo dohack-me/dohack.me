@@ -2,7 +2,6 @@ import React, {Suspense} from "react";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import AdminViewLoading from "@/app/dashboard/admin/@repositories/[repository]/loading";
-import {isAdmin} from "@/lib/auth";
 import {redirect} from "next/navigation";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger,} from "@/components/ui/collapsible"
 import {Category} from "@prisma/client";
@@ -13,10 +12,6 @@ import {CollapsibleButton} from "@/components/CollapsibleButton";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
 export default async function AdminChallengeLayout({ params, repository }: { params: Promise<{repository: string}>, repository: React.ReactNode }) {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
     const repositoryId = (await params).repository
     const categories = Object.keys(Category)
     const allChallenges = await readChallenges()

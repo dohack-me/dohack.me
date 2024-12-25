@@ -1,59 +1,55 @@
-import {redirect} from 'next/navigation'
 import {Card, CardHeader, CardTitle, CardContent, CardDescription} from '@/components/ui/card'
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
-import {isLoggedIn} from "@/lib/auth";
+import {requireUser} from "@/lib/auth";
 
 export default async function DashboardPage() {
-    let data
-    if (!(data = await isLoggedIn())) {
-        redirect('/login')
-    }
-
-    return (
-        <div className={"flex flex-col py-4 px-8 gap-y-8"}>
-            <div>
-                <h1 className={"text-2xl"}>Welcome, {data.user.user_metadata["preferred_username"]}</h1>
+    return await requireUser(async(data) => {
+        return (
+            <div className={"flex flex-col py-4 px-8 gap-y-8"}>
+                <div>
+                    <h1 className={"text-2xl"}>Welcome, {data.user_metadata["preferred_username"]}</h1>
+                </div>
+                <div>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Progress</CardTitle>
+                            <CardDescription>View your category statistics</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Tabs defaultValue={"crypto"} className={"flex flex-col gap-y-8"}>
+                                <TabsList>
+                                    <TabsTrigger value={"crypto"}>Cryptography</TabsTrigger>
+                                    <TabsTrigger value={"forensics"}>Forensics</TabsTrigger>
+                                    <TabsTrigger value={"web"}>Web</TabsTrigger>
+                                    <TabsTrigger value={"rev"}>Reverse Engineering</TabsTrigger>
+                                    <TabsTrigger value={"pwn"}>Pwn</TabsTrigger>
+                                    <TabsTrigger value={"misc"}>Miscellaneous</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value={"crypto"}>
+                                    <DashboardProgressBody tab={"crypto"}/>
+                                </TabsContent>
+                                <TabsContent value={"forensics"}>
+                                    <DashboardProgressBody tab={"forensics"}/>
+                                </TabsContent>
+                                <TabsContent value={"web"}>
+                                    <DashboardProgressBody tab={"web"}/>
+                                </TabsContent>
+                                <TabsContent value={"rev"}>
+                                    <DashboardProgressBody tab={"rev"}/>
+                                </TabsContent>
+                                <TabsContent value={"pwn"}>
+                                    <DashboardProgressBody tab={"pwn"}/>
+                                </TabsContent>
+                                <TabsContent value={"misc"}>
+                                    <DashboardProgressBody tab={"misc"}/>
+                                </TabsContent>
+                            </Tabs>
+                        </CardContent>
+                    </Card>
+                </div>
             </div>
-            <div>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Progress</CardTitle>
-                        <CardDescription>View your category statistics</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Tabs defaultValue={"crypto"} className={"flex flex-col gap-y-8"}>
-                            <TabsList>
-                                <TabsTrigger value={"crypto"}>Cryptography</TabsTrigger>
-                                <TabsTrigger value={"forensics"}>Forensics</TabsTrigger>
-                                <TabsTrigger value={"web"}>Web</TabsTrigger>
-                                <TabsTrigger value={"rev"}>Reverse Engineering</TabsTrigger>
-                                <TabsTrigger value={"pwn"}>Pwn</TabsTrigger>
-                                <TabsTrigger value={"misc"}>Miscellaneous</TabsTrigger>
-                            </TabsList>
-                            <TabsContent value={"crypto"}>
-                                <DashboardProgressBody tab={"crypto"}/>
-                            </TabsContent>
-                            <TabsContent value={"forensics"}>
-                                <DashboardProgressBody tab={"forensics"}/>
-                            </TabsContent>
-                            <TabsContent value={"web"}>
-                                <DashboardProgressBody tab={"web"}/>
-                            </TabsContent>
-                            <TabsContent value={"rev"}>
-                                <DashboardProgressBody tab={"rev"}/>
-                            </TabsContent>
-                            <TabsContent value={"pwn"}>
-                                <DashboardProgressBody tab={"pwn"}/>
-                            </TabsContent>
-                            <TabsContent value={"misc"}>
-                                <DashboardProgressBody tab={"misc"}/>
-                            </TabsContent>
-                        </Tabs>
-                    </CardContent>
-                </Card>
-            </div>
-        </div>
-    )
+        )
+    })
 }
 
 function DashboardProgressBody({tab}: {tab: string}) {

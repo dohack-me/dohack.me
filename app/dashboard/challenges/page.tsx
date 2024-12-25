@@ -1,9 +1,7 @@
-import {redirect} from 'next/navigation'
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {Input} from "@/components/ui/input";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
-import {isLoggedIn} from "@/lib/auth";
 
 interface Repository {
     name: string;
@@ -55,10 +53,6 @@ const tempRepositories = [
 ]
 
 export default async function ChallengesPage() {
-    if (!(await isLoggedIn())) {
-        redirect('/login')
-    }
-
     return (
         <div className={"flex flex-col py-4 px-8 gap-y-4"}>
             <Card>

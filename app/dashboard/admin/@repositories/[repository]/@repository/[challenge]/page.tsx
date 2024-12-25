@@ -3,17 +3,12 @@ import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
+import {ChevronLeftIcon, PlusIcon} from "lucide-react";
 import {redirect} from "next/navigation";
 import EditChallengeForm from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/details-form";
 import { readRepository } from "@/lib/database/repository";
-import {isAdmin} from "@/lib/auth";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
     const paramsObj = await params
     const repositoryId = paramsObj.repository
     const challengeId = paramsObj.challenge
@@ -36,13 +31,29 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                     </div>
                     <Button asChild>
                         <Link href={`/dashboard/admin/${repositoryId}`}>
-                            <ChevronLeftIcon />
-                            Back to Repository
+                            <ChevronLeftIcon/>
+                            <p className={"hidden lg:block"}>Back to Repository</p>
+                            <p className={"hidden sm:block lg:hidden"}>Back</p>
                         </Link>
                     </Button>
                 </CardHeader>
             </Card>
-            <EditChallengeForm repository={repository} challenge={challenge} />
+            <EditChallengeForm repository={repository} challenge={challenge}/>
+            <Card>
+                <CardHeader className={"flex flex-row justify-between"}>
+                    <div className={"flex flex-col gap-y-1.5"}>
+                        <CardTitle>{"Distributed Files"}</CardTitle>
+                        <CardDescription>{"Distributed files are available to all users, used in order to solve challenges"}</CardDescription>
+                    </div>
+                    <Button asChild>
+                        <Link href={`/dashboard/admin/${repositoryId}`}>
+                            <PlusIcon/>
+                            <p className={"hidden lg:block"}>Add files</p>
+                            <p className={"hidden sm:block lg:hidden"}>Add</p>
+                        </Link>
+                    </Button>
+                </CardHeader>
+            </Card>
         </div>
     )
 }

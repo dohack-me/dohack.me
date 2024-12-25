@@ -6,20 +6,14 @@ import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Dia
 import CreateRepositoryForm from "@/app/dashboard/admin/@repositories/form";
 import {DeleteButton} from "@/components/DeleteButton";
 import React from "react";
-import {isAdmin} from "@/lib/auth";
 import {redirect} from "next/navigation";
 
 export default async function AdminRepositoriesPage() {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
     const repositories = await readRepositories()
 
     if (!repositories) {
         redirect("/dashboard");
     }
-
 
     return (
         <Card className={"h-full"}>
