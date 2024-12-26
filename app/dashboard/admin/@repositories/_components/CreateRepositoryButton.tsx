@@ -27,7 +27,7 @@ const formSchema = z.object({
     }).url()
 })
 
-export default function CreateRepositoryForm() {
+export default function CreateRepositoryButton() {
     const router = useRouter()
     const [open, setOpen] = useState(false)
 

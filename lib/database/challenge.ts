@@ -4,6 +4,7 @@ import {prisma} from "@/app/prisma";
 import {Repository, readRepository} from "@/lib/database/repository";
 import {Category} from "@prisma/client";
 import {isAdmin, isLoggedIn} from "@/lib/auth";
+import {redirect} from "next/navigation";
 
 export type Challenge = {
     id: string
@@ -33,7 +34,7 @@ export type EditableChallenge = {
 
 export async function createChallenge(data: EditableChallenge) {
     if (!await isAdmin()) {
-        return null
+        redirect("/dashboard");
     }
 
     const result = await prisma.challenge.create({
@@ -66,7 +67,7 @@ export async function createChallenge(data: EditableChallenge) {
 
 export async function readChallenges() {
     if (!await isLoggedIn()) {
-        return null
+        redirect("/login");
     }
 
     const results = await prisma.challenge.findMany()
@@ -91,7 +92,7 @@ export async function readChallenges() {
 
 export async function readChallenge(id: string) {
     if (!await isLoggedIn()) {
-        return null
+        redirect("/login");
     }
 
     const result = await prisma.challenge.findUnique({
@@ -100,7 +101,7 @@ export async function readChallenge(id: string) {
         }
     })
 
-    if (result == null) return null
+    if (result == null) return undefined
 
     return {
         id: result.id,
@@ -120,7 +121,7 @@ export async function readChallenge(id: string) {
 
 export async function updateChallenge(id: string, data: EditableChallenge) {
     if (!await isAdmin()) {
-        return null
+        redirect("/dashboard");
     }
 
     const result = await prisma.challenge.update({
@@ -156,7 +157,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 
 export async function deleteChallenge(id: string) {
     if (!await isAdmin()) {
-        return null
+        redirect("/dashboard");
     }
 
     const result = await prisma.challenge.delete({
