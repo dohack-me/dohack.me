@@ -19,7 +19,7 @@ export default async function ChallengeFilesView({repositoryId, challengeId}: {r
                 <Card className={"min-h-96 flex flex-col"}>
                     <ResizablePanelGroup direction={"horizontal"} className={"flex-1"}>
                         <ResizablePanel defaultSize={20}>
-                            <UploadChallengeFilesView repositoryId={repositoryId} challengeId={challengeId}/>
+                            <UploadChallengeFilesView challengeId={challengeId}/>
                         </ResizablePanel>
                         <ResizableHandle/>
                         <ResizablePanel defaultSize={80}>

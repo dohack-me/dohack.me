@@ -1,28 +1,30 @@
 'use client'
 
-import {Repository} from "@/lib/database/repository";
 import {Challenge} from "@/lib/database/challenge";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {CloudUploadIcon} from "lucide-react";
+import {uploadChallengeFile} from "@/lib/storage";
 
-export default function UploadChallengeFilesForm({repository, challenge}: {repository: Repository, challenge: Challenge}) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const basePath = `${repository.id}/${challenge.id}`;
-
+export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
         const inputElement = event.currentTarget.querySelector('input[type="file"]')! as HTMLInputElement;
         inputElement.click();
     }
 
-    function onDrop(event: React.DragEvent<HTMLButtonElement>) {
+    async function onDrop(event: React.DragEvent<HTMLButtonElement>) {
         event.preventDefault()
         const files = event.dataTransfer.files;
         if (files.length <= 0) {
             return
         }
-        alert(files.length)
+
+        for (const file of Array.from(files)) {
+            const formData = new FormData();
+            formData.append("file", file);
+            await uploadChallengeFile(formData, challenge);
+        }
     }
 
     async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -31,7 +33,12 @@ export default function UploadChallengeFilesForm({repository, challenge}: {repos
         if (!files || files.length <= 0) {
             return
         }
-        alert(files.length)
+
+        for (const file of Array.from(files)) {
+            const formData = new FormData();
+            formData.append("file", file);
+            await uploadChallengeFile(formData, challenge);
+        }
     }
 
     return (
@@ -49,7 +56,7 @@ export default function UploadChallengeFilesForm({repository, challenge}: {repos
                 </div>
                 <p>Or, click to choose files</p>
             </div>
-            <Input type={"file"} className={"hidden"} onChange={onChange}/>
+            <Input type={"file"} multiple className={"hidden"} onChange={onChange}/>
         </Button>
     )
 }
