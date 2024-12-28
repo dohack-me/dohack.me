@@ -6,8 +6,11 @@ import {Button} from "@/components/ui/button";
 import React from "react";
 import {CloudUploadIcon} from "lucide-react";
 import {uploadChallengeFile} from "@/lib/storage";
+import {useRouter} from "next/navigation";
 
 export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
+    const router = useRouter()
+
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
         const inputElement = event.currentTarget.querySelector('input[type="file"]')! as HTMLInputElement;
         inputElement.click();
@@ -16,6 +19,17 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
     async function onDrop(event: React.DragEvent<HTMLButtonElement>) {
         event.preventDefault()
         const files = event.dataTransfer.files;
+        await uploadFiles(files);
+    }
+
+    async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+        event.preventDefault()
+        const files = event.target.files;
+        if (!files) return
+        await uploadFiles(files);
+    }
+
+    async function uploadFiles(files: FileList) {
         if (files.length <= 0) {
             return
         }
@@ -25,20 +39,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
             formData.append("file", file);
             await uploadChallengeFile(formData, challenge);
         }
-    }
-
-    async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
-        event.preventDefault()
-        const files = event.target.files;
-        if (!files || files.length <= 0) {
-            return
-        }
-
-        for (const file of Array.from(files)) {
-            const formData = new FormData();
-            formData.append("file", file);
-            await uploadChallengeFile(formData, challenge);
-        }
+        router.refresh()
     }
 
     return (

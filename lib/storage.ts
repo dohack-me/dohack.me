@@ -14,3 +14,10 @@ export async function uploadChallengeFile(data: FormData, challenge: Challenge) 
         }
     )
 }
+
+export async function deleteChallengeFile(path: string) {
+    const supabase = await getServerClient()
+    return await supabase.storage.from("challenges").remove([
+        path
+    ])
+}

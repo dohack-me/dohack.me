@@ -4,7 +4,7 @@ import {Separator} from "@/components/ui/separator";
 import React, {Suspense} from "react";
 import Link from "next/link";
 import {AppWindow, Home, LogOut, Settings, Swords} from "lucide-react";
-import {ModeToggle} from "@/components/mode-toggle";
+import {ModeToggle} from "@/components/ModeToggle";
 import {logOut} from "@/app/auth-actions";
 import {isAdmin, requireUser} from "@/lib/auth";
 import DashboardLoadingPage from "@/app/dashboard/loading";

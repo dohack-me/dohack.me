@@ -1,6 +1,6 @@
 'use server'
 
-import {prisma} from "@/app/prisma";
+import {prisma} from "@/lib/prisma";
 import {isAdmin, isLoggedIn} from "@/lib/auth";
 import {redirect} from "next/navigation";
 

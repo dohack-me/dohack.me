@@ -1,9 +1,9 @@
 import {getServerClient} from "@/lib/supabase/server";
-import {prisma} from "@/app/prisma";
 import {AppRole} from "@prisma/client";
 import {redirect} from "next/navigation";
 import {User} from "@supabase/supabase-js";
 import React from "react";
+import {prisma} from "@/lib/prisma";
 
 export async function isLoggedIn() {
     const supabase = await getServerClient()

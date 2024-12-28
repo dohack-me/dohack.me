@@ -1,6 +1,6 @@
 'use server'
 
-import {prisma} from "@/app/prisma";
+import {prisma} from "@/lib/prisma";
 import {Repository, readRepository} from "@/lib/database/repository";
 import {Category} from "@prisma/client";
 import {isAdmin, isLoggedIn} from "@/lib/auth";
