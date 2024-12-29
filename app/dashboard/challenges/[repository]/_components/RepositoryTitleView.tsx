@@ -12,13 +12,13 @@ export default async function RepositoryTitleView({repositoryId}: {repositoryId:
         <Card>
             <CardHeader className={"flex flex-row justify-between"}>
                 <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle>Viewing Repository: <Link href={repository.sourceLink} className={"underline"}>{repository.name}</Link></CardTitle>
+                    <CardTitle><Link href={repository.sourceLink} className={"underline"}>{repository.name}</Link></CardTitle>
                     <CardDescription>Created by: <Link href={repository.organizationLink} className={"underline"}>{repository.organization}</Link></CardDescription>
                 </div>
                 <Button asChild>
-                    <Link href={`/dashboard/admin`}>
+                    <Link href={`/dashboard/challenges`}>
                         <ChevronLeftIcon/>
-                        <p className={"hidden lg:block"}>Back to Repositories</p>
+                        <p className={"hidden lg:block"}>Back to Challenges</p>
                         <p className={"hidden sm:block lg:hidden"}>Back</p>
                     </Link>
                 </Button>

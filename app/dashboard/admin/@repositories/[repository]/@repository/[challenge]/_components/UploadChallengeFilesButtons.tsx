@@ -33,3 +33,13 @@ export function DeleteChallengeFileButton({path, name}: {path: string, name: str
         </Dialog>
     )
 }
+
+export function CopyChallengeFileUrlButton({url}: {url: string}) {
+    async function onClick() {
+        await navigator.clipboard.writeText(url)
+    }
+
+    return (
+        <DropdownMenuItem onClick={onClick}>Copy URL</DropdownMenuItem>
+    )
+}

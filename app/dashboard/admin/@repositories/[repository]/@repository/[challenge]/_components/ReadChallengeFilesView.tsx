@@ -4,13 +4,14 @@ import {EllipsisVerticalIcon, FileIcon, FolderIcon, TriangleAlertIcon} from "luc
 import {isFolder} from "@/lib/utils";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/components/ui/dropdown-menu"
 import {
+    CopyChallengeFileUrlButton,
     DeleteChallengeFileButton
 } from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/UploadChallengeFilesButtons";
+import Link from "next/link";
 
 export default async function ReadChallengeFilesView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const storagePath = `${repositoryId}/${challengeId}`;
     const { data, error } = await (await getServerClient()).storage.from("challenges").list(storagePath)
-
     if (error || !data) {
         return (
             <div className={"h-full w-full flex flex-col items-center justify-center"}>
@@ -37,11 +38,25 @@ export default async function ReadChallengeFilesView({repositoryId, challengeId}
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DeleteChallengeFileButton path={`${storagePath}/${file.name}`} name={file.name}/>
-                            <DropdownMenuItem>Download</DropdownMenuItem>
+                            <DownloadChallengeFileButton path={`${storagePath}/${file.name}`} fileName={file.name}/>
+                            <CopyChallengeFileUrlView path={`${storagePath}/${file.name}`}/>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             ))}
         </div>
+    )
+}
+async function CopyChallengeFileUrlView({path}: {path: string}) {
+    const url = (await getServerClient()).storage.from('challenges').getPublicUrl(path).data.publicUrl
+    return (
+        <CopyChallengeFileUrlButton url={url}/>
+    )
+}
+
+async function DownloadChallengeFileButton({path, fileName}: {path: string, fileName: string}) {
+    const url = (await getServerClient()).storage.from('challenges').getPublicUrl(path).data.publicUrl
+    return (
+        <DropdownMenuItem><Link href={url} download={fileName}>Download</Link></DropdownMenuItem>
     )
 }

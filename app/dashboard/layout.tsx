@@ -91,7 +91,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                     </SidebarFooter>
                 </Sidebar>
                 <main className={"flex-grow flex flex-col"}>
-                    <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center"}>
+                    <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center z-10"}>
                         <SidebarTrigger/>
                         <Separator orientation={"vertical"}/>
                         <Suspense fallback={<BreadcrumbsLoading/>}>
