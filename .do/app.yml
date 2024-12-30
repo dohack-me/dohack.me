@@ -1,3 +1,4 @@
+#file: noinspection ComposeUnknownKeys,ComposeUnknownValues
 ingress:
   rules:
     - component:
@@ -29,13 +30,13 @@ services:
         scope: RUN_AND_BUILD_TIME
         type: SECRET
         value: EV[1:NfChIFbZji5KIcWzl/JkxWIt2VoefLc0:1K2oUrcKkQtZ5xwgk1O0JPV0bpPgM99TvgJUji58ltdF7y/ai1DNSJnMKJ4OUzg9Cmed3IUTPUSOReeXOUfufMrmM6FjTaDAx6hCfh6RIxcPg28JGCD0ohD6HEydcos8ir4JEEhsP/pPebLLgxhfuPXZhN25sgCnhJy8b7f93WKUgA==]
-      - key: NODE_ENV
-        scope: RUN_AND_BUILD_TIME
-        value: production
       - key: RLS_DATABASE_URL
         scope: RUN_AND_BUILD_TIME
         type: SECRET
         value: EV[1:u9ZpDkrQLdvVe8dgGcYdfGsy99tZlill:Kwrai7JUSTtLo39CWKWlo0dZ5dEl5NQO+GL5e0wClaiVT+IqbMjfUuhI/1Y/zBRodGqvoycjNCQiiz7bvLeaEhOo83qSelPGSyMifA9eAqMvI4/b/xR8NxlbXw3YzTC5uTboHfrZruEg8b1LQYRdT3Vc2LSV2haDSM1mEkB2UKo=]
+      - key: NODE_ENV
+        scope: RUN_AND_BUILD_TIME
+        value: production
     github:
       branch: master
       deploy_on_push: true

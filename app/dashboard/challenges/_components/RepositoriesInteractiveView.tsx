@@ -11,7 +11,7 @@ export default function RepositoriesInteractiveView({repositories}: {repositorie
     const [finalRepositories, setFinalRepositories] = useState(repositories);
 
     function onChange(input: string) {
-        setFinalRepositories(repositories.filter((repository) => repository.name.startsWith(input)));
+        setFinalRepositories(repositories.filter((repository) => repository.name.toLowerCase().startsWith(input.toLowerCase())));
     }
 
     return (

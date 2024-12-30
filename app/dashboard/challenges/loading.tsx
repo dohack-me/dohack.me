@@ -2,6 +2,6 @@ import {Skeleton} from "@/components/ui/skeleton";
 
 export default function RepositoriesLoading() {
     return (
-        <Skeleton className={"flex-grow"}/>
+        <Skeleton className={"flex-grow my-4 mx-8"}/>
     )
 }
