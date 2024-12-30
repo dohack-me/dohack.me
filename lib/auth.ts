@@ -3,7 +3,7 @@ import {AppRole} from "@prisma/client";
 import {redirect} from "next/navigation";
 import {User} from "@supabase/supabase-js";
 import React from "react";
-import {prisma} from "@/lib/prisma";
+import rlsExtension, {prisma} from "@/lib/prisma";
 
 export async function isLoggedIn() {
     const supabase = await getServerClient()
@@ -23,7 +23,7 @@ export async function isAdmin() {
         return null
     }
 
-    const userRole = (await prisma.user_Role.findFirst({
+    const userRole = (await prisma.$extends(rlsExtension()).user_Role.findFirst({
         where: {id: data.user.id},
     }))
 

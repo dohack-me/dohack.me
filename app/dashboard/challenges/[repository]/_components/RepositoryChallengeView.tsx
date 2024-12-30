@@ -1,6 +1,8 @@
+import { Button } from "@/components/ui/button";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {readChallenges} from "@/lib/database/challenge";
 import {Category} from "@prisma/client";
+import Link from "next/link";
 
 export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
     const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId);
@@ -10,24 +12,21 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
         .filter(({challenges}) => challenges.length > 0)
 
     return (
-        <Card>
-            <CardHeader>test</CardHeader>
-            <CardContent className={"flex flex-col gap-y-4"}>
-                {categoryChallenges.map(({category, challenges}) => (
-                    <Card key={category}>
-                        <CardHeader>{category}</CardHeader>
-                        <CardContent>
-                            {
-                                challenges.map((challenge) => (
-                                    <Card key={challenge.id}>
-                                        <CardHeader>test</CardHeader>
-                                    </Card>
-                                ))
-                            }
-                        </CardContent>
-                    </Card>
-                ))}
-            </CardContent>
-        </Card>
+        <div className={"flex flex-col gap-y-4"}>
+            {categoryChallenges.map(({category, challenges}) => (
+                <Card key={category}>
+                    <CardHeader>{category}</CardHeader>
+                    <CardContent className={"grid-view"}>
+                        {
+                            challenges.map((challenge) => (
+                                <Button key={challenge.id} asChild variant={"outline"}>
+                                    <Link href={`/dashboard/challenges/${repositoryId}/${challenge.id}`}>{challenge.name}</Link>
+                                </Button>
+                            ))
+                        }
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
     )
 }

@@ -1,10 +1,8 @@
 'use server'
 
-import {prisma} from "@/lib/prisma";
+import rlsExtension, {prisma} from "@/lib/prisma";
 import {Repository, readRepository} from "@/lib/database/repository";
 import {Category} from "@prisma/client";
-import {isAdmin, isLoggedIn} from "@/lib/auth";
-import {redirect} from "next/navigation";
 
 export type Challenge = {
     id: string
@@ -33,11 +31,7 @@ export type EditableChallenge = {
 }
 
 export async function createChallenge(data: EditableChallenge) {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
-    const result = await prisma.challenge.create({
+    const result = await prisma.$extends(rlsExtension()).challenge.create({
         data: {
             name: data.name,
             description: data.description,
@@ -66,11 +60,7 @@ export async function createChallenge(data: EditableChallenge) {
 }
 
 export async function readChallenges() {
-    if (!await isLoggedIn()) {
-        redirect("/login");
-    }
-
-    const results = await prisma.challenge.findMany()
+    const results = await prisma.$extends(rlsExtension()).challenge.findMany()
 
     return await Promise.all(results.map(async (result) => {
         return {
@@ -91,11 +81,7 @@ export async function readChallenges() {
 }
 
 export async function readChallenge(id: string) {
-    if (!await isLoggedIn()) {
-        redirect("/login");
-    }
-
-    const result = await prisma.challenge.findUnique({
+    const result = await prisma.$extends(rlsExtension()).challenge.findUnique({
         where: {
             id: id
         }
@@ -120,11 +106,7 @@ export async function readChallenge(id: string) {
 }
 
 export async function updateChallenge(id: string, data: EditableChallenge) {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
-    const result = await prisma.challenge.update({
+    const result = await prisma.$extends(rlsExtension()).challenge.update({
         where: {
             id: id
         },
@@ -156,11 +138,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 }
 
 export async function deleteChallenge(id: string) {
-    if (!await isAdmin()) {
-        redirect("/dashboard");
-    }
-
-    const result = await prisma.challenge.delete({
+    const result = await prisma.$extends(rlsExtension()).challenge.delete({
         where: {
             id: id
         }

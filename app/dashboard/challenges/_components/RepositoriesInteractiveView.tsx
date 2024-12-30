@@ -17,7 +17,7 @@ export default function RepositoriesInteractiveView({repositories}: {repositorie
     return (
         <>
             <Input placeholder={"Search repositories by name"} onChange={(e) => onChange(e.target.value)} />
-            <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-8"}>
+            <div className={"grid-view"}>
                 {finalRepositories.map((repository) => (
                     <Card key={repository.id}>
                         <CardHeader>

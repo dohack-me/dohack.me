@@ -37,7 +37,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                     </TabsList>
                     {categories.map((category) => (
                         <TabsContent key={category} value={category}>
-                            <div className={"grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-y-8 gap-x-8"}>
+                            <div className={"grid-view"}>
                                 {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
                                     <Card key={challenge.id}>
                                         <CardHeader>

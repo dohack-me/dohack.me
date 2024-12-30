@@ -32,6 +32,10 @@ services:
       - key: NODE_ENV
         scope: RUN_AND_BUILD_TIME
         value: production
+      - key: RLS_DATABASE_URL
+        scope: RUN_AND_BUILD_TIME
+        type: SECRET
+        value: EV[1:u9ZpDkrQLdvVe8dgGcYdfGsy99tZlill:Kwrai7JUSTtLo39CWKWlo0dZ5dEl5NQO+GL5e0wClaiVT+IqbMjfUuhI/1Y/zBRodGqvoycjNCQiiz7bvLeaEhOo83qSelPGSyMifA9eAqMvI4/b/xR8NxlbXw3YzTC5uTboHfrZruEg8b1LQYRdT3Vc2LSV2haDSM1mEkB2UKo=]
     github:
       branch: master
       deploy_on_push: true
