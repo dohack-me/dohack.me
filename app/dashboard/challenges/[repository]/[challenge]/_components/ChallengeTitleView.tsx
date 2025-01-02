@@ -3,22 +3,27 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon} from "lucide-react";
 import React from "react";
-import {readRepository} from "@/lib/database/repository";
+import {readChallenge} from "@/lib/database/challenge";
+import {redirect} from "next/navigation";
 
-export default async function RepositoryTitleView({repositoryId}: {repositoryId: string}) {
-    const repository = await readRepository(repositoryId)
+export default async function ChallengeTitleView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
+    const challenge = await readChallenge(challengeId)
+
+    if (!challenge) {
+        redirect("/error")
+    }
 
     return (
         <Card>
             <CardHeader className={"flex flex-row justify-between"}>
                 <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle><Link href={repository.sourceLink} className={"underline"}>{repository.name}</Link></CardTitle>
-                    <CardDescription>Created by: <Link href={repository.organizationLink} className={"underline"}>{repository.organization}</Link></CardDescription>
+                    <CardTitle>{challenge.name}</CardTitle>
+                    <CardDescription>Category: {challenge.category}</CardDescription>
                 </div>
                 <Button asChild>
-                    <Link href={`/dashboard/challenges`}>
+                    <Link href={`/dashboard/challenges/${repositoryId}`}>
                         <ChevronLeftIcon/>
-                        <p className={"hidden lg:block"}>Back to Repositories</p>
+                        <p className={"hidden lg:block"}>Back to Challenges</p>
                         <p className={"hidden sm:block lg:hidden"}>Back</p>
                     </Link>
                 </Button>
