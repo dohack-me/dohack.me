@@ -22,7 +22,7 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                 <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
             </Suspense>
             <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                <ChallengeFilesView repositoryId={repositoryId} challengeId={challengeId}/>
+                <ChallengeFilesView challengeId={challengeId}/>
             </Suspense>
         </div>
     )

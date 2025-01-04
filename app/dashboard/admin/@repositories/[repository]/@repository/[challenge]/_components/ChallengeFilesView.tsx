@@ -6,7 +6,7 @@ import UploadChallengeFilesView
 import ReadChallengeFilesView
     from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/ReadChallengeFilesView";
 
-export default async function ChallengeFilesView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
+export default async function ChallengeFilesView({challengeId}: {challengeId: string}) {
     return (
         <Card>
             <CardHeader className={"flex flex-row justify-between"}>
@@ -23,7 +23,7 @@ export default async function ChallengeFilesView({repositoryId, challengeId}: {r
                         </ResizablePanel>
                         <ResizableHandle/>
                         <ResizablePanel defaultSize={80}>
-                            <ReadChallengeFilesView repositoryId={repositoryId} challengeId={challengeId}/>
+                            <ReadChallengeFilesView challengeId={challengeId}/>
                         </ResizablePanel>
                     </ResizablePanelGroup>
                 </Card>
