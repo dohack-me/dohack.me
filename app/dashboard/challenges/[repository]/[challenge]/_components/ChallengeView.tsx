@@ -1,26 +1,68 @@
-import {Card, CardFooter, CardHeader} from "@/components/ui/card";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
+import {ChevronLeftIcon} from "lucide-react";
+import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
 import {redirect} from "next/navigation";
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import {readChallengeFiles} from "@/lib/storage";
+import {getServerClient} from "@/lib/supabase/server";
 
-export default async function ChallengeView({challengeId}: {challengeId: string}) {
+export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
 
     if (!challenge) {
         redirect("/error")
     }
 
+    const files = await readChallengeFiles(challenge);
+
+    if (!files) {
+        redirect("/error")
+    }
+
+    const bucketObject = (await getServerClient()).storage.from('challenges')
+    const getPublicUrl = (path: string) => {
+        return bucketObject.getPublicUrl(path, {
+            download: true
+        }).data.publicUrl
+    }
+
     return (
-        <Card>
-            <CardHeader>
+        <Card className={"flex-grow flex flex-col"}>
+            <CardHeader className={"flex flex-row justify-between"}>
+                <div className={"flex flex-col gap-y-1.5"}>
+                    <CardTitle>{challenge.name}</CardTitle>
+                    <CardDescription>Category: {challenge.category}</CardDescription>
+                </div>
+                <Button asChild>
+                    <Link href={`/dashboard/challenges/${repositoryId}`}>
+                        <ChevronLeftIcon/>
+                        <p className={"hidden lg:block"}>Back to Challenges</p>
+                        <p className={"hidden sm:block lg:hidden"}>Back</p>
+                    </Link>
+                </Button>
+            </CardHeader>
+            <CardContent className={"flex-grow"}>
                 <div>
                     {challenge.description.split("\n").map((line) => (
-                        <p key={line}>{line}</p>
+                        <p key={line} className={"text-wrap"}>{line}</p>
                     ))}
                 </div>
-            </CardHeader>
-            <CardFooter>
+            </CardContent>
+            <CardFooter className={"flex flex-col gap-y-4"}>
+                <div className={"w-full flex"}>
+                    {files.map(async(file) => {
+                        const url = getPublicUrl(`${challenge.repository.id}/${challenge.id}/${file.name}`)
+                        return (
+                            <Button key={file.id} asChild>
+                                <Link href={url}>{file.name}</Link>
+                            </Button>
+                        )
+                    }
+                    )}
+                </div>
                 <form className={"w-full flex flex-row gap-x-4"}>
                     <Input type={"text"} placeholder={"Flag"} />
                     <Button type={"submit"}>Submit</Button>

@@ -11,6 +11,7 @@ import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTri
 import {PlusIcon} from "lucide-react";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
+import {useToast} from "@/hooks/use-toast"
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -28,6 +29,7 @@ const formSchema = z.object({
 })
 
 export default function CreateRepositoryButton() {
+    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -46,6 +48,9 @@ export default function CreateRepositoryButton() {
         await createRepository(values)
         setOpen(false)
         router.refresh()
+        toast({
+            title: "Successfully created repository.",
+        })
     }
 
     return (

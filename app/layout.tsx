@@ -1,6 +1,7 @@
 import "./globals.css";
 
 import {ThemeProvider} from "@/components/ThemeProvider"
+import {Toaster} from "@/components/ui/toaster";
 
 export default async function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
@@ -14,6 +15,7 @@ export default async function RootLayout({children,}: Readonly<{ children: React
                 >
                     {children}
                 </ThemeProvider>
+                <Toaster/>
             </body>
         </html>
     );

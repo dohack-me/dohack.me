@@ -20,7 +20,7 @@ export type EditableRepository = {
 }
 
 export async function createRepository(data: EditableRepository) {
-    return (await prisma.$extends(rlsExtension()).repository.create({
+    return (await prisma.$extends(rlsExtension()).repositories.create({
         data: {
             name: data.name,
             sourceLink: data.sourceLink,
@@ -31,11 +31,11 @@ export async function createRepository(data: EditableRepository) {
 }
 
 export async function readRepositories() {
-    return (await prisma.$extends(rlsExtension()).repository.findMany()) as Repository[]
+    return (await prisma.$extends(rlsExtension()).repositories.findMany()) as Repository[]
 }
 
 export async function readRepository(id: string) {
-    return (await prisma.$extends(rlsExtension()).repository.findUnique({
+    return (await prisma.$extends(rlsExtension()).repositories.findUnique({
         where: {
             id: id
         }
@@ -43,7 +43,7 @@ export async function readRepository(id: string) {
 }
 
 export async function updateRepository(id: string, data: EditableRepository) {
-    return (await prisma.$extends(rlsExtension()).repository.update({
+    return (await prisma.$extends(rlsExtension()).repositories.update({
         where: {
             id: id
         },
@@ -57,7 +57,7 @@ export async function updateRepository(id: string, data: EditableRepository) {
 }
 
 export async function deleteRepository(id: string) {
-    return (await prisma.$extends(rlsExtension()).repository.delete({
+    return (await prisma.$extends(rlsExtension()).repositories.delete({
         where: {
             id: id
         }

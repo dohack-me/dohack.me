@@ -28,27 +28,28 @@ enum Category {
   MISC
 }
 
-model Repository {
-  id               String      @id @unique @default(uuid()) @db.Uuid
+model Repositories {
+  id               String       @id @unique @default(uuid()) @db.Uuid
   name             String
   sourceLink       String
   organization     String
   organizationLink String
-  challenges       Challenge[]
+  challenges       Challenges[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("repository")
+  @@map("repositories")
 }
 
-model Challenge {
+model Challenges {
   id          String   @id @unique @default(uuid()) @db.Uuid
   name        String   @unique
   description String
   category    Category
   answer      String
   authors     String[]
+  solves      Solves[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -56,24 +57,36 @@ model Challenge {
   repositoryId String  @db.Uuid
   imageId      String? @db.Uuid
 
-  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
-  image      Image?     @relation(fields: [imageId], references: [id], onDelete: SetNull)
+  repository Repositories @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  image      Images?      @relation(fields: [imageId], references: [id], onDelete: SetNull)
 
-  @@map("challenge")
+  @@map("challenges")
 }
 
-model Image {
-  id         String      @id @unique @default(uuid()) @db.Uuid
-  image      String      @unique
-  challenges Challenge[]
+model Images {
+  id         String       @id @unique @default(uuid()) @db.Uuid
+  image      String       @unique
+  challenges Challenges[]
   port       Int
 
-  @@map("image")
+  @@map("images")
 }
 
-model User_Role {
-  id   String  @id @unique @db.Uuid
-  role AppRole @default(USER)
+model Users {
+  id     String   @id @unique @db.Uuid
+  role   AppRole  @default(USER)
+  solves Solves[]
 
-  @@map("user_role")
+  @@map("users")
+}
+
+model Solves {
+  userId      String @db.Uuid
+  challengeId String @db.Uuid
+
+  user      Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, challengeId])
+  @@map("solves")
 }

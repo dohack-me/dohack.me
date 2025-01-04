@@ -31,7 +31,7 @@ export type EditableChallenge = {
 }
 
 export async function createChallenge(data: EditableChallenge) {
-    const result = await prisma.$extends(rlsExtension()).challenge.create({
+    const result = await prisma.$extends(rlsExtension()).challenges.create({
         data: {
             name: data.name,
             description: data.description,
@@ -60,7 +60,7 @@ export async function createChallenge(data: EditableChallenge) {
 }
 
 export async function readChallenges() {
-    const results = await prisma.$extends(rlsExtension()).challenge.findMany()
+    const results = await prisma.$extends(rlsExtension()).challenges.findMany()
 
     return await Promise.all(results.map(async (result) => {
         return {
@@ -81,7 +81,7 @@ export async function readChallenges() {
 }
 
 export async function readChallenge(id: string) {
-    const result = await prisma.$extends(rlsExtension()).challenge.findUnique({
+    const result = await prisma.$extends(rlsExtension()).challenges.findUnique({
         where: {
             id: id
         }
@@ -106,7 +106,7 @@ export async function readChallenge(id: string) {
 }
 
 export async function updateChallenge(id: string, data: EditableChallenge) {
-    const result = await prisma.$extends(rlsExtension()).challenge.update({
+    const result = await prisma.$extends(rlsExtension()).challenges.update({
         where: {
             id: id
         },
@@ -138,7 +138,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 }
 
 export async function deleteChallenge(id: string) {
-    const result = await prisma.$extends(rlsExtension()).challenge.delete({
+    const result = await prisma.$extends(rlsExtension()).challenges.delete({
         where: {
             id: id
         }

@@ -23,7 +23,7 @@ export async function isAdmin() {
         return null
     }
 
-    const userRole = (await prisma.$extends(rlsExtension()).user_Role.findFirst({
+    const userRole = (await prisma.$extends(rlsExtension()).users.findFirst({
         where: {id: data.user.id},
     }))
 

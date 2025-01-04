@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import {Category} from "@prisma/client";
 import {Select, SelectContent, SelectTrigger, SelectItem, SelectValue} from "@/components/ui/select";
 import {useRouter} from "next/navigation";
+import {useToast} from "@/hooks/use-toast"
 
 const categories = Object.keys(Category)
 
@@ -45,6 +46,7 @@ const formSchema = z.object({
 })
 
 export default function CreateChallengeButton({repository}: {repository: Repository}) {
+    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -77,6 +79,9 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
         })
         setOpen(false)
         router.refresh()
+        toast({
+            title: "Successfully created challenge.",
+        })
     }
 
     return (

@@ -5,7 +5,7 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {CloudUploadIcon} from "lucide-react";
-import {uploadChallengeFile} from "@/lib/storage";
+import {createChallengeFile} from "@/lib/storage";
 import {useRouter} from "next/navigation";
 
 export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
@@ -37,7 +37,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
         for (const file of Array.from(files)) {
             const formData = new FormData();
             formData.append("file", file);
-            await uploadChallengeFile(formData, challenge);
+            await createChallengeFile(formData, challenge);
         }
         router.refresh()
     }

@@ -3,8 +3,7 @@ import CreateChallengeButton from "@/app/dashboard/admin/@repositories/[reposito
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog";
-import {DeleteButton} from "@/components/DeleteButton";
+import {DeleteDialogButton} from "@/components/DeleteDialogButton";
 import {deleteChallenge, readChallenges} from "@/lib/database/challenge";
 import React from "react";
 import {readRepository} from "@/lib/database/repository";
@@ -52,26 +51,13 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                                             <Button asChild>
                                                 <Link href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
                                             </Button>
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Button variant={"destructive"}>Delete</Button>
-                                                </DialogTrigger>
-                                                <DialogContent>
-                                                    <DialogHeader>
-                                                        <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                                        <DialogDescription>{`This action cannot be undone. This will permanently delete "${challenge.name}".`}</DialogDescription>
-                                                    </DialogHeader>
-                                                    <DialogFooter>
-                                                        <DeleteButton callback={async() => {
-                                                            'use server'
-                                                            await deleteChallenge(challenge.id)
-                                                        }}/>
-                                                        <DialogClose asChild>
-                                                            <Button >Close</Button>
-                                                        </DialogClose>
-                                                    </DialogFooter>
-                                                </DialogContent>
-                                            </Dialog>
+                                            <DeleteDialogButton
+                                                description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
+                                                confirmation={"Successfully deleted challenge."}
+                                                callback={async() => {
+                                                    'use server'
+                                                    await deleteChallenge(challenge.id)
+                                                }}/>
                                         </CardFooter>
                                     </Card>
                                 ))}
