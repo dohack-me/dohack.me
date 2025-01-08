@@ -3,6 +3,7 @@
 import rlsExtension, {prisma} from "@/lib/prisma";
 import {Repository, readRepository} from "@/lib/database/repository";
 import {Category} from "@prisma/client";
+import {deleteChallengeFile} from "@/lib/storage";
 
 export type Challenge = {
     id: string
@@ -138,6 +139,17 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 }
 
 export async function deleteChallenge(id: string) {
+    const repositoryId = await prisma.$extends(rlsExtension()).challenges.findUniqueOrThrow({
+        where: {
+            id: id
+        },
+        select: {
+            repositoryId: true
+        }
+    })
+
+    await deleteChallengeFile(`${repositoryId}/${id}`)
+
     const result = await prisma.$extends(rlsExtension()).challenges.delete({
         where: {
             id: id

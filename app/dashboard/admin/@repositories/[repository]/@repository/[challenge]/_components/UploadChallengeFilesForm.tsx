@@ -7,9 +7,11 @@ import React from "react";
 import {CloudUploadIcon} from "lucide-react";
 import {createChallengeFile} from "@/lib/storage";
 import {useRouter} from "next/navigation";
+import {useToast} from "@/hooks/use-toast";
 
 export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
     const router = useRouter()
+    const {toast} = useToast()
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
         const inputElement = event.currentTarget.querySelector('input[type="file"]')! as HTMLInputElement;
@@ -40,6 +42,9 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
             await createChallengeFile(formData, challenge);
         }
         router.refresh()
+        toast({
+            title: "Successfully uploaded files."
+        })
     }
 
     return (

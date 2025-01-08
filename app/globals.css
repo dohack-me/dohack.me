@@ -14,6 +14,14 @@ body {
   .grid-view {
     @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-8 gap-x-8;
   }
+
+  .header-with-button {
+    @apply flex flex-row justify-between items-center gap-x-4 space-y-0
+  }
+
+  .header-with-button-description {
+    @apply flex flex-col gap-y-1.5
+  }
 }
 
 @layer base {

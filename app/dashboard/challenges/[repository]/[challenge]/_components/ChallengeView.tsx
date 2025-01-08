@@ -1,13 +1,13 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
+import {ChevronLeftIcon, DownloadIcon} from "lucide-react";
 import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
 import {redirect} from "next/navigation";
-import {Input} from "@/components/ui/input";
 import {readChallengeFiles} from "@/lib/storage";
 import {getServerClient} from "@/lib/supabase/server";
+import ChallengeInputForm from "@/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeInputForm";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
@@ -31,8 +31,8 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
 
     return (
         <Card className={"flex-grow flex flex-col"}>
-            <CardHeader className={"flex flex-row justify-between"}>
-                <div className={"flex flex-col gap-y-1.5"}>
+            <CardHeader className={"header-with-button"}>
+                <div className={"header-with-button-description"}>
                     <CardTitle>{challenge.name}</CardTitle>
                     <CardDescription>Category: {challenge.category}</CardDescription>
                 </div>
@@ -57,16 +57,16 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                         const url = getPublicUrl(`${challenge.repository.id}/${challenge.id}/${file.name}`)
                         return (
                             <Button key={file.id} asChild>
-                                <Link href={url}>{file.name}</Link>
+                                <Link href={url}>
+                                    <DownloadIcon/>
+                                    {file.name}
+                                </Link>
                             </Button>
                         )
                     }
                     )}
                 </div>
-                <form className={"w-full flex flex-row gap-x-4"}>
-                    <Input type={"text"} placeholder={"Flag"} />
-                    <Button type={"submit"}>Submit</Button>
-                </form>
+                <ChallengeInputForm challengeId={challengeId}/>
             </CardFooter>
         </Card>
     )

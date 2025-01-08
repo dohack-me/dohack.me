@@ -55,8 +55,13 @@ export function DeleteChallengeFileButton({path, name}: {path: string, name: str
 }
 
 export function CopyChallengeFileUrlButton({url}: {url: string}) {
+    const {toast} = useToast()
+
     async function onClick() {
         await navigator.clipboard.writeText(url)
+        toast({
+            title: "Copied file link into your clipboard.",
+        })
     }
 
     return (

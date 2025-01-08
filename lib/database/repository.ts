@@ -1,6 +1,7 @@
 'use server'
 
 import rlsExtension, {prisma} from "@/lib/prisma";
+import {deleteChallengeFile} from "@/lib/storage";
 
 export type Repository = {
     id: string
@@ -57,6 +58,8 @@ export async function updateRepository(id: string, data: EditableRepository) {
 }
 
 export async function deleteRepository(id: string) {
+    await deleteChallengeFile(id)
+
     return (await prisma.$extends(rlsExtension()).repositories.delete({
         where: {
             id: id

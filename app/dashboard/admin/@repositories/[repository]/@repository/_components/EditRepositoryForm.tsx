@@ -48,7 +48,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Organization Details</CardTitle>

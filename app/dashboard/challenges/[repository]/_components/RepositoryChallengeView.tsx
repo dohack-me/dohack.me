@@ -4,6 +4,7 @@ import {readChallenges} from "@/lib/database/challenge";
 import {Category} from "@prisma/client";
 import Link from "next/link";
 import {BookDashedIcon} from "lucide-react";
+import {hasSolvedChallenge} from "@/lib/users";
 
 export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
     const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId);
@@ -32,11 +33,14 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
                     <CardHeader>{category}</CardHeader>
                     <CardContent className={"grid-view"}>
                         {
-                            challenges.map((challenge) => (
-                                <Button key={challenge.id} asChild variant={"outline"}>
-                                <Link href={`/dashboard/challenges/${repositoryId}/${challenge.id}`}>{challenge.name}</Link>
-                                </Button>
-                            ))
+                            challenges.map(async (challenge) => {
+                                const hasSolved = (await hasSolvedChallenge(challenge.id))!
+                                return (
+                                    <Button key={challenge.id} asChild variant={hasSolved ? "outline" : "default"}>
+                                        <Link href={`/dashboard/challenges/${repositoryId}/${challenge.id}`} className={hasSolved ? "line-through" : undefined}>{challenge.name}</Link>
+                                    </Button>
+                                )
+                            })
                         }
                     </CardContent>
                 </Card>
