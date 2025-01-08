@@ -2,7 +2,7 @@
 
 import {readChallenge} from "@/lib/database/challenge";
 import {getServerClient} from "@/lib/supabase/server";
-import {createSolve, readUserChallengeSolve} from "@/lib/solves";
+import {createSolve, readUserChallengeSolve} from "@/lib/database/solves";
 
 export async function getUserId() {
     const {data, error} = await (await getServerClient()).auth.getUser()

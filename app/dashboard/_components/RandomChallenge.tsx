@@ -1,5 +1,5 @@
 import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {readUserSolves} from "@/lib/solves";
+import {readUserSolves} from "@/lib/database/solves";
 import rlsExtension, {prisma} from "@/lib/prisma";
 import {readRepository} from "@/lib/database/repository";
 import {Challenge} from "@/lib/database/challenge";

@@ -1,12 +1,12 @@
 import RepositoryTitleView from "@/app/dashboard/challenges/[repository]/_components/RepositoryTitleView";
 import React, {Suspense} from "react";
-import RepositoryLoading from "@/app/dashboard/challenges/[repository]/loading";
 import RepositoryChallengeView from "@/app/dashboard/challenges/[repository]/_components/RepositoryChallengeView";
 import {ChevronLeftIcon} from "lucide-react";
 import {Card, CardHeader} from "@/components/ui/card";
 import TitleCardTextSkeleton from "@/components/skeletons/TitleCardTextSkeleton";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {Skeleton} from "@/components/ui/skeleton";
 
 export default async function RepositoryPage({ params }: { params: Promise<{ repository: string }> }) {
     const repositoryId = (await params).repository
@@ -27,7 +27,7 @@ export default async function RepositoryPage({ params }: { params: Promise<{ rep
                     </Button>
                 </CardHeader>
             </Card>
-            <Suspense fallback={<RepositoryLoading/>}>
+            <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
                 <RepositoryChallengeView repositoryId={repositoryId} />
             </Suspense>
         </div>

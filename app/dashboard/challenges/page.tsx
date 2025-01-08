@@ -1,20 +1,32 @@
-import {Suspense} from "react";
+import React, {Suspense} from "react";
 import RepositoriesView from "@/app/dashboard/challenges/_components/RepositoriesView";
-import RepositoriesLoading from "@/app/dashboard/challenges/loading";
 import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import Link from "next/link";
+import {ChevronLeftIcon} from "lucide-react";
+import {Skeleton} from "@/components/ui/skeleton";
 
 export default async function ChallengesPage() {
     return (
         <div className={"flex-grow flex flex-col py-4 px-8 gap-y-4"}>
-            <Card className={"flex-grow flex flex-col"}>
-                <CardHeader>
-                    <CardTitle className={"text-center"}>Select a repository</CardTitle>
-                    <CardDescription className={"text-center"}>Repositories are publicly available at ...</CardDescription>
+            <Card>
+                <CardHeader className={"header-with-button"}>
+                    <div className={"header-with-button-description"}>
+                        <CardTitle>Select a repository</CardTitle>
+                        <CardDescription>Repositories are publicly available at ...</CardDescription>
+                    </div>
+                    <Button asChild>
+                        <Link href={`/dashboard`}>
+                            <ChevronLeftIcon/>
+                            <p className={"hidden lg:block"}>Back to Dashboard</p>
+                            <p className={"hidden sm:block lg:hidden"}>Back</p>
+                        </Link>
+                    </Button>
                 </CardHeader>
-                <Suspense fallback={<RepositoriesLoading/>}>
-                    <RepositoriesView/>
-                </Suspense>
             </Card>
+            <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                <RepositoriesView/>
+            </Suspense>
         </div>
     )
 }

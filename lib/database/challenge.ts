@@ -63,8 +63,8 @@ export async function createChallenge(data: EditableChallenge) {
 export async function readChallenges() {
     const results = await prisma.$extends(rlsExtension()).challenges.findMany()
 
-    return await Promise.all(results.map(async (result) => {
-        return {
+    return await Promise.all(
+        results.map(async (result) => ({
             id: result.id,
             name: result.name,
             description: result.description,
@@ -77,8 +77,8 @@ export async function readChallenges() {
 
             repository: await readRepository(result.repositoryId),
             imageId: result.imageId,
-        } as Challenge
-    })) as Challenge[]
+        }) as Challenge)
+    )
 }
 
 export async function readChallenge(id: string) {
