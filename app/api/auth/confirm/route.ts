@@ -2,6 +2,7 @@ import {type EmailOtpType} from '@supabase/supabase-js'
 import {type NextRequest} from 'next/server'
 import {getServerClient} from '@/lib/supabase/server'
 import {redirect} from 'next/navigation'
+import {revalidatePath} from "next/cache";
 
 export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url)
@@ -16,7 +17,8 @@ export async function GET(request: NextRequest) {
             token_hash,
         })
         if (!error) {
-            redirect(`${process.env.PUBLIC_URL}/dashboard`)
+            revalidatePath("/dashboard")
+            redirect("/dashboard")
         }
     }
 

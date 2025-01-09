@@ -22,6 +22,14 @@ body {
   .header-with-button-description {
     @apply flex flex-col gap-y-1.5
   }
+
+  .padding {
+    @apply py-4 px-8
+  }
+
+  .column {
+    @apply flex flex-col gap-y-8
+  }
 }
 
 @layer base {

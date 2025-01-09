@@ -10,6 +10,7 @@ import {Input} from "@/components/ui/input"
 import Link from "next/link";
 import {SiDiscord, SiGithub} from "@icons-pack/react-simple-icons"
 import {login, oauthLogin} from "@/app/auth-actions";
+import {useToast} from "@/hooks/use-toast";
 
 const formSchema = z.object({
     email: z.string().min(1).email(),
@@ -17,6 +18,7 @@ const formSchema = z.object({
 })
 
 export default function LoginPage() {
+    const {toast} = useToast();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -26,15 +28,21 @@ export default function LoginPage() {
     })
 
     async function onLogin(values: z.infer<typeof formSchema>) {
-        await login(values.email, values.password)
+        if ((await login(values.email, values.password))) {
+            toast({
+                title: "Invalid login credentials",
+                description: "Your account details are wrong.",
+                variant: "destructive"
+            })
+        }
     }
 
     return (
-        <div className={"flex-grow flex flex-col items-center justify-center"}>
+        <div className={"flex-grow flex flex-col items-center justify-center bg-muted"}>
             <Card className={"flex flex-col items-center justify-center w-full rounded-none lg:rounded-xl lg:w-[40%] flex-grow lg:flex-grow-0"}>
-                <CardHeader className={"w-full"}>
-                    <CardTitle className={"text-center"}>Welcome back</CardTitle>
-                    <CardDescription className={"text-center"}>Ready to get started?</CardDescription>
+                <CardHeader className={"w-full text-center"}>
+                    <CardTitle>Welcome back</CardTitle>
+                    <CardDescription>Ready to get started?</CardDescription>
                 </CardHeader>
                 <CardContent className={"w-full flex flex-col gap-y-6"}>
                     <div className={"flex flex-col gap-y-4"}>
@@ -47,13 +55,13 @@ export default function LoginPage() {
                             Login using Discord
                         </Button>
                     </div>
-                    <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-                        <span className="relative z-10 bg-background px-2 text-muted-foreground">
+                    <div className={"relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"}>
+                        <span className={"relative z-10 bg-background px-2 text-muted-foreground"}>
                             Or continue with
                         </span>
                     </div>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onLogin)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(onLogin)} className={"space-y-8"}>
                             <FormField
                                 control={form.control}
                                 name="email"

@@ -8,17 +8,15 @@ import {Provider} from "@supabase/auth-js";
 export async function login(email: string, password: string) {
     const supabase = await getServerClient()
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const {error} = await supabase.auth.signInWithPassword({
         email: email,
         password: password
     })
 
-    if (error) {
-        redirect('/error')
-    }
+    if (error) return true
 
-    revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    revalidatePath("/dashboard")
+    redirect("/dashboard")
 }
 
 export async function oauthLogin(provider: Provider) {
@@ -43,7 +41,7 @@ export async function oauthLogin(provider: Provider) {
 export async function signup(email: string, username: string, password: string) {
     const supabase = await getServerClient()
 
-    const { error } = await supabase.auth.signUp({
+    const {error} = await supabase.auth.signUp({
         email: email,
         password: password,
         options: {
@@ -57,12 +55,7 @@ export async function signup(email: string, username: string, password: string) 
         }
     })
 
-    if (error) {
-        redirect('/error')
-    }
-
-    revalidatePath('/', 'layout')
-    redirect('/dashboard')
+    return error
 }
 
 export async function logOut() {

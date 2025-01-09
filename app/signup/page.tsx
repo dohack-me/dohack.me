@@ -9,6 +9,7 @@ import {Input} from "@/components/ui/input"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link";
 import {signup} from "@/app/auth-actions";
+import {useToast} from "@/hooks/use-toast";
 
 const formSchema = z.object({
     email: z.string().min(1).email(),
@@ -17,22 +18,33 @@ const formSchema = z.object({
 })
 
 export default function SignupPage() {
+    const {toast} = useToast();
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema)
     })
 
     async function onSignup(values: z.infer<typeof formSchema>) {
-        await signup(values.email, values.username, values.password)
+        if ((await signup(values.email, values.username, values.password))) {
+            toast({
+                title: "Something went wrong with your registration.",
+                description: "Please try again later."
+            })
+        } else {
+            toast({
+                title: "One more step...",
+                description: "Check your email inbox to confirm your registration."
+            })
+        }
     }
 
     return (
-        <div className={"flex items-center justify-center w-full h-full"}>
-            <Card className={"w-[30%]"}>
-                <CardHeader>
+        <div className={"flex-grow flex flex-col items-center justify-center bg-muted"}>
+            <Card className={"flex flex-col items-center justify-center w-full rounded-none lg:rounded-xl lg:w-[40%] flex-grow lg:flex-grow-0"}>
+                <CardHeader className={"w-full text-center"}>
                     <CardTitle>Sign Up</CardTitle>
                     <CardDescription>Enter your email and password</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className={"w-full flex flex-col gap-y-6"}>
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSignup)} className="space-y-8">
                             <FormField
@@ -53,7 +65,8 @@ export default function SignupPage() {
                                 name="username"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel className={"w-full flex flex-row justify-between"}>Username</FormLabel>
+                                        <FormLabel
+                                            className={"w-full flex flex-row justify-between"}>Username</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -66,7 +79,8 @@ export default function SignupPage() {
                                 name="password"
                                 render={({field}) => (
                                     <FormItem>
-                                        <FormLabel className={"w-full flex flex-row justify-between"}>Password</FormLabel>
+                                        <FormLabel
+                                            className={"w-full flex flex-row justify-between"}>Password</FormLabel>
                                         <FormControl>
                                             <Input type={"password"} {...field} />
                                         </FormControl>

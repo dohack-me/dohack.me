@@ -36,7 +36,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                     <SidebarContent>
                         <SidebarGroup>
                             <SidebarGroupLabel>
-                                <Link href="/">dohack.me</Link>
+                                <Link href="/">dohack.me ALPHA</Link>
                             </SidebarGroupLabel>
                             <SidebarGroupContent>
                                 <SidebarMenu>
