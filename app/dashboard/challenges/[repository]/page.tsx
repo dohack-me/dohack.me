@@ -12,7 +12,7 @@ export default async function RepositoryPage({ params }: { params: Promise<{ rep
     const repositoryId = (await params).repository
 
     return (
-        <div className={"flex-grow flex flex-col py-4 px-8 gap-y-4"}>
+        <div className={"grow-col padding gap-y-4"}>
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <Suspense fallback={<TitleCardTextSkeleton/>}>

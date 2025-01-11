@@ -4,23 +4,16 @@ import Link from "next/link";
 import {ChevronLeftIcon, DownloadIcon} from "lucide-react";
 import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
-import {redirect} from "next/navigation";
+import {notFound} from "next/navigation";
 import {readChallengeFiles} from "@/lib/storage";
 import {getServerClient} from "@/lib/supabase/server";
 import ChallengeInputForm from "@/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeInputForm";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
-
-    if (!challenge) {
-        redirect("/error")
-    }
-
-    const files = await readChallengeFiles(challenge);
-
-    if (!files) {
-        redirect("/error")
-    }
+    if (!challenge) notFound()
+    const files = await readChallengeFiles(challenge)
+    if (!files) notFound()
 
     const bucketObject = (await getServerClient()).storage.from('challenges')
     const getPublicUrl = (path: string) => {

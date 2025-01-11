@@ -3,10 +3,12 @@ import {Card} from "@/components/ui/card";
 import EditChallengeForm
     from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/EditChallengeForm";
 import {readChallenge} from "@/lib/database/challenge";
+import {notFound} from "next/navigation";
 
 export default async function EditChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const repository = await readRepository(repositoryId)
-    const challenge = (await readChallenge(challengeId))!
+    const challenge = await readChallenge(challengeId)
+    if (!challenge) notFound()
 
     return (
         <Card>

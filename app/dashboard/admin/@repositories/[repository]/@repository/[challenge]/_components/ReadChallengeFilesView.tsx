@@ -10,9 +10,11 @@ import {
 import Link from "next/link";
 import {readChallenge} from "@/lib/database/challenge";
 import {readChallengeFiles} from "@/lib/storage";
+import {notFound} from "next/navigation";
 
 export default async function ReadChallengeFilesView({challengeId}: {challengeId: string}) {
-    const challenge = (await readChallenge(challengeId))!
+    const challenge = await readChallenge(challengeId)
+    if (!challenge) notFound()
     const data = await readChallengeFiles(challenge);
 
     if (!data) {

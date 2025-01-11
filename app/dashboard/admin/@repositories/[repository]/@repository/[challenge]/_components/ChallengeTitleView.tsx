@@ -1,9 +1,11 @@
 import {CardDescription, CardTitle} from "@/components/ui/card";
 import React from "react";
 import {readChallenge} from "@/lib/database/challenge";
+import {notFound} from "next/navigation";
 
 export default async function ChallengeTitleView({challengeId}: {challengeId: string}) {
-    const challenge = (await readChallenge(challengeId))!
+    const challenge = (await readChallenge(challengeId))
+    if (!challenge) notFound()
 
     return (
         <div className={"header-with-button-description"}>

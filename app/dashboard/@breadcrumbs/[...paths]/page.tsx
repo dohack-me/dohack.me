@@ -2,6 +2,7 @@ import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPa
 import React from "react";
 import {readRepository} from "@/lib/database/repository";
 import {readChallenge} from "@/lib/database/challenge";
+import {notFound} from "next/navigation";
 
 function isUUID(text: string): boolean {
     return text.match(new RegExp("^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})$")) != null;
@@ -17,7 +18,9 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
             if (repository != null) {
                 name = repository.name
             } else {
-                name = (await readChallenge(path))!.name // scuffed, will make it less scuffed later
+                const challenge = await readChallenge(path)
+                if (!challenge) notFound()
+                name = challenge.name
             }
         } else {
             name = path

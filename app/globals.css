@@ -27,8 +27,16 @@ body {
     @apply py-4 px-8
   }
 
+  .margin {
+    @apply my-4 mx-8
+  }
+
   .column {
     @apply flex flex-col gap-y-8
+  }
+
+  .grow-col {
+    @apply flex-grow flex flex-col
   }
 }
 

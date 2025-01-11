@@ -29,7 +29,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue={categories[0]}>
-                    <TabsList>
+                    <TabsList className={"w-full"}>
                         {categories.map((category) => (
                             <TabsTrigger key={category} value={category}>{category}</TabsTrigger>
                         ))}
