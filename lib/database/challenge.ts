@@ -12,12 +12,12 @@ export type Challenge = {
     category: Category
     answer: string
     authors: string[]
+    composeFile?: string
 
     createdAt: Date
     updatedAt: Date
 
     repository: Repository
-    imageId: string | null
 }
 
 export type EditableChallenge = {
@@ -26,9 +26,9 @@ export type EditableChallenge = {
     category: Category
     answer: string
     authors: string[]
+    composeFile?: string
 
     repository: Repository
-    imageId: string | null
 }
 
 export async function createChallenge(data: EditableChallenge) {
@@ -39,8 +39,9 @@ export async function createChallenge(data: EditableChallenge) {
             category: data.category,
             answer: data.answer,
             authors: data.authors,
+            composeFile: data.composeFile,
+
             repositoryId: data.repository.id,
-            imageId: data.imageId,
         }
     })
 
@@ -51,12 +52,12 @@ export async function createChallenge(data: EditableChallenge) {
         category: result.category,
         answer: result.answer,
         authors: result.authors,
+        composeFile: result.composeFile,
 
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
 
         repository: await readRepository(result.repositoryId),
-        imageId: result.imageId,
     } as Challenge
 }
 
@@ -71,12 +72,12 @@ export async function readChallenges() {
             category: result.category,
             answer: result.answer,
             authors: result.authors,
+            composeFile: result.composeFile,
 
             createdAt: result.createdAt,
             updatedAt: result.updatedAt,
 
             repository: await readRepository(result.repositoryId),
-            imageId: result.imageId,
         }) as Challenge)
     )
 }
@@ -97,12 +98,12 @@ export async function readChallenge(id: string) {
         category: result.category,
         answer: result.answer,
         authors: result.authors,
+        composeFile: result.composeFile,
 
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
 
         repository: await readRepository(result.repositoryId),
-        imageId: result.imageId,
     } as Challenge
 }
 
@@ -117,8 +118,9 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
             category: data.category,
             answer: data.answer,
             authors: data.authors,
+            composeFile: data.composeFile,
+
             repositoryId: data.repository.id,
-            imageId: data.imageId,
         }
     })
 
@@ -129,12 +131,12 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
         category: result.category,
         answer: result.answer,
         authors: result.authors,
+        composeFile: result.composeFile,
 
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
 
         repository: await readRepository(result.repositoryId),
-        imageId: result.imageId,
     } as Challenge
 }
 
@@ -163,11 +165,11 @@ export async function deleteChallenge(id: string) {
         category: result.category,
         answer: result.answer,
         authors: result.authors,
+        composeFile: result.composeFile,
 
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
 
         repository: await readRepository(result.repositoryId),
-        imageId: result.imageId,
     } as Challenge
 }

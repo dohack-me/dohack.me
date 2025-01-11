@@ -2,9 +2,9 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable";
 import React from "react";
 import UploadChallengeFilesView
-    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/UploadChallengeFilesView";
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/UploadChallengeFilesView";
 import ReadChallengeFilesView
-    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/ReadChallengeFilesView";
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/ReadChallengeFilesView";
 
 export default async function ChallengeFilesView({challengeId}: {challengeId: string}) {
     return (

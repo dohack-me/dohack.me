@@ -67,7 +67,6 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
             repository: repository,
-            imageId: null // TODO: Add container image functionality
         })
         router.refresh()
     }
@@ -93,7 +92,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                 <CardContent className={"flex flex-col gap-y-4"}>
                     <FormField
                         control={form.control}
-                        name="name"
+                        name={"name"}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Challenge Name</FormLabel>
@@ -109,7 +108,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                     />
                     <FormField
                         control={form.control}
-                        name="description"
+                        name={"description"}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Challenge Description</FormLabel>
@@ -125,7 +124,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                     />
                     <FormField
                         control={form.control}
-                        name="category"
+                        name={"category"}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Challenge Category</FormLabel>
@@ -154,7 +153,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                     />
                     <FormField
                         control={form.control}
-                        name="answer"
+                        name={"answer"}
                         render={({ field }) => (
                             <FormItem>
                                 <FormLabel>Challenge Answer</FormLabel>

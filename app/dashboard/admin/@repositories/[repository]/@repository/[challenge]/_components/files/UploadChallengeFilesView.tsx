@@ -1,6 +1,6 @@
 import {readChallenge} from "@/lib/database/challenge";
 import UploadChallengeFilesForm
-    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/UploadChallengeFilesForm";
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/UploadChallengeFilesForm";
 import {notFound} from "next/navigation";
 
 export default async function UploadChallengeFilesView({challengeId}: {challengeId: string}) {

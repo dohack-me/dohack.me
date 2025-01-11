@@ -25,7 +25,7 @@ const topitems = [
 
 export default async function DashboardLayout({children, breadcrumbs}: { children: React.ReactNode, breadcrumbs: React.ReactNode}) {
     return await requireUser(async() => {
-        const cookieStore = cookies()
+        const cookieStore = await cookies()
         const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
 
         const admin = await isAdmin()

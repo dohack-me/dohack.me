@@ -14,7 +14,7 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-enum AppRole {
+enum UserRole {
   ADMIN
   USER
 }
@@ -48,33 +48,49 @@ model Challenges {
   description String
   category    Category
   answer      String
+  composeFile String?
   authors     String[]
-  solves      Solves[]
+
+  solves   Solves[]
+  websites Websites[]
+  sockets  Sockets[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  repositoryId String  @db.Uuid
-  imageId      String? @db.Uuid
+  repositoryId String @db.Uuid
 
   repository Repositories @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
-  image      Images?      @relation(fields: [imageId], references: [id], onDelete: SetNull)
 
   @@map("challenges")
 }
 
-model Images {
-  id         String       @id @unique @default(uuid()) @db.Uuid
-  image      String       @unique
-  challenges Challenges[]
-  port       Int
+model Websites {
+  id  String @id @unique @default(uuid()) @db.Uuid
+  url String
 
-  @@map("images")
+  challengeId String @db.Uuid
+
+  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("websites")
+}
+
+model Sockets {
+  id   String @id @unique @default(uuid()) @db.Uuid
+  host String
+  port String
+
+  challengeId String @db.Uuid
+
+  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("sockets")
 }
 
 model Users {
   id     String   @id @unique @db.Uuid
-  role   AppRole  @default(USER)
+  role   UserRole @default(USER)
   solves Solves[]
 
   @@map("users")

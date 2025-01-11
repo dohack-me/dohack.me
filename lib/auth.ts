@@ -1,5 +1,5 @@
 import {getServerClient} from "@/lib/supabase/server";
-import {AppRole} from "@prisma/client";
+import {UserRole} from "@prisma/client";
 import {redirect} from "next/navigation";
 import {User} from "@supabase/supabase-js";
 import React from "react";
@@ -27,7 +27,7 @@ export async function isAdmin() {
         where: {id: data.user.id},
     }))
 
-    if (userRole == null || userRole.role != AppRole.ADMIN) {
+    if (userRole == null || userRole.role != UserRole.ADMIN) {
         return null
     }
     return data

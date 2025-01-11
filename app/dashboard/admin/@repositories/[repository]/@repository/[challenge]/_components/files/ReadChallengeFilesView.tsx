@@ -6,7 +6,7 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, 
 import {
     CopyChallengeFileUrlButton,
     DeleteChallengeFileButton
-} from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/UploadChallengeFilesButtons";
+} from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/UploadChallengeFilesButtons";
 import Link from "next/link";
 import {readChallenge} from "@/lib/database/challenge";
 import {readChallengeFiles} from "@/lib/storage";

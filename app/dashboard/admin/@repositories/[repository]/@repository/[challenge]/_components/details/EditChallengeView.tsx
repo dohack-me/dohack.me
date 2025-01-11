@@ -1,7 +1,7 @@
 import {readRepository} from "@/lib/database/repository";
 import {Card} from "@/components/ui/card";
 import EditChallengeForm
-    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/EditChallengeForm";
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/details/EditChallengeForm";
 import {readChallenge} from "@/lib/database/challenge";
 import {notFound} from "next/navigation";
 
