@@ -75,7 +75,6 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
             repository: repository,
-            imageId: null // TODO: Add container image functionality
         })
         setOpen(false)
         router.refresh()
