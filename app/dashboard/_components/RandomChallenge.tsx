@@ -31,7 +31,6 @@ export default async function RandomChallenge() {
             updatedAt: result.updatedAt,
 
             repository: await readRepository(result.repositoryId),
-            imageId: result.imageId,
         } as Challenge
     })) as Challenge[]
 
