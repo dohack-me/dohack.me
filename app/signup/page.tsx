@@ -24,6 +24,9 @@ export default function SignupPage() {
     })
 
     async function onSignup(values: z.infer<typeof formSchema>) {
+        toast({
+            title: "Please wait...",
+        })
         if ((await signup(values.email, values.username, values.password))) {
             toast({
                 title: "Something went wrong with your registration.",
@@ -31,7 +34,7 @@ export default function SignupPage() {
             })
         } else {
             toast({
-                title: "One more step...",
+                title: "One more step!",
                 description: "Check your email inbox to confirm your registration."
             })
         }
