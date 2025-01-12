@@ -37,30 +37,29 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                     </Button>
                 </CardHeader>
                 <CardContent>
-                    <TabsList className={"w-full"}>
+                    <TabsList className={"tabs-list grid-cols-3"}>
                         <TabsTrigger value={"details"}>Details</TabsTrigger>
                         <TabsTrigger value={"files"}>Files</TabsTrigger>
                         <TabsTrigger value={"services"}>Services</TabsTrigger>
                     </TabsList>
                 </CardContent>
             </Card>
-            <div className={"grow-col *:grow-col"}>
-                <TabsContent value={"details"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                        <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
-                    </Suspense>
+            <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                <TabsContent value={"details"} className={"flex-grow mt-0"}>
+                    <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
                 </TabsContent>
-                <TabsContent value={"files"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                        <ChallengeFilesView challengeId={challengeId}/>
-                    </Suspense>
+                <TabsContent value={"files"} className={"flex-grow mt-0"}>
+                    <ChallengeFilesView challengeId={challengeId}/>
                 </TabsContent>
-                <TabsContent value={"services"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                        <ChallengeServiceView repositoryId={repositoryId} challengeId={challengeId}/>
-                    </Suspense>
+                <TabsContent value={"services"} className={"flex-grow mt-0"}>
+                    <ChallengeServiceView repositoryId={repositoryId} challengeId={challengeId}/>
                 </TabsContent>
-            </div>
+            </Suspense>
         </Tabs>
     )
+
+    // instead of having one suspense for each tabscontent and component, i have one suspense for all components as
+    // flex-grow respects components that take no space in dom when determining size for some reason
+    // this causes the skeleton to only take up 1/3 of the available space lol
+    // since this is admin/private ui, im fine taking speed loss here
 }

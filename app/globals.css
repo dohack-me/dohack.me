@@ -38,6 +38,10 @@ body {
   .grow-col {
     @apply flex-grow flex flex-col
   }
+
+  .tabs-list {
+    @apply w-full grid
+  }
 }
 
 @layer base {
