@@ -9,6 +9,9 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {hasSolvedChallenge, submitChallengeAnswer} from "@/lib/users";
 import {useToast} from "@/hooks/use-toast";
+import {useState} from "react";
+import {TConductorInstance} from "react-canvas-confetti/src/types";
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
 
 const formSchema = z.object({
     answer: z.string().min(1, {
@@ -19,6 +22,7 @@ const formSchema = z.object({
 export default function ChallengeInputForm({challengeId}: {challengeId: string}) {
     const router = useRouter()
     const {toast} = useToast()
+    const [conductor, setConductor] = useState<TConductorInstance>()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -54,6 +58,7 @@ export default function ChallengeInputForm({challengeId}: {challengeId: string})
                     description: "Try again.",
                 })
             } else {
+                if (conductor) conductor.shoot()
                 toast({
                     title: "Success!",
                     description: "You solved the challenge!",
@@ -67,6 +72,7 @@ export default function ChallengeInputForm({challengeId}: {challengeId: string})
 
     return (
         <Form {...form}>
+            <Fireworks onInit={({conductor}) => setConductor(conductor)}/>
             <form onSubmit={form.handleSubmit(onSubmit)} className={"w-full flex flex-row gap-x-4"}>
                 <FormField
                     control={form.control}
