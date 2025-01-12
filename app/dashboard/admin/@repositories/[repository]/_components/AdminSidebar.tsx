@@ -5,11 +5,11 @@ import {InfoIcon} from "lucide-react";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/components/ui/collapsible";
 import {CollapsibleButton} from "@/components/CollapsibleButton";
 import React from "react";
-import {readChallenges} from "@/lib/database/challenge";
+import {readRepositoryChallenges} from "@/lib/database/challenges";
 import {Category} from "@prisma/client";
 
 export default async function AdminSidebar({repositoryId}: {repositoryId: string}) {
-    const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId)
+    const challenges = await readRepositoryChallenges(repositoryId);
     const categories = Object.keys(Category)
 
     return (

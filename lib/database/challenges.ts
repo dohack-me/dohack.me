@@ -1,7 +1,7 @@
 'use server'
 
 import rlsExtension, {prisma} from "@/lib/prisma";
-import {Repository, readRepository} from "@/lib/database/repository";
+import {Repository, readRepository} from "@/lib/database/repositories";
 import {Category} from "@prisma/client";
 import {deleteChallengeFile} from "@/lib/storage";
 
@@ -31,20 +31,20 @@ export type EditableChallenge = {
     repository: Repository
 }
 
-export async function createChallenge(data: EditableChallenge) {
-    const result = await prisma.$extends(rlsExtension()).challenges.create({
-        data: {
-            name: data.name,
-            description: data.description,
-            category: data.category,
-            answer: data.answer,
-            authors: data.authors,
-            composeFile: data.composeFile,
+type RawChallenge = {
+    id: string
+    name: string
+    description: string
+    category: Category
+    answer: string
+    composeFile: string | null
+    authors: string[]
+    createdAt: Date
+    updatedAt: Date
+    repositoryId: string
+}
 
-            repositoryId: data.repository.id,
-        }
-    })
-
+async function objectToChallenge(result: RawChallenge) {
     return {
         id: result.id,
         name: result.name,
@@ -61,9 +61,7 @@ export async function createChallenge(data: EditableChallenge) {
     } as Challenge
 }
 
-export async function readChallenges() {
-    const results = await prisma.$extends(rlsExtension()).challenges.findMany()
-
+async function objectsToChallenges(results: RawChallenge[]) {
     return await Promise.all(
         results.map(async (result) => ({
             id: result.id,
@@ -82,6 +80,39 @@ export async function readChallenges() {
     )
 }
 
+export async function createChallenge(data: EditableChallenge) {
+    const result = await prisma.$extends(rlsExtension()).challenges.create({
+        data: {
+            name: data.name,
+            description: data.description,
+            category: data.category,
+            answer: data.answer,
+            authors: data.authors,
+            composeFile: data.composeFile,
+
+            repositoryId: data.repository.id,
+        }
+    })
+
+    return await objectToChallenge(result)
+}
+
+export async function readChallenges() {
+    const results = await prisma.$extends(rlsExtension()).challenges.findMany()
+
+    return await objectsToChallenges(results)
+}
+
+export async function readRepositoryChallenges(repositoryId: string) {
+    const results = await prisma.$extends(rlsExtension()).challenges.findMany({
+        where: {
+            repositoryId: repositoryId
+        }
+    })
+
+    return await objectsToChallenges(results)
+}
+
 export async function readChallenge(id: string) {
     const result = await prisma.$extends(rlsExtension()).challenges.findUnique({
         where: {
@@ -91,20 +122,7 @@ export async function readChallenge(id: string) {
 
     if (result == null) return undefined
 
-    return {
-        id: result.id,
-        name: result.name,
-        description: result.description,
-        category: result.category,
-        answer: result.answer,
-        authors: result.authors,
-        composeFile: result.composeFile,
-
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-
-        repository: await readRepository(result.repositoryId),
-    } as Challenge
+    return await objectToChallenge(result)
 }
 
 export async function updateChallenge(id: string, data: EditableChallenge) {
@@ -124,20 +142,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
         }
     })
 
-    return {
-        id: result.id,
-        name: result.name,
-        description: result.description,
-        category: result.category,
-        answer: result.answer,
-        authors: result.authors,
-        composeFile: result.composeFile,
-
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-
-        repository: await readRepository(result.repositoryId),
-    } as Challenge
+    return await objectToChallenge(result)
 }
 
 export async function deleteChallenge(id: string) {
@@ -158,18 +163,5 @@ export async function deleteChallenge(id: string) {
         }
     })
 
-    return {
-        id: result.id,
-        name: result.name,
-        description: result.description,
-        category: result.category,
-        answer: result.answer,
-        authors: result.authors,
-        composeFile: result.composeFile,
-
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-
-        repository: await readRepository(result.repositoryId),
-    } as Challenge
+    return await objectToChallenge(result)
 }

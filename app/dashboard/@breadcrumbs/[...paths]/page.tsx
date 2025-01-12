@@ -1,7 +1,7 @@
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb";
 import React from "react";
-import {readRepository} from "@/lib/database/repository";
-import {readChallenge} from "@/lib/database/challenge";
+import {readRepository} from "@/lib/database/repositories";
+import {readChallenge} from "@/lib/database/challenges";
 import {notFound} from "next/navigation";
 
 function isUUID(text: string): boolean {

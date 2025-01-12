@@ -1,6 +1,6 @@
 import {CardDescription, CardTitle} from "@/components/ui/card";
 import React from "react";
-import {readChallenge} from "@/lib/database/challenge";
+import {readChallenge} from "@/lib/database/challenges";
 import {notFound} from "next/navigation";
 
 export default async function ChallengeTitleView({challengeId}: {challengeId: string}) {

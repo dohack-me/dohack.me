@@ -1,7 +1,7 @@
 import {CardDescription, CardTitle} from "@/components/ui/card";
 import Link from "next/link";
 import React from "react";
-import {readRepository} from "@/lib/database/repository";
+import {readRepository} from "@/lib/database/repositories";
 
 export default async function RepositoryTitleView({repositoryId}: {repositoryId: string}) {
     const repository = await readRepository(repositoryId)

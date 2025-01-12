@@ -12,8 +12,8 @@ import TitleCardTextSkeleton from "@/components/skeletons/TitleCardTextSkeleton"
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon} from "lucide-react";
-import ChallengeServiceView
-    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallengeServiceView";
+import ChallengeComposeView
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallengeComposeView";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
@@ -44,22 +44,27 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                     </TabsList>
                 </CardContent>
             </Card>
-            <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                <TabsContent value={"details"} className={"flex-grow mt-0"}>
-                    <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
-                </TabsContent>
-                <TabsContent value={"files"} className={"flex-grow mt-0"}>
-                    <ChallengeFilesView challengeId={challengeId}/>
-                </TabsContent>
-                <TabsContent value={"services"} className={"flex-grow mt-0"}>
-                    <ChallengeServiceView repositoryId={repositoryId} challengeId={challengeId}/>
-                </TabsContent>
-            </Suspense>
+            <TabsContent value={"details"} className={"flex-grow mt-0"}>
+                <div className={"h-full w-full flex flex-col"}>
+                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                        <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
+                    </Suspense>
+                </div>
+            </TabsContent>
+            <TabsContent value={"files"} className={"flex-grow mt-0"}>
+                <div className={"h-full w-full flex flex-col"}>
+                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                        <ChallengeFilesView challengeId={challengeId}/>
+                    </Suspense>
+                </div>
+            </TabsContent>
+            <TabsContent value={"services"} className={"flex-grow mt-0"}>
+                <div className={"h-full w-full flex flex-col gap-y-4"}>
+                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                        <ChallengeComposeView repositoryId={repositoryId} challengeId={challengeId}/>
+                    </Suspense>
+                </div>
+            </TabsContent>
         </Tabs>
-    )
-
-    // instead of having one suspense for each tabscontent and component, i have one suspense for all components as
-    // flex-grow respects components that take no space in dom when determining size for some reason
-    // this causes the skeleton to only take up 1/3 of the available space lol
-    // since this is admin/private ui, im fine taking speed loss here
+)
 }

@@ -4,9 +4,9 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {DeleteDialogButton} from "@/components/DeleteDialogButton";
-import {deleteChallenge, readChallenges} from "@/lib/database/challenge";
+import {deleteChallenge, readChallenges} from "@/lib/database/challenges";
 import React from "react";
-import {readRepository} from "@/lib/database/repository";
+import {readRepository} from "@/lib/database/repositories";
 import {Category} from "@prisma/client";
 
 export default async function ChallengesView({repositoryId}: {repositoryId: string}) {

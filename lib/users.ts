@@ -1,6 +1,6 @@
 'use server'
 
-import {readChallenge} from "@/lib/database/challenge";
+import {readChallenge} from "@/lib/database/challenges";
 import {getServerClient} from "@/lib/supabase/server";
 import {createSolve, readUserChallengeSolve} from "@/lib/database/solves";
 

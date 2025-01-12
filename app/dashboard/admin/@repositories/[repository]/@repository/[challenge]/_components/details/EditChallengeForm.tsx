@@ -11,11 +11,11 @@ import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/
 import {PlusIcon, SaveIcon, XIcon} from "lucide-react";
 import React from "react";
 import {Category} from "@prisma/client";
-import {Challenge, updateChallenge} from "@/lib/database/challenge";
+import {Challenge, updateChallenge} from "@/lib/database/challenges";
 import {Textarea} from "@/components/ui/textarea";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {cn} from "@/lib/utils";
-import {Repository} from "@/lib/database/repository";
+import {Repository} from "@/lib/database/repositories";
 
 const categories = Object.keys(Category)
 

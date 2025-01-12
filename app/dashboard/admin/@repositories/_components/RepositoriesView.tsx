@@ -2,7 +2,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {DeleteDialogButton} from "@/components/DeleteDialogButton";
-import {deleteRepository, readRepositories} from "@/lib/database/repository";
+import {deleteRepository, readRepositories} from "@/lib/database/repositories";
 import React from "react";
 
 export default async function RepositoriesView() {

@@ -1,4 +1,4 @@
-import {readRepository} from "@/lib/database/repository";
+import {readRepository} from "@/lib/database/repositories";
 import {Card} from "@/components/ui/card";
 import EditRepositoryForm
     from "@/app/dashboard/admin/@repositories/[repository]/@repository/_components/EditRepositoryForm";

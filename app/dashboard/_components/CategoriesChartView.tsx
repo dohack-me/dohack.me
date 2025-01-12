@@ -1,5 +1,5 @@
 import {readUserSolves} from "@/lib/database/solves";
-import {readChallenge} from "@/lib/database/challenge";
+import {readChallenge} from "@/lib/database/challenges";
 import {Category} from "@prisma/client";
 import CategoriesChart from "@/app/dashboard/_components/CategoriesChart";
 

@@ -1,6 +1,6 @@
 'use server'
 
-import {Challenge} from "@/lib/database/challenge";
+import {Challenge} from "@/lib/database/challenges";
 import {getServerClient} from "@/lib/supabase/server";
 
 export async function createChallengeFile(data: FormData, challenge: Challenge) {

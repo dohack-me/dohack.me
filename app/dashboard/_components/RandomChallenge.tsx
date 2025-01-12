@@ -1,8 +1,8 @@
 import {Card, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {readUserSolves} from "@/lib/database/solves";
 import rlsExtension, {prisma} from "@/lib/prisma";
-import {readRepository} from "@/lib/database/repository";
-import {Challenge} from "@/lib/database/challenge";
+import {readRepository} from "@/lib/database/repositories";
+import {Challenge} from "@/lib/database/challenges";
 import Link from "next/link";
 import {Button} from "@/components/ui/button";
 import {SwordIcon} from "lucide-react";

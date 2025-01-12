@@ -1,4 +1,4 @@
-import {readChallenge} from "@/lib/database/challenge";
+import {readChallenge} from "@/lib/database/challenges";
 import UploadChallengeFilesForm
     from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/UploadChallengeFilesForm";
 import {notFound} from "next/navigation";

@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon, DownloadIcon} from "lucide-react";
 import React from "react";
-import {readChallenge} from "@/lib/database/challenge";
+import {readChallenge} from "@/lib/database/challenges";
 import {notFound} from "next/navigation";
 import {readChallengeFiles} from "@/lib/storage";
 import {getServerClient} from "@/lib/supabase/server";

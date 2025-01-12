@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import {Card, CardContent, CardTitle, CardDescription, CardHeader} from "@/components/ui/card";
-import {readChallenges} from "@/lib/database/challenge";
+import {readRepositoryChallenges} from "@/lib/database/challenges";
 import {Category} from "@prisma/client";
 import Link from "next/link";
 import {BookDashedIcon} from "lucide-react";
 import {hasSolvedChallenge} from "@/lib/users";
 
 export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
-    const challenges = (await readChallenges()).filter((challenge) => challenge.repository.id === repositoryId);
+    const challenges = await readRepositoryChallenges(repositoryId);
 
     if (challenges.length <= 0) return (
         <div className={"grow-col gap-y-4"}>

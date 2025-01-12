@@ -1,6 +1,6 @@
 'use client'
 
-import {Repository} from "@/lib/database/repository";
+import {Repository} from "@/lib/database/repositories";
 import {Input} from "@/components/ui/input";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import Link from "next/link";

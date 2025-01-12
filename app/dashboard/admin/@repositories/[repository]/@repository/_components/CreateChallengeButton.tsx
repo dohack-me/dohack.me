@@ -6,11 +6,11 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {Repository} from "@/lib/database/repository";
+import {Repository} from "@/lib/database/repositories";
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/components/ui/sheet";
 import {PlusIcon, XIcon} from "lucide-react";
 import React, {useState} from "react";
-import {createChallenge} from "@/lib/database/challenge";
+import {createChallenge} from "@/lib/database/challenges";
 import {Textarea} from "@/components/ui/textarea";
 import { cn } from "@/lib/utils"
 import {Category} from "@prisma/client";

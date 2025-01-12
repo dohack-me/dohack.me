@@ -1,6 +1,6 @@
 'use client'
 
-import {Challenge} from "@/lib/database/challenge";
+import {Challenge} from "@/lib/database/challenges";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import React from "react";

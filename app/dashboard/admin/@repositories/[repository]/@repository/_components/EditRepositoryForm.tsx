@@ -6,7 +6,7 @@ import {z} from "zod"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {Repository, updateRepository} from "@/lib/database/repository";
+import {Repository, updateRepository} from "@/lib/database/repositories";
 import {useRouter} from "next/navigation";
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {SaveIcon} from "lucide-react";
