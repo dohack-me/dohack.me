@@ -10,7 +10,7 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
     const challenges = await readRepositoryChallenges(repositoryId);
 
     if (challenges.length <= 0) return (
-        <div className={"grow-col gap-y-4"}>
+        <div className={"flex-grow small-column"}>
             <Card className={"grow-col"}>
                 <CardHeader className={"flex-grow flex items-center justify-center"}>
                     <BookDashedIcon/>
@@ -37,7 +37,7 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
         .filter(({challenges}) => challenges.length > 0)
 
     return (
-        <div className={"flex flex-col gap-y-4"}>
+        <div className={"small-column"}>
             {categoryChallenges.map(({category, challenges}) => (
                 <Card key={category}>
                     <CardHeader>

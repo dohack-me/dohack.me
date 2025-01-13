@@ -73,7 +73,7 @@ export default function ChallengeInputForm({challengeId}: {challengeId: string})
     return (
         <Form {...form}>
             <Fireworks onInit={({conductor}) => setConductor(conductor)}/>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"w-full flex flex-row gap-x-4"}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={"w-full small-row"}>
                 <FormField
                     control={form.control}
                     name={"answer"}

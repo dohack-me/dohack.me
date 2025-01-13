@@ -92,8 +92,8 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                     <p className={"hidden sm:block lg:hidden"}>Create</p>
                 </Button>
             </SheetTrigger>
-            <SheetContent>
-            <SheetHeader>
+            <SheetContent className={"small-column"}>
+                <SheetHeader>
                     <SheetTitle>Creating Challenge</SheetTitle>
                     <SheetDescription>
                         Fill in the challenge details as required

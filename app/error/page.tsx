@@ -10,7 +10,7 @@ export default function ErrorPage() {
                     <CardTitle>Sorry, something went wrong.</CardTitle>
                     <CardDescription>Please try again later.</CardDescription>
                 </CardHeader>
-                <CardContent className={"flex flex-col gap-y-4"}>
+                <CardContent className={"small-column"}>
                     <Button asChild className={"w-full"}>
                         <Link href={"/"}>Home Page</Link>
                     </Button>

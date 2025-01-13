@@ -15,7 +15,7 @@ export default async function AdminRepositoryOverviewPage({ params }: { params: 
     const repositoryId = (await params).repository
 
     return (
-        <div className={"h-full w-full flex flex-col gap-y-4"}>
+        <div className={"h-full w-full small-column"}>
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <Suspense fallback={<TitleCardTextSkeleton/>}>

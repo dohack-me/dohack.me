@@ -15,6 +15,8 @@ import {ChevronLeftIcon} from "lucide-react";
 import ChallengeComposeView
     from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallengeComposeView";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
+import ChallegeServicesView
+    from "@/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallegeServicesView";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
     const paramsObj = await params
@@ -59,9 +61,10 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                 </div>
             </TabsContent>
             <TabsContent value={"services"} className={"flex-grow mt-0"}>
-                <div className={"h-full w-full flex flex-col gap-y-4"}>
+                <div className={"h-full w-full small-column"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
                         <ChallengeComposeView repositoryId={repositoryId} challengeId={challengeId}/>
+                        <ChallegeServicesView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>

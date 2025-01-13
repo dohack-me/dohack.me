@@ -44,7 +44,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                     ))}
                 </div>
             </CardContent>
-            <CardFooter className={"flex flex-col gap-y-4"}>
+            <CardFooter className={"small-column"}>
                 <div className={"w-full flex"}>
                     {files.map(async(file) => {
                         const url = getPublicUrl(`${challenge.repository.id}/${challenge.id}/${file.name}`)

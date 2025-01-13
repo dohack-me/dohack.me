@@ -62,7 +62,7 @@ export default function CreateRepositoryButton() {
                     <p className={"hidden sm:block lg:hidden"}>Create</p>
                 </Button>
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent className={"small-column"}>
                 <SheetHeader>
                     <SheetTitle>Creating Repository</SheetTitle>
                     <SheetDescription>

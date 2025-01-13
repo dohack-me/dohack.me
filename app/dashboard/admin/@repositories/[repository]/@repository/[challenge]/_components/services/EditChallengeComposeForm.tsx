@@ -55,7 +55,7 @@ export default function EditChallengeComposeForm({repository, challenge}: {repos
                         Save
                     </Button>
                 </CardHeader>
-                <CardContent className={"flex flex-col gap-y-4"}>
+                <CardContent className={"small-column"}>
                     <FormField
                         control={form.control}
                         name={"composeFile"}

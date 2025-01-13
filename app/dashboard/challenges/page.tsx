@@ -8,7 +8,7 @@ import {Skeleton} from "@/components/ui/skeleton";
 
 export default async function ChallengesPage() {
     return (
-        <div className={"grow-col padding gap-y-4"}>
+        <div className={"flex-grow padding small-column"}>
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>

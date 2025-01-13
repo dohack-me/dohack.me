@@ -89,7 +89,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                         Save
                     </Button>
                 </CardHeader>
-                <CardContent className={"flex flex-col gap-y-4"}>
+                <CardContent className={"small-column"}>
                     <FormField
                         control={form.control}
                         name={"name"}

@@ -59,7 +59,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                         <p className={"hidden sm:block"}>Save</p>
                     </Button>
                 </CardHeader>
-                <CardContent className={"flex flex-col gap-y-4"}>
+                <CardContent className={"small-column"}>
                     <FormField
                         control={form.control}
                         name={"name"}

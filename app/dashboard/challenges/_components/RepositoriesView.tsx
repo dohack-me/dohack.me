@@ -7,7 +7,7 @@ export default async function RepositoriesView() {
 
     return (
         <Card>
-            <CardHeader className={"flex flex-col gap-y-8"}>
+            <CardHeader className={"column"}>
                 <RepositoriesInteractiveView repositories={repositories} />
             </CardHeader>
         </Card>

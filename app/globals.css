@@ -35,6 +35,14 @@ body {
     @apply flex flex-col gap-y-8
   }
 
+  .small-column {
+    @apply flex flex-col gap-y-4
+  }
+
+  .small-row {
+    @apply flex flex-row gap-x-4
+  }
+
   .grow-col {
     @apply flex-grow flex flex-col
   }
