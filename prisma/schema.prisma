@@ -48,7 +48,6 @@ model Challenges {
   description String
   category    Category
   answer      String
-  composeFile String?
   authors     String[]
 
   solves   Solves[]
@@ -66,8 +65,10 @@ model Challenges {
 }
 
 model Websites {
-  id  String @id @unique @default(uuid()) @db.Uuid
-  url String
+  id                String              @id @unique @default(uuid()) @db.Uuid
+  image             String
+  tag               String
+  websiteContainers WebsiteContainers[]
 
   challengeId String @db.Uuid
 
@@ -88,10 +89,22 @@ model Sockets {
   @@map("sockets")
 }
 
+model WebsiteContainers {
+  userId    String @db.Uuid
+  websiteId String @db.Uuid
+
+  user    Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  website Websites @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+
+  @@id([userId, websiteId])
+  @@map("website_containers")
+}
+
 model Users {
-  id     String   @id @unique @db.Uuid
-  role   UserRole @default(USER)
-  solves Solves[]
+  id                String              @id @unique @db.Uuid
+  role              UserRole            @default(USER)
+  solves            Solves[]
+  websiteContainers WebsiteContainers[]
 
   @@map("users")
 }
