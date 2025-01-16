@@ -9,7 +9,7 @@ import {
 } from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/UploadChallengeFilesButtons";
 import Link from "next/link";
 import {readChallenge} from "@/src/lib/database/challenges";
-import {readChallengeFiles} from "@/src/lib/storage";
+import {deleteChallengeFile, readChallengeFiles} from "@/src/lib/storage";
 import {notFound} from "next/navigation";
 
 export default async function ReadChallengeFilesView({challengeId}: {challengeId: string}) {
@@ -43,7 +43,10 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
                         <DropdownMenuContent>
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DeleteChallengeFileButton path={`${challenge.repository.id}/${challenge.id}/${file.name}`} name={file.name}/>
+                            <DeleteChallengeFileButton name={file.name} callback={async () => {
+                                'use server'
+                                await deleteChallengeFile(`${challenge.repository.id}/${challenge.id}/${file.name}`)
+                            }}/>
                             <DownloadChallengeFileButton path={`${challenge.repository.id}/${challenge.id}/${file.name}`} fileName={file.name}/>
                             <CopyChallengeFileUrlView path={`${challenge.repository.id}/${challenge.id}/${file.name}`}/>
                         </DropdownMenuContent>

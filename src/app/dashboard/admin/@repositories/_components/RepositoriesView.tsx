@@ -33,7 +33,9 @@ export default async function RepositoriesView() {
                                 callback={async () => {
                                     'use server'
                                     await deleteRepository(repository.id)
-                                }}/>
+                                }}>
+                                <Button variant={"destructive"}>Delete</Button>
+                            </DeleteDialogButton>
                         </CardFooter>
                     </Card>
                 ))}

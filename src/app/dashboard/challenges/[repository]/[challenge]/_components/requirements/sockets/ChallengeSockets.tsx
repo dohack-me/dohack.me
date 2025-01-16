@@ -3,7 +3,7 @@ import React from "react";
 import {Challenge} from "@/src/lib/database/challenges";
 import {readChallengeSocketServices} from "@/src/lib/services/sockets";
 import ChallengeSocketsButton
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/services/ChallengeSocketsButton";
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketsButton";
 
 export default async function ChallengeSockets({challenge}: {challenge: Challenge}) {
     const sockets = await readChallengeSocketServices(challenge.id)

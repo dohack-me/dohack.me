@@ -19,7 +19,7 @@ const formSchema = z.object({
     }),
 })
 
-export default function ChallengeInputForm({challengeId}: {challengeId: string}) {
+export default function ChallengeAnswerInputForm({challengeId}: {challengeId: string}) {
     const router = useRouter()
     const {toast} = useToast()
     const [conductor, setConductor] = useState<TConductorInstance>()

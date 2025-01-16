@@ -57,7 +57,9 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                                                 callback={async() => {
                                                     'use server'
                                                     await deleteChallenge(challenge.id)
-                                                }}/>
+                                                }}>
+                                                <Button variant={"destructive"}>Delete</Button>
+                                            </DeleteDialogButton>
                                         </CardFooter>
                                     </Card>
                                 ))}

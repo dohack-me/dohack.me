@@ -14,6 +14,9 @@ export type WebsiteServiceResult = {
     error: WebsiteServiceErrors | null;
 }
 
+const url = process.env.BACKEND_URL as string
+const key = process.env.SECRET_KEY as string
+
 export async function readWebsiteInstance(websiteId: string) {
     const userId = await getUserId()
     if (!userId) return null;
@@ -60,8 +63,37 @@ export async function requestWebsiteService(websiteId: string) {
     return {data: data, error: null}
 }
 
+export async function removeWebsiteService(websiteId: string) {
+    const userId = await getUserId()
+    if (!userId) return {data: null, error: WebsiteServiceErrors.INVALID_ID}
+    const website = await readWebsiteService(websiteId)
+    if (!website) return {data: null, error: WebsiteServiceErrors.INVALID_ID}
+
+    const instance = await prisma.$extends(rlsExtension()).websiteInstances.findUnique({
+        where: {
+            userId_websiteId: {
+                userId: userId,
+                websiteId: websiteId
+            }
+        }
+    })
+    if (!instance) return {data: null, error: WebsiteServiceErrors.NO_INSTANCE}
+
+    const data = await stopWebsiteService(instance.id)
+    if (!data) return {data: null, error: WebsiteServiceErrors.SERVER_ERROR}
+
+    await prisma.$extends(rlsExtension()).websiteInstances.delete({
+        where: {
+            userId_websiteId: {
+                userId: userId,
+                websiteId: websiteId
+            }
+        }
+    })
+    return {data: true, error: null}
+}
+
 async function deployWebsiteService(website: Website) {
-    const url = process.env.BACKEND_URL as string
     const response = await fetch(`${url}/api/v1/service`, {
         method: "POST",
         body: JSON.stringify({
@@ -70,7 +102,7 @@ async function deployWebsiteService(website: Website) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": (process.env.SECRET_KEY || "")
+            "Authorization": key
         }
     })
 
@@ -80,4 +112,20 @@ async function deployWebsiteService(website: Website) {
         url: string
     } = await response.json()
     return data
+}
+
+async function stopWebsiteService(instanceId: string) {
+    const response = await fetch(`${url}/api/v1/service`, {
+        method: "DELETE",
+        body: JSON.stringify({
+            "id": instanceId
+        }),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": key
+        }
+    })
+
+    if (!response.ok) return undefined
+    return true
 }

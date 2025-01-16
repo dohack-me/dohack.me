@@ -8,7 +8,7 @@ import {useToast} from "@/src/hooks/use-toast";
 import {useForm} from "react-hook-form";
 import {Form} from "@/src/components/ui/form";
 
-export function DeleteDialogButton({description, confirmation, callback}: {description: string, confirmation: string, callback(): Promise<void>}) {
+export function DeleteDialogButton({description, confirmation, callback, children}: {description: string, confirmation: string, callback(): Promise<void>, children: React.ReactNode}) {
     const [open, setOpen] = useState(false)
     const {toast} = useToast()
     const router = useRouter()
@@ -26,7 +26,7 @@ export function DeleteDialogButton({description, confirmation, callback}: {descr
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={"destructive"}>Delete</Button>
+                {children}
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

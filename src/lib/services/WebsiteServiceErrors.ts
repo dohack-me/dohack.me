@@ -3,5 +3,6 @@ export enum WebsiteServiceErrors {
     INVALID_ID,
     SERVER_ERROR,
     TOO_MANY_INSTANCES,
-    ALREADY_HAVE_INSTANCE
+    ALREADY_HAVE_INSTANCE,
+    NO_INSTANCE
 }

@@ -2,19 +2,21 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon} from "lucide-react";
-import React from "react";
+import React, {Suspense} from "react";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
-import ChallengeInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeInputForm";
-import {Separator} from "@/src/components/ui/separator";
-import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeFiles";
-import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/services/ChallengeWebsites";
-import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/services/ChallengeSockets";
+import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm";
+import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/files/ChallengeFiles";
+import {Skeleton} from "@/src/components/ui/skeleton";
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable";
+import ChallengeWebsites
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites";
+import ChallengeSockets
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
     if (!challenge) notFound()
-
 
     return (
         <Card className={"flex-grow flex flex-col"}>
@@ -31,22 +33,29 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                     </Link>
                 </Button>
             </CardHeader>
-            <CardContent className={"flex-grow small-row"}>
-                <div className={"grow-col"}>
-                    {challenge.description.split("\n").map((line) => (
-                        <p key={line} className={"text-wrap"}>{line}</p>
-                    ))}
-                    <Separator className={"mt-3"} orientation={"horizontal"}/>
-                </div>
-                <Separator orientation={"vertical"}/>
-                <div className={"small-column"}>
-                    <ChallengeFiles challenge={challenge}/>
-                    <ChallengeWebsites challenge={challenge}/>
-                    <ChallengeSockets challenge={challenge}/>
-                </div>
+            <CardContent className={"flex-grow"}>
+                <ResizablePanelGroup direction={"horizontal"}>
+                    <ResizablePanel defaultSize={70}>
+                        {challenge.description.split("\n").map((line) => (
+                            <p key={line} className={"text-wrap"}>{line}</p>
+                        ))}
+                    </ResizablePanel>
+                    <ResizableHandle className={"mx-4"}/>
+                    <ResizablePanel defaultSize={30} className={"small-column"}>
+                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                            <ChallengeFiles challenge={challenge}/>
+                        </Suspense>
+                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                            <ChallengeWebsites challenge={challenge}/>
+                        </Suspense>
+                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                            <ChallengeSockets challenge={challenge}/>
+                        </Suspense>
+                    </ResizablePanel>
+                </ResizablePanelGroup>
             </CardContent>
             <CardFooter>
-                <ChallengeInputForm challengeId={challengeId}/>
+                <ChallengeAnswerInputForm challengeId={challengeId}/>
             </CardFooter>
         </Card>
     )

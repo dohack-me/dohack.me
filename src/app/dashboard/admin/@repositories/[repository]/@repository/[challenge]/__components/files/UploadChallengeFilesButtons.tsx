@@ -1,56 +1,20 @@
 'use client'
 
-import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog";
-import {Button} from "@/src/components/ui/button";
-import React, {useState} from "react";
+import React from "react";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
-import {deleteChallengeFile} from "@/src/lib/storage";
 import {useToast} from "@/src/hooks/use-toast";
-import {useRouter} from "next/navigation";
-import {useForm} from "react-hook-form";
-import {Form} from "@/src/components/ui/form";
+import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
 
-export function DeleteChallengeFileButton({path, name}: {path: string, name: string}) {
-    const [open, setOpen] = useState(false)
-    const {toast} = useToast()
-    const router = useRouter()
-    const form = useForm()
-
-    async function onSubmit() {
-        await deleteChallengeFile(path)
-        setOpen(false)
-        router.refresh()
-        toast({
-            title: "Successfully deleted file.",
-        })
-    }
-
+export function DeleteChallengeFileButton({name, callback}: {name: string, callback(): Promise<void>}) {
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                    Delete
-                </DropdownMenuItem>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                    <DialogDescription>{`This action cannot be undone. This will permanently delete "${name}".`}</DialogDescription>
-                </DialogHeader>
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <Button variant={"destructive"} type={"submit"}>Delete</Button>
-                            </form>
-                        </Form>
-                    </DialogClose>
-                    <DialogClose asChild>
-                        <Button>Close</Button>
-                    </DialogClose>
-                </DialogFooter>
-            </DialogContent>
-        </Dialog>
+        <DeleteDialogButton
+            description={`This action cannot be undone. This will permanently delete "${name}".`}
+            confirmation={"Successfully deleted file."}
+            callback={callback}>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                Delete
+            </DropdownMenuItem>
+        </DeleteDialogButton>
     )
 }
 
