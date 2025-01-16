@@ -69,7 +69,8 @@ async function deployWebsiteService(website: Website) {
             "tag": website.tag
         }),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": (process.env.SECRET_KEY || "")
         }
     })
 
