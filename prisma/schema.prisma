@@ -65,10 +65,10 @@ model Challenges {
 }
 
 model Websites {
-  id                String              @id @unique @default(uuid()) @db.Uuid
-  image             String
-  tag               String
-  websiteContainers WebsiteContainers[]
+  id               String             @id @unique @default(uuid()) @db.Uuid
+  image            String
+  tag              String
+  websiteInstances WebsiteInstances[]
 
   challengeId String @db.Uuid
 
@@ -89,22 +89,24 @@ model Sockets {
   @@map("sockets")
 }
 
-model WebsiteContainers {
+model WebsiteInstances {
   userId    String @db.Uuid
   websiteId String @db.Uuid
+  id        String @db.Uuid
+  url       String
 
   user    Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
   website Websites @relation(fields: [websiteId], references: [id], onDelete: Cascade)
 
   @@id([userId, websiteId])
-  @@map("website_containers")
+  @@map("website_instances")
 }
 
 model Users {
-  id                String              @id @unique @db.Uuid
-  role              UserRole            @default(USER)
-  solves            Solves[]
-  websiteContainers WebsiteContainers[]
+  id               String             @id @unique @db.Uuid
+  role             UserRole           @default(USER)
+  solves           Solves[]
+  websiteInstances WebsiteInstances[]
 
   @@map("users")
 }

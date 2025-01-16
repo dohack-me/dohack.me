@@ -8,8 +8,8 @@ import {notFound} from "next/navigation";
 import ChallengeInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeInputForm";
 import {Separator} from "@/src/components/ui/separator";
 import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeFiles";
-import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeWebsites";
-import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeSockets";
+import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/services/ChallengeWebsites";
+import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/services/ChallengeSockets";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)

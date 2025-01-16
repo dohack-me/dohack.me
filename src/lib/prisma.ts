@@ -1,17 +1,5 @@
-import {PrismaClient, Prisma} from "@prisma/client"
+import {Prisma} from "@prisma/client"
 import {getServerClient} from "@/src/lib/supabase/server";
-
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
-
-export const prisma = globalForPrisma.prisma || new PrismaClient({
-    datasources: {
-        db: {
-            url: process.env.RLS_DATABASE_URL as string
-        }
-    }
-})
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma
 
 // taken from https://github.com/dthyresson/prisma-extension-supabase-rls
 export default function rlsExtension() {

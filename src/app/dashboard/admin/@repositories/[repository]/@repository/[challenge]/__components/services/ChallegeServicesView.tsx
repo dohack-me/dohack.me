@@ -1,5 +1,5 @@
 import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/src/components/ui/card";
-import {readChallengeWebsiteServices} from "@/src/lib/database/services/websites";
+import {readChallengeWebsiteServices} from "@/src/lib/services/websites";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
 import CreateWebsiteServiceButton
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateWebsiteServiceButton";
@@ -7,7 +7,7 @@ import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
 import CreateSocketServiceButton
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateSocketServiceButton";
-import {readChallengeSocketServices} from "@/src/lib/database/services/sockets";
+import {readChallengeSocketServices} from "@/src/lib/services/sockets";
 
 
 export default async function ChallegeServicesView({challengeId}: {challengeId: string}) {

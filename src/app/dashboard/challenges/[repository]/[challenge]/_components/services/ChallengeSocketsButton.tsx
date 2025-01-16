@@ -3,7 +3,7 @@
 import {Button} from "@/src/components/ui/button";
 import {ServerIcon} from "lucide-react";
 import React from "react";
-import {Socket} from "@/src/lib/database/services/sockets";
+import {Socket} from "@/src/lib/services/sockets";
 import {useToast} from "@/src/hooks/use-toast";
 
 export default function ChallengeSocketsButton({socket}: {socket: Socket}) {

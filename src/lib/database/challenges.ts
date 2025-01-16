@@ -1,6 +1,7 @@
 'use server'
 
-import rlsExtension, {prisma} from "@/src/lib/prisma";
+import {prisma} from '@/src/lib/globals'
+import rlsExtension from "@/src/lib/prisma";
 import {Repository, readRepository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
 import {deleteChallengeFile} from "@/src/lib/storage";
@@ -114,7 +115,7 @@ export async function readChallenge(id: string) {
         }
     })
 
-    if (result == null) return undefined
+    if (result == null) return null
 
     return await objectToChallenge(result)
 }

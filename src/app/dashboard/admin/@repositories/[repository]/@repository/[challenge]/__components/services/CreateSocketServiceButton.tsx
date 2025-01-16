@@ -12,7 +12,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast"
 import {Challenge} from "@/src/lib/database/challenges"
-import {createSocketService} from "@/src/lib/database/services/sockets";
+import {createSocketService} from "@/src/lib/services/sockets";
 
 const formSchema = z.object({
     host: z.string().min(1, {

@@ -3,7 +3,8 @@ import {UserRole} from "@prisma/client";
 import {redirect} from "next/navigation";
 import {User} from "@supabase/supabase-js";
 import React from "react";
-import rlsExtension, {prisma} from "@/src/lib/prisma";
+import rlsExtension from "@/src/lib/prisma";
+import {prisma} from "@/src/lib/globals";
 
 export async function isLoggedIn() {
     const supabase = await getServerClient()

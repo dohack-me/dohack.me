@@ -11,7 +11,7 @@ import {PlusIcon} from "lucide-react";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast"
-import {createWebsiteService} from "@/src/lib/database/services/websites";
+import {createWebsiteService} from "@/src/lib/services/websites";
 import {Challenge} from "@/src/lib/database/challenges"
 
 const formSchema = z.object({

@@ -1,12 +1,13 @@
 import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {readUserSolves} from "@/src/lib/database/solves";
-import rlsExtension, {prisma} from "@/src/lib/prisma";
+import rlsExtension from "@/src/lib/prisma";
 import {readRepository} from "@/src/lib/database/repositories";
 import {Challenge} from "@/src/lib/database/challenges";
 import Link from "next/link";
 import {Button} from "@/src/components/ui/button";
 import {SwordIcon} from "lucide-react";
 import React from "react";
+import {prisma} from "@/src/lib/globals";
 
 export default async function RandomChallenge() {
     const userSolves = await readUserSolves()

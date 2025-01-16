@@ -1,6 +1,7 @@
 'use server'
 
-import rlsExtension, {prisma} from "@/src/lib/prisma";
+import {prisma} from '@/src/lib/globals'
+import rlsExtension from "@/src/lib/prisma";
 import {getUserId} from "@/src/lib/users";
 
 export async function createSolve(challengeId: string) {

@@ -1,7 +1,8 @@
 'use server'
 
+import {prisma} from '@/src/lib/globals'
 import {Challenge, readChallenge} from "@/src/lib/database/challenges";
-import rlsExtension, {prisma} from "@/src/lib/prisma";
+import rlsExtension from "@/src/lib/prisma";
 
 export type Website = {
     id: string
@@ -78,7 +79,7 @@ export async function readWebsiteService(websiteId: string) {
         }
     })
 
-    if (result == null) return undefined
+    if (result == null) return null
 
     return await objectToWebsite(result)
 }
