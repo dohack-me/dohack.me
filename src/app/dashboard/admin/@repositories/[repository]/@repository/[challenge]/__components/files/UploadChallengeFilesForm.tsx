@@ -43,7 +43,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
         }
         router.refresh()
         toast({
-            title: "Successfully uploaded files."
+            title: "Successfully uploaded file."
         })
     }
 

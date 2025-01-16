@@ -7,6 +7,7 @@ import ChallengeSocketsButton
 
 export default async function ChallengeSockets({challenge}: {challenge: Challenge}) {
     const sockets = await readChallengeSocketServices(challenge.id)
+    if (sockets.length <= 0) return null
 
     return (
         <Card className={"h-fit flex flex-col"}>

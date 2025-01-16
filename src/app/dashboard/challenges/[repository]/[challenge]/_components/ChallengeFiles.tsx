@@ -11,6 +11,8 @@ import {Challenge} from "@/src/lib/database/challenges";
 export default async function ChallengeFiles({challenge}: {challenge: Challenge}) {
     const files = await readChallengeFiles(challenge)
     if (!files) notFound()
+    if (files.length <= 0) return null
+
     const bucketObject = (await getServerClient()).storage.from('challenges')
     const getPublicUrl = (path: string) => {
         return bucketObject.getPublicUrl(path, {

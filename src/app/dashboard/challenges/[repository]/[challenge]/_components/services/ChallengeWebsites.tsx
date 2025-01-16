@@ -7,6 +7,7 @@ import ChallengeWebsiteButton
 
 export default async function ChallengeWebsites({challenge}: {challenge: Challenge}) {
     const websites = await readChallengeWebsiteServices(challenge.id)
+    if (websites.length <= 0) return null
 
     return (
         <Card className={"h-fit flex flex-col"}>

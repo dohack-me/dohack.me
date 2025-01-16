@@ -34,7 +34,7 @@ export function DeleteDialogButton({description, confirmation, callback}: {descr
                     <DialogDescription>{description}</DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <DialogClose>
+                    <DialogClose asChild>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <Button variant={"destructive"} type={"submit"}>Delete</Button>

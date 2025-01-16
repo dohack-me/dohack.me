@@ -5,10 +5,10 @@ import {Button} from "@/src/components/ui/button";
 import React, {useState} from "react";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
 import {deleteChallengeFile} from "@/src/lib/storage";
-import {Form} from "@/src/components/ui/form";
 import {useToast} from "@/src/hooks/use-toast";
 import {useRouter} from "next/navigation";
 import {useForm} from "react-hook-form";
+import {Form} from "@/src/components/ui/form";
 
 export function DeleteChallengeFileButton({path, name}: {path: string, name: string}) {
     const [open, setOpen] = useState(false)
@@ -19,10 +19,10 @@ export function DeleteChallengeFileButton({path, name}: {path: string, name: str
     async function onSubmit() {
         await deleteChallengeFile(path)
         setOpen(false)
+        router.refresh()
         toast({
             title: "Successfully deleted file.",
         })
-        router.refresh()
     }
 
     return (
@@ -38,7 +38,7 @@ export function DeleteChallengeFileButton({path, name}: {path: string, name: str
                     <DialogDescription>{`This action cannot be undone. This will permanently delete "${name}".`}</DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                    <DialogClose>
+                    <DialogClose asChild>
                         <Form {...form}>
                             <form onSubmit={form.handleSubmit(onSubmit)}>
                                 <Button variant={"destructive"} type={"submit"}>Delete</Button>
