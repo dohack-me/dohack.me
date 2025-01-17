@@ -94,38 +94,46 @@ export async function removeWebsiteService(websiteId: string) {
 }
 
 async function deployWebsiteService(website: Website) {
-    const response = await fetch(`${url}/api/v1/service`, {
-        method: "POST",
-        body: JSON.stringify({
-            "image": website.image,
-            "tag": website.tag
-        }),
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": key
-        }
-    })
+    try {
+        const response = await fetch(`${url}/api/v1/service`, {
+            method: "POST",
+            body: JSON.stringify({
+                "image": website.image,
+                "tag": website.tag
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": key
+            }
+        })
 
-    if (!response.ok) return undefined
-    const data: {
-        id: string
-        url: string
-    } = await response.json()
-    return data
+        if (!response.ok) return undefined
+        const data: {
+            id: string
+            url: string
+        } = await response.json()
+        return data
+    } catch {
+        return undefined
+    }
 }
 
 async function stopWebsiteService(instanceId: string) {
-    const response = await fetch(`${url}/api/v1/service`, {
-        method: "DELETE",
-        body: JSON.stringify({
-            "id": instanceId
-        }),
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": key
-        }
-    })
+    try {
+        const response = await fetch(`${url}/api/v1/service`, {
+            method: "DELETE",
+            body: JSON.stringify({
+                "id": instanceId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": key
+            }
+        })
 
-    if (!response.ok) return undefined
-    return true
+        if (!response.ok) return undefined
+        return true
+    } catch {
+        return undefined
+    }
 }

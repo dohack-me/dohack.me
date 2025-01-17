@@ -24,10 +24,13 @@ export default async function ChallengeWebsiteButtonView({website}: {website: We
             <DeleteDialogButton
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
                 confirmation={"Successfully deleted instance."}
+                fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
                     'use server'
-                    await removeWebsiteService(website.id)
-                }}>
+                    const {error} = await removeWebsiteService(website.id)
+                    return error == null
+                }}
+            >
                 <Button>
                     <XIcon/>
                 </Button>

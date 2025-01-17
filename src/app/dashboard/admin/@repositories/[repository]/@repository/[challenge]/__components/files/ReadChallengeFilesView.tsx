@@ -45,7 +45,8 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
                             <DropdownMenuSeparator />
                             <DeleteChallengeFileButton name={file.name} callback={async () => {
                                 'use server'
-                                await deleteChallengeFile(`${challenge.repository.id}/${challenge.id}/${file.name}`)
+                                const {error} = await deleteChallengeFile(`${challenge.repository.id}/${challenge.id}/${file.name}`)
+                                return error == null
                             }}/>
                             <DownloadChallengeFileButton path={`${challenge.repository.id}/${challenge.id}/${file.name}`} fileName={file.name}/>
                             <CopyChallengeFileUrlView path={`${challenge.repository.id}/${challenge.id}/${file.name}`}/>

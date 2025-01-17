@@ -8,17 +8,18 @@ import {useToast} from "@/src/hooks/use-toast";
 import {useForm} from "react-hook-form";
 import {Form} from "@/src/components/ui/form";
 
-export function DeleteDialogButton({description, confirmation, callback, children}: {description: string, confirmation: string, callback(): Promise<void>, children: React.ReactNode}) {
+export function DeleteDialogButton({description, confirmation, fail, callback, children}: {description: string, confirmation: string, fail: string, callback(): Promise<boolean>, children: React.ReactNode}) {
     const [open, setOpen] = useState(false)
     const {toast} = useToast()
     const router = useRouter()
     const form = useForm()
 
     async function onSubmit() {
-        await callback()
+        const success = await callback()
         setOpen(false)
         toast({
-            title: confirmation,
+            title: (success ? confirmation : "Something went wrong."),
+            description: (success ? null : fail),
         })
         router.refresh()
     }
