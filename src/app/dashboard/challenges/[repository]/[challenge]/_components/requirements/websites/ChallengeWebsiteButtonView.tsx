@@ -1,5 +1,4 @@
 import {Website} from "@/src/lib/services/websites";
-import {readWebsiteInstance, removeWebsiteService} from "@/src/lib/services/orchestrator";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {ExternalLinkIcon, XIcon} from "lucide-react";
@@ -7,6 +6,8 @@ import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
 import React from "react";
 import CreateWebsiteInstanceButton
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/CreateWebsiteInstanceButton";
+import {readWebsiteInstance} from "@/src/lib/instances/websiteinstances";
+import {shutdownWebsiteInstance} from "@/src/lib/orchestrator/websites";
 
 export default async function ChallengeWebsiteButtonView({website}: {website: Website}) {
     const instance = await readWebsiteInstance(website.id);
@@ -27,7 +28,7 @@ export default async function ChallengeWebsiteButtonView({website}: {website: We
                 fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
                     'use server'
-                    const {error} = await removeWebsiteService(website.id)
+                    const {error} = await shutdownWebsiteInstance(website.id)
                     return error == null
                 }}
             >

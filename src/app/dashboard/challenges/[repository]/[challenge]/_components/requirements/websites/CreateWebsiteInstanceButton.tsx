@@ -3,10 +3,10 @@
 import {Button} from "@/src/components/ui/button";
 import {ServerIcon} from "lucide-react";
 import React from "react";
-import {requestWebsiteService} from "@/src/lib/services/orchestrator";
-import {WebsiteServiceErrors} from "@/src/lib/services/WebsiteServiceErrors";
+import {WebsiteServiceErrors} from "@/src/lib/orchestrator/ServiceActionErrors";
 import {useToast} from "@/src/hooks/use-toast";
 import {useRouter} from "next/navigation";
+import {deployWebsiteInstance} from "@/src/lib/orchestrator/websites";
 
 export default function CreateWebsiteInstanceButton({websiteId}: {websiteId: string}) {
     const {toast} = useToast();
@@ -17,7 +17,7 @@ export default function CreateWebsiteInstanceButton({websiteId}: {websiteId: str
             title: "Starting website instance...",
             description: "Please be patient!",
         })
-        const {data, error} = await requestWebsiteService(websiteId)
+        const {data, error} = await deployWebsiteInstance(websiteId)
         if (error) {
             switch (error) {
                 case WebsiteServiceErrors.TOO_MANY_INSTANCES:

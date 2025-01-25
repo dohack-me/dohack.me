@@ -8,7 +8,7 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@
 import {Input} from "@/src/components/ui/input"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
 import Link from "next/link";
-import {signup} from "@/src/app/auth-actions";
+import {signup} from "@/src/lib/auth-actions";
 import {useToast} from "@/src/hooks/use-toast";
 
 const formSchema = z.object({

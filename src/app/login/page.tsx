@@ -9,7 +9,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import {Input} from "@/src/components/ui/input"
 import Link from "next/link";
 import {SiDiscord, SiGithub} from "@icons-pack/react-simple-icons"
-import {login, oauthLogin} from "@/src/app/auth-actions";
+import {login, oauthLogin} from "@/src/lib/auth-actions";
 import {useToast} from "@/src/hooks/use-toast";
 
 const formSchema = z.object({

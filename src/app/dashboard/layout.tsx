@@ -5,7 +5,7 @@ import React, {Suspense} from "react";
 import Link from "next/link";
 import {AppWindow, Home, LogOut, Settings, Swords} from "lucide-react";
 import {ModeToggle} from "@/src/components/ModeToggle";
-import {logOut} from "@/src/app/auth-actions";
+import {logOut} from "@/src/lib/auth-actions";
 import {isAdmin, requireUser} from "@/src/lib/auth";
 import DashboardLoadingPage from "@/src/app/dashboard/loading";
 import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading";
