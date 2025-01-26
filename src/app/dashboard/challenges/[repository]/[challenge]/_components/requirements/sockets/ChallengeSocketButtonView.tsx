@@ -1,7 +1,6 @@
 import {Socket} from "@/src/lib/services/sockets";
 import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {ClipboardIcon, XIcon} from "lucide-react";
+import {XIcon} from "lucide-react";
 import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
 import React from "react";
 import CreateSocketInstanceButton
