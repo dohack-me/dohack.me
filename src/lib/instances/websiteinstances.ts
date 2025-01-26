@@ -4,9 +4,7 @@ import {getUserId} from "@/src/lib/users";
 import {prisma} from "@/src/lib/globals";
 import rlsExtension from "@/src/lib/prisma";
 import {readWebsiteService, Website} from "@/src/lib/services/websites";
-
-const url = process.env.BACKEND_URL as string
-const key = process.env.SECRET_KEY as string
+import EnvironmentVariables from "@/src/lib/environment";
 
 export type WebsiteInstance = {
     website: Website,
@@ -74,7 +72,7 @@ export async function createWebsiteInstance(website: Website) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${url}/api/v1/service/website`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website`, {
         method: "POST",
         body: JSON.stringify({
             "image": website.image,
@@ -82,7 +80,7 @@ export async function createWebsiteInstance(website: Website) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": key
+            "Authorization": EnvironmentVariables.SECRET_KEY
         }
     })
 
@@ -107,14 +105,14 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${url}/api/v1/service`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service`, {
         method: "DELETE",
         body: JSON.stringify({
             "id": instance.id,
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": key
+            "Authorization": EnvironmentVariables.SECRET_KEY
         }
     })
 

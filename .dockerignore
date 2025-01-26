@@ -1,0 +1,12 @@
+Dockerfile
+.dockerignore
+npm-debug.log
+README.md
+.next
+.git
+.github
+.idea
+.env.prod
+.eslintrc.json
+.gitignore
+components.json

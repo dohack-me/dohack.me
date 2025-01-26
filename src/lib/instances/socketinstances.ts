@@ -4,9 +4,7 @@ import {getUserId} from "@/src/lib/users";
 import {prisma} from "@/src/lib/globals";
 import rlsExtension from "@/src/lib/prisma";
 import {readSocketService, Socket} from "@/src/lib/services/sockets";
-
-const url = process.env.BACKEND_URL as string
-const key = process.env.SECRET_KEY as string
+import EnvironmentVariables from "@/src/lib/environment";
 
 export type SocketInstance = {
     socket: Socket,
@@ -74,7 +72,7 @@ export async function createSocketInstance(socket: Socket) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${url}/api/v1/service/socket`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/socket`, {
         method: "POST",
         body: JSON.stringify({
             "image": socket.image,
@@ -82,7 +80,7 @@ export async function createSocketInstance(socket: Socket) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": key
+            "Authorization": EnvironmentVariables.SECRET_KEY
         }
     })
 
@@ -107,14 +105,14 @@ export async function deleteSocketInstance(instance: SocketInstance) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${url}/api/v1/service`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service`, {
         method: "DELETE",
         body: JSON.stringify({
             "id": instance.id,
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": key
+            "Authorization": EnvironmentVariables.SECRET_KEY
         }
     })
 
