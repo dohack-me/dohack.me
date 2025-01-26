@@ -6,29 +6,29 @@ import rlsExtension from "@/src/lib/prisma";
 
 export type Socket = {
     id: string
-    host: string
-    port: number
+    image: string
+    tag: string
     challenge: Challenge
 }
 
 export type EditableSocket = {
-    host: string
-    port: number
+    image: string
+    tag: string
     challenge: Challenge
 }
 
 type RawSocket = {
     id: string,
-    host: string
-    port: number
+    image: string
+    tag: string
     challengeId: string
 }
 
 async function objectToSocket(result: RawSocket) {
     return {
         id: result.id,
-        host: result.host,
-        port: result.port,
+        image: result.image,
+        tag: result.tag,
         challenge: await readChallenge(result.challengeId),
     } as Socket
 }
@@ -37,8 +37,8 @@ async function objectsToSockets(results: RawSocket[]) {
     return await Promise.all(
         results.map(async (result) => ({
             id: result.id,
-            host: result.host,
-            port: result.port,
+            image: result.image,
+            tag: result.tag,
             challenge: await readChallenge(result.challengeId)
         }) as Socket)
     )
@@ -47,8 +47,8 @@ async function objectsToSockets(results: RawSocket[]) {
 export async function createSocketService(data: EditableSocket) {
     const result = await prisma.$extends(rlsExtension()).sockets.create({
         data: {
-            host: data.host,
-            port: data.port,
+            image: data.image,
+            tag: data.tag,
             challengeId: data.challenge.id,
         }
     })

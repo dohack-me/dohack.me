@@ -47,7 +47,7 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
                         ))}
                         {sockets.map(socket => (
                             <TableRow key={socket.id}>
-                                <TableCell>{`${socket.host}:${socket.port}`}</TableCell>
+                                <TableCell>{`${socket.image}:${socket.tag}`}</TableCell>
                                 <TableCell>Socket</TableCell>
                                 <TableCell>Button</TableCell>
                             </TableRow>

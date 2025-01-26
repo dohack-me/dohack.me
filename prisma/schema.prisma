@@ -78,9 +78,10 @@ model Websites {
 }
 
 model Sockets {
-  id   String @id @unique @default(uuid()) @db.Uuid
-  host String
-  port Int
+  id              String            @id @unique @default(uuid()) @db.Uuid
+  image           String
+  tag             String
+  socketInstances SocketInstances[]
 
   challengeId String @db.Uuid
 
@@ -102,11 +103,25 @@ model WebsiteInstances {
   @@map("website_instances")
 }
 
+model SocketInstances {
+  userId   String @db.Uuid
+  socketId String @db.Uuid
+  id       String @db.Uuid
+  port     Int
+
+  user   Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  socket Sockets @relation(fields: [socketId], references: [id], onDelete: Cascade)
+
+  @@id([userId, socketId])
+  @@map("socket_instances")
+}
+
 model Users {
   id               String             @id @unique @db.Uuid
   role             UserRole           @default(USER)
   solves           Solves[]
   websiteInstances WebsiteInstances[]
+  socketInstances  SocketInstances[]
 
   @@map("users")
 }

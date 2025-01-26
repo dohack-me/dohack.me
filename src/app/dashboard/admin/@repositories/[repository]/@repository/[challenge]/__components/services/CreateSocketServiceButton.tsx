@@ -15,15 +15,12 @@ import {Challenge} from "@/src/lib/database/challenges"
 import {createSocketService} from "@/src/lib/services/sockets";
 
 const formSchema = z.object({
-    host: z.string().min(1, {
-        message: "Socket host is required",
+    image: z.string().min(1, {
+        message: "Image name is required",
     }),
-    port: z.coerce.number({
-        required_error: "Port is required",
-        invalid_type_error: "Port must be a number"
-    }).int().positive().min(1, {
-        message: "Port must be above 0"
-    })
+    tag: z.string().min(1, {
+        message: "Image tag is required",
+    }),
 })
 
 export default function CreateSocketServiceButton({challenge}: {challenge: Challenge}) {
@@ -35,15 +32,15 @@ export default function CreateSocketServiceButton({challenge}: {challenge: Chall
         resolver: zodResolver(formSchema),
         mode: "onChange",
         defaultValues: {
-            host: "",
-            port: 80
+            image: "",
+            tag: ""
         }
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         await createSocketService({
-            host: values.host,
-            port: values.port,
+            image: values.image,
+            tag: values.tag,
             challenge: challenge
         })
         setOpen(false)
@@ -73,15 +70,15 @@ export default function CreateSocketServiceButton({challenge}: {challenge: Chall
                     <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
                         <FormField
                             control={form.control}
-                            name={"host"}
+                            name={"image"}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Socket Host</FormLabel>
+                                    <FormLabel>Docker Image Name</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <Input{...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        The host of the socket service.
+                                        The name of the Docker image used to deploy the socket service
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -89,15 +86,15 @@ export default function CreateSocketServiceButton({challenge}: {challenge: Chall
                         />
                         <FormField
                             control={form.control}
-                            name={"port"}
+                            name={"tag"}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Socket Port</FormLabel>
+                                    <FormLabel>Docker Image Tag</FormLabel>
                                     <FormControl>
-                                        <Input type={"number"} {...field}/>
+                                        <Input{...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        The port of the socket service.
+                                        The tag of the Docker image used to deploy the socket service
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
