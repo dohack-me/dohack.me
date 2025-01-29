@@ -6,7 +6,7 @@ README.md
 .git
 .github
 .idea
-.env.prod
+.env.*
 .eslintrc.json
 .gitignore
 components.json

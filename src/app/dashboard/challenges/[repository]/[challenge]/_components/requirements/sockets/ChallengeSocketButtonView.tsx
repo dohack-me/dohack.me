@@ -18,7 +18,7 @@ export default async function ChallengeSocketButtonView({socket}: {socket: Socke
     )
     return (
         <div className={"w-full small-row justify-between"}>
-            <ChallengeCopySocketButton value={`nc ${EnvironmentVariables.BACKEND_DISPLAY} ${instance.port}`}/>
+            <ChallengeCopySocketButton value={`nc ${EnvironmentVariables.NEXT_PUBLIC_BACKEND_HOST} ${instance.port}`}/>
             <DeleteDialogButton
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
                 confirmation={"Successfully deleted instance."}
