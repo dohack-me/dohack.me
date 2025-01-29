@@ -1,0 +1,16 @@
+services:
+  dohack-me:
+    build:
+      dockerfile: ./Dockerfile
+    environment:
+      - NEXT_PUBLIC_BACKEND_HOST=${NEXT_PUBLIC_BACKEND_HOST}
+      - PUBLIC_URL=${PUBLIC_URL}
+      - BACKEND_URL=${BACKEND_URL}
+      - BACKEND_SECRET_KEY=${BACKEND_SECRET_KEY}
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+      - DATABASE_URL=${DATABASE_URL}
+      - DIRECT_URL=${DIRECT_URL}
+      - RLS_DATABASE_URL=${RLS_DATABASE_URL}
+    ports:
+      - "3000:3000"
