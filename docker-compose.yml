@@ -13,4 +13,4 @@ services:
       - DIRECT_URL=${DIRECT_URL}
       - RLS_DATABASE_URL=${RLS_DATABASE_URL}
     ports:
-      - "3000:80"
+      - "3000:3000"
