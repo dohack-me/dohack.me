@@ -2,10 +2,9 @@ import {z} from "zod";
 
 const EnvironmentVariablesObject = z.object({
     NEXT_PUBLIC_BACKEND_HOST: z.string(),
-
     PUBLIC_URL: z.string(),
     BACKEND_URL: z.string(),
-    SECRET_KEY: z.string(),
+    BACKEND_SECRET_KEY: z.string(),
     SUPABASE_URL: z.string(),
     SUPABASE_ANON_KEY: z.string(),
     DATABASE_URL: z.string(),

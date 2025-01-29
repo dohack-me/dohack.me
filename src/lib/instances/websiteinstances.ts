@@ -80,7 +80,7 @@ export async function createWebsiteInstance(website: Website) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.SECRET_KEY
+            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
         }
     })
 
@@ -112,7 +112,7 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.SECRET_KEY
+            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
         }
     })
 

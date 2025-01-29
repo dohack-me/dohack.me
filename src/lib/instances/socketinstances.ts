@@ -80,7 +80,7 @@ export async function createSocketInstance(socket: Socket) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.SECRET_KEY
+            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
         }
     })
 
@@ -112,7 +112,7 @@ export async function deleteSocketInstance(instance: SocketInstance) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.SECRET_KEY
+            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
         }
     })
 
