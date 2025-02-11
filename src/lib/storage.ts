@@ -11,10 +11,6 @@ export type BucketFile = {
     lastModified: Date;
 }
 
-export async function createChallengeFile(formData: FormData, challenge: Challenge) {
-
-}
-
 export async function readChallengeFiles(challenge: Challenge): Promise<BucketFile[]> {
     return new Promise((resolve, reject) => {
         const files: BucketFile[] = []
@@ -39,6 +35,10 @@ export async function readChallengeFiles(challenge: Challenge): Promise<BucketFi
 
 export async function getChallengeFileUrl(filePath: string) {
     return minio.presignedGetObject(EnvironmentVariables.MINIO_BUCKET, filePath, 60 * 60)
+}
+
+export async function getChallengeFileUploadUrl(filePath: string) {
+    return minio.presignedPutObject(EnvironmentVariables.MINIO_BUCKET, filePath, 60 * 60)
 }
 
 export async function deleteChallengeFile(filePath: string) {
