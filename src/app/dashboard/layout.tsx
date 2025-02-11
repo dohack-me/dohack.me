@@ -28,7 +28,7 @@ const topitems = [
 export default async function DashboardLayout({children, breadcrumbs}: { children: React.ReactNode, breadcrumbs: React.ReactNode}) {
     const session = await auth()
     if (!session) {
-        redirect("/")
+        redirect("/login")
     }
 
     const cookieStore = await cookies()
