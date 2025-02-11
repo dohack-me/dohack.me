@@ -1,6 +1,6 @@
-'use server'
+"use server"
 
-import {getUserId} from "@/src/lib/users";
+import {getUserId} from "@/src/lib/auth/users";
 import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors";
 import {readSocketService} from "@/src/lib/services/sockets";
 import {createSocketInstance, deleteSocketInstance, readSocketInstance, readSocketInstances} from "@/src/lib/instances/socketinstances";

@@ -1,8 +1,7 @@
-'use server'
+"use server"
 
 import {prisma} from '@/src/lib/globals'
 import {Challenge, readChallenge} from "@/src/lib/database/challenges";
-import rlsExtension from "@/src/lib/prisma";
 
 export type Website = {
     id: string
@@ -45,7 +44,7 @@ async function objectsToWebsites(results: RawWebsite[]) {
 }
 
 export async function createWebsiteService(data: EditableWebsite) {
-    const result = await prisma.$extends(rlsExtension()).websites.create({
+    const result = await prisma.website.create({
         data: {
             image: data.image,
             tag: data.tag,
@@ -57,13 +56,13 @@ export async function createWebsiteService(data: EditableWebsite) {
 }
 
 export async function readWebsiteServices() {
-    const results = await prisma.$extends(rlsExtension()).websites.findMany()
+    const results = await prisma.website.findMany()
 
     return await objectsToWebsites(results)
 }
 
 export async function readChallengeWebsiteServices(challengeId: string) {
-    const results = await prisma.$extends(rlsExtension()).websites.findMany({
+    const results = await prisma.website.findMany({
         where: {
             challengeId: challengeId,
         }
@@ -73,7 +72,7 @@ export async function readChallengeWebsiteServices(challengeId: string) {
 }
 
 export async function readWebsiteService(websiteId: string) {
-    const result = await prisma.$extends(rlsExtension()).websites.findUnique({
+    const result = await prisma.website.findUnique({
         where: {
             id: websiteId,
         }

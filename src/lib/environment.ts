@@ -5,11 +5,8 @@ const EnvironmentVariablesObject = z.object({
     PUBLIC_URL: z.string(),
     BACKEND_URL: z.string(),
     BACKEND_SECRET_KEY: z.string(),
-    SUPABASE_URL: z.string(),
-    SUPABASE_ANON_KEY: z.string(),
     DATABASE_URL: z.string(),
-    DIRECT_URL: z.string(),
-    RLS_DATABASE_URL: z.string(),
+    AUTH_SECRET: z.string(),
     NODE_ENV: z.string()
 })
 

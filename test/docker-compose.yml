@@ -1,0 +1,11 @@
+services:
+  database:
+    image: postgres
+    container_name: dohackme_db
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: test
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"

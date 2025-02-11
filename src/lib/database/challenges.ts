@@ -1,10 +1,8 @@
-'use server'
+"use server"
 
 import {prisma} from '@/src/lib/globals'
-import rlsExtension from "@/src/lib/prisma";
 import {Repository, readRepository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
-import {deleteChallengeFile} from "@/src/lib/storage";
 
 export type Challenge = {
     id: string
@@ -77,7 +75,7 @@ async function objectsToChallenges(results: RawChallenge[]) {
 }
 
 export async function createChallenge(data: EditableChallenge) {
-    const result = await prisma.$extends(rlsExtension()).challenges.create({
+    const result = await prisma.challenge.create({
         data: {
             name: data.name,
             description: data.description,
@@ -93,13 +91,13 @@ export async function createChallenge(data: EditableChallenge) {
 }
 
 export async function readChallenges() {
-    const results = await prisma.$extends(rlsExtension()).challenges.findMany()
+    const results = await prisma.challenge.findMany()
 
     return await objectsToChallenges(results)
 }
 
 export async function readRepositoryChallenges(repositoryId: string) {
-    const results = await prisma.$extends(rlsExtension()).challenges.findMany({
+    const results = await prisma.challenge.findMany({
         where: {
             repositoryId: repositoryId
         }
@@ -109,7 +107,7 @@ export async function readRepositoryChallenges(repositoryId: string) {
 }
 
 export async function readChallenge(id: string) {
-    const result = await prisma.$extends(rlsExtension()).challenges.findUnique({
+    const result = await prisma.challenge.findUnique({
         where: {
             id: id
         }
@@ -121,7 +119,7 @@ export async function readChallenge(id: string) {
 }
 
 export async function updateChallenge(id: string, data: EditableChallenge) {
-    const result = await prisma.$extends(rlsExtension()).challenges.update({
+    const result = await prisma.challenge.update({
         where: {
             id: id
         },
@@ -140,18 +138,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 }
 
 export async function deleteChallenge(id: string) {
-    const repositoryId = await prisma.$extends(rlsExtension()).challenges.findUniqueOrThrow({
-        where: {
-            id: id
-        },
-        select: {
-            repositoryId: true
-        }
-    })
-
-    await deleteChallengeFile(`${repositoryId}/${id}`)
-
-    const result = await prisma.$extends(rlsExtension()).challenges.delete({
+    const result = await prisma.challenge.delete({
         where: {
             id: id
         }

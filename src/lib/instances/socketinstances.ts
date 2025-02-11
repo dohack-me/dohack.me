@@ -1,8 +1,7 @@
-'use server'
+"use server"
 
-import {getUserId} from "@/src/lib/users";
+import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
-import rlsExtension from "@/src/lib/prisma";
 import {readSocketService, Socket} from "@/src/lib/services/sockets";
 import EnvironmentVariables from "@/src/lib/environment";
 
@@ -43,7 +42,7 @@ async function objectToSocketInstances(results: RawSocketInstance[]) {
 export async function readSocketInstance(socketId: string) {
     const userId = await getUserId()
     if (!userId) return null;
-    const result = await prisma.$extends(rlsExtension()).socketInstances.findUnique({
+    const result = await prisma.socketInstance.findUnique({
         where: {
             userId_socketId: {
                 userId: userId,
@@ -59,7 +58,7 @@ export async function readSocketInstance(socketId: string) {
 export async function readSocketInstances() {
     const userId = await getUserId()
     if (!userId) return null;
-    const results = await prisma.$extends(rlsExtension()).socketInstances.findMany({
+    const results = await prisma.socketInstance.findMany({
         where: {
             userId: userId
         }
@@ -90,7 +89,7 @@ export async function createSocketInstance(socket: Socket) {
         port: number
     } = await response.json()
 
-    const result = await prisma.$extends(rlsExtension()).socketInstances.create({
+    const result = await prisma.socketInstance.create({
         data: {
             socketId: socket.id,
             userId: userId,
@@ -118,7 +117,7 @@ export async function deleteSocketInstance(instance: SocketInstance) {
 
     if (!response.ok) return null
 
-    const result = await prisma.$extends(rlsExtension()).socketInstances.delete({
+    const result = await prisma.socketInstance.delete({
         where: {
             userId_socketId: {
                 userId: userId,

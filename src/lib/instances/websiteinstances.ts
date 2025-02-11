@@ -1,8 +1,7 @@
-'use server'
+"use server"
 
-import {getUserId} from "@/src/lib/users";
+import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
-import rlsExtension from "@/src/lib/prisma";
 import {readWebsiteService, Website} from "@/src/lib/services/websites";
 import EnvironmentVariables from "@/src/lib/environment";
 
@@ -43,7 +42,7 @@ async function objectToWebsiteInstances(results: RawWebsiteInstance[]) {
 export async function readWebsiteInstance(websiteId: string) {
     const userId = await getUserId()
     if (!userId) return null;
-    const result = await prisma.$extends(rlsExtension()).websiteInstances.findUnique({
+    const result = await prisma.websiteInstance.findUnique({
         where: {
             userId_websiteId: {
                 userId: userId,
@@ -59,7 +58,7 @@ export async function readWebsiteInstance(websiteId: string) {
 export async function readWebsiteInstances() {
     const userId = await getUserId()
     if (!userId) return null;
-    const results = await prisma.$extends(rlsExtension()).websiteInstances.findMany({
+    const results = await prisma.websiteInstance.findMany({
         where: {
             userId: userId
         }
@@ -90,7 +89,7 @@ export async function createWebsiteInstance(website: Website) {
         url: string
     } = await response.json()
 
-    const result = await prisma.$extends(rlsExtension()).websiteInstances.create({
+    const result = await prisma.websiteInstance.create({
         data: {
             websiteId: website.id,
             userId: userId,
@@ -118,7 +117,7 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
 
     if (!response.ok) return null
 
-    const result = await prisma.$extends(rlsExtension()).websiteInstances.delete({
+    const result = await prisma.websiteInstance.delete({
         where: {
             userId_websiteId: {
                 userId: userId,

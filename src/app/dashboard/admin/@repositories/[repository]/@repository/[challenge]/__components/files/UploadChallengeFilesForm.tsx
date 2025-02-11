@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {Challenge} from "@/src/lib/database/challenges";
 import {Input} from "@/src/components/ui/input";

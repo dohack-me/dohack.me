@@ -9,9 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -28,21 +27,22 @@ enum Category {
   MISC
 }
 
-model Repositories {
-  id               String       @id @unique @default(uuid()) @db.Uuid
+model Repository {
+  id               String @id @unique @default(uuid()) @db.Uuid
   name             String
   sourceLink       String
   organization     String
   organizationLink String
-  challenges       Challenges[]
+
+  challenges Challenge[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("repositories")
+  @@map("repository")
 }
 
-model Challenges {
+model Challenge {
   id          String   @id @unique @default(uuid()) @db.Uuid
   name        String   @unique
   description String
@@ -50,89 +50,153 @@ model Challenges {
   answer      String
   authors     String[]
 
-  solves   Solves[]
-  websites Websites[]
-  sockets  Sockets[]
+  solves   Solve[]
+  websites Website[]
+  sockets  Socket[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   repositoryId String @db.Uuid
 
-  repository Repositories @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  repository Repository @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
 
-  @@map("challenges")
+  @@map("challenge")
 }
 
-model Websites {
-  id               String             @id @unique @default(uuid()) @db.Uuid
-  image            String
-  tag              String
-  websiteInstances WebsiteInstances[]
-
+model Website {
+  id          String @id @unique @default(uuid()) @db.Uuid
   challengeId String @db.Uuid
+  image       String
+  tag         String
 
-  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  websiteInstances WebsiteInstance[]
 
-  @@map("websites")
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("website")
 }
 
-model Sockets {
-  id              String            @id @unique @default(uuid()) @db.Uuid
-  image           String
-  tag             String
-  socketInstances SocketInstances[]
-
+model Socket {
+  id          String @id @unique @default(uuid()) @db.Uuid
   challengeId String @db.Uuid
+  image       String
+  tag         String
 
-  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  socketInstances SocketInstance[]
 
-  @@map("sockets")
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("socket")
 }
 
-model WebsiteInstances {
+model WebsiteInstance {
   userId    String @db.Uuid
   websiteId String @db.Uuid
   id        String @db.Uuid
   url       String
 
-  user    Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  website Websites @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  user    CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  website Website    @relation(fields: [websiteId], references: [id], onDelete: Cascade)
 
   @@id([userId, websiteId])
-  @@map("website_instances")
+  @@map("website_instance")
 }
 
-model SocketInstances {
+model SocketInstance {
   userId   String @db.Uuid
   socketId String @db.Uuid
   id       String @db.Uuid
   port     Int
 
-  user   Users   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  socket Sockets @relation(fields: [socketId], references: [id], onDelete: Cascade)
+  user   CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  socket Socket     @relation(fields: [socketId], references: [id], onDelete: Cascade)
 
   @@id([userId, socketId])
-  @@map("socket_instances")
+  @@map("socket_instance")
 }
 
-model Users {
-  id               String             @id @unique @db.Uuid
-  role             UserRole           @default(USER)
-  solves           Solves[]
-  websiteInstances WebsiteInstances[]
-  socketInstances  SocketInstances[]
-
-  @@map("users")
-}
-
-model Solves {
+model Solve {
   userId      String @db.Uuid
   challengeId String @db.Uuid
 
-  user      Users      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  challenge Challenges @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  user      CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge  @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   @@id([userId, challengeId])
-  @@map("solves")
+  @@map("solve")
+}
+
+model CustomUser {
+  id     String   @id @unique @default(uuid()) @db.Uuid
+  userId String   @unique
+  role   UserRole @default(USER)
+
+  solves           Solve[]
+  websiteInstances WebsiteInstance[]
+  socketInstances  SocketInstance[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("custom_user")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  customUser CustomUser?
+
+  @@map("user")
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("session")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+  @@map("verification_token")
 }

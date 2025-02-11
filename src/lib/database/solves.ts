@@ -1,14 +1,13 @@
-'use server'
+"use server"
 
 import {prisma} from '@/src/lib/globals'
-import rlsExtension from "@/src/lib/prisma";
-import {getUserId} from "@/src/lib/users";
+import {getUserId} from "@/src/lib/auth/users";
 
 export async function createSolve(challengeId: string) {
     const userId = await getUserId()
     if (!userId) return null
 
-    return await prisma.$extends(rlsExtension()).solves.create({
+    return prisma.solve.create({
         data: {
             userId: userId,
             challengeId: challengeId,
@@ -17,7 +16,7 @@ export async function createSolve(challengeId: string) {
 }
 
 export async function readChallengeSolves(challengeId: string) {
-    return await prisma.$extends(rlsExtension()).solves.findMany({
+    return prisma.solve.findMany({
         where: {
             challengeId: challengeId,
         }
@@ -28,7 +27,7 @@ export async function readUserSolves() {
     const userId = await getUserId()
     if (!userId) return null
 
-    return await prisma.$extends(rlsExtension()).solves.findMany({
+    return prisma.solve.findMany({
         where: {
             userId: userId,
         }
@@ -39,7 +38,7 @@ export async function readUserChallengeSolve(challengeId: string) {
     const userId = await getUserId()
     if (!userId) return null
 
-    return await prisma.$extends(rlsExtension()).solves.findUnique({
+    return prisma.solve.findUnique({
         where: {
             userId_challengeId: {
                 userId: userId,
@@ -53,7 +52,7 @@ export async function deleteSolve(challengeId: string) {
     const userId = await getUserId()
     if (!userId) return null
 
-    return await prisma.$extends(rlsExtension()).solves.delete({
+    return prisma.solve.delete({
         where: {
             userId_challengeId: {
                 userId: userId,

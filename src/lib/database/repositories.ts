@@ -1,8 +1,6 @@
-'use server'
+"use server"
 
 import {prisma} from '@/src/lib/globals'
-import rlsExtension from "@/src/lib/prisma";
-import {deleteChallengeFile} from "@/src/lib/storage";
 
 export type Repository = {
     id: string
@@ -22,7 +20,7 @@ export type EditableRepository = {
 }
 
 export async function createRepository(data: EditableRepository) {
-    return (await prisma.$extends(rlsExtension()).repositories.create({
+    return (await prisma.repository.create({
         data: {
             name: data.name,
             sourceLink: data.sourceLink,
@@ -33,11 +31,11 @@ export async function createRepository(data: EditableRepository) {
 }
 
 export async function readRepositories() {
-    return (await prisma.$extends(rlsExtension()).repositories.findMany()) as Repository[]
+    return (await prisma.repository.findMany()) as Repository[]
 }
 
 export async function readRepository(id: string) {
-    return (await prisma.$extends(rlsExtension()).repositories.findUnique({
+    return (await prisma.repository.findUnique({
         where: {
             id: id
         }
@@ -45,7 +43,7 @@ export async function readRepository(id: string) {
 }
 
 export async function updateRepository(id: string, data: EditableRepository) {
-    return (await prisma.$extends(rlsExtension()).repositories.update({
+    return (await prisma.repository.update({
         where: {
             id: id
         },
@@ -59,9 +57,7 @@ export async function updateRepository(id: string, data: EditableRepository) {
 }
 
 export async function deleteRepository(id: string) {
-    await deleteChallengeFile(id)
-
-    return (await prisma.$extends(rlsExtension()).repositories.delete({
+    return (await prisma.repository.delete({
         where: {
             id: id
         }

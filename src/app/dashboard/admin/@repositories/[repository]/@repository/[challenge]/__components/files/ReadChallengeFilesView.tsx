@@ -1,12 +1,7 @@
 import React from "react";
-import {getServerClient} from "@/src/lib/supabase/server";
-import {EllipsisVerticalIcon, FileIcon, FolderIcon, TriangleAlertIcon} from "lucide-react";
-import {isFolder} from "@/src/lib/utils";
+import {EllipsisVerticalIcon, FileIcon, TriangleAlertIcon} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
-import {
-    CopyChallengeFileUrlButton,
-    DeleteChallengeFileButton
-} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/UploadChallengeFilesButtons";
+import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/UploadChallengeFilesButtons";
 import Link from "next/link";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {deleteChallengeFile, readChallengeFiles} from "@/src/lib/storage";
@@ -33,7 +28,7 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
             {finalData.map((file) => (
                 <div key={file.id} className={"hover:bg-accent p-2 flex flex-row items-center justify-between first:rounded-tr-lg"}>
                     <div className={"flex flex-row gap-x-2"}>
-                        {isFolder(file) ? <FolderIcon/> : <FileIcon/>}
+                        <FileIcon/>
                         <p>{file.name}</p>
                     </div>
                     <DropdownMenu>
@@ -44,7 +39,7 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
                             <DeleteChallengeFileButton name={file.name} callback={async () => {
-                                'use server'
+                                "use server"
                                 const {error} = await deleteChallengeFile(`${challenge.repository.id}/${challenge.id}/${file.name}`)
                                 return error == null
                             }}/>

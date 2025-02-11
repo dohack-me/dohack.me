@@ -1,6 +1,5 @@
 import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {readUserSolves} from "@/src/lib/database/solves";
-import rlsExtension from "@/src/lib/prisma";
 import {readRepository} from "@/src/lib/database/repositories";
 import {Challenge} from "@/src/lib/database/challenges";
 import Link from "next/link";
@@ -13,7 +12,7 @@ export default async function RandomChallenge() {
     const userSolves = await readUserSolves()
     if (!userSolves) return null
 
-    const challenges = await Promise.all((await prisma.$extends(rlsExtension()).challenges.findMany({
+    const challenges = await Promise.all((await prisma.challenge.findMany({
         where: {
             id: {
                 notIn: (userSolves.map((solve) => (solve.challengeId)))

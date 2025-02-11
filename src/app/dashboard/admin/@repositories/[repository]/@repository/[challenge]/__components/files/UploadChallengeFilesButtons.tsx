@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import React from "react";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
