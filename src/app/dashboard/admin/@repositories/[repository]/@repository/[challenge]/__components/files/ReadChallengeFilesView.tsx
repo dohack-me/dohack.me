@@ -16,13 +16,12 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
     return (
         <div className={"h-full w-full flex flex-col"}>
             {data.map((file) => {
-                const fileName = file.name.split("/")[2]
                 return (
                     <div key={file.etag}
                          className={"hover:bg-accent p-2 flex flex-row items-center justify-between first:rounded-tr-lg"}>
                         <div className={"flex flex-row gap-x-2"}>
                             <FileIcon/>
-                            <p>{fileName}</p>
+                            <p>{file.name}</p>
                         </div>
                         <DropdownMenu>
                             <DropdownMenuTrigger>
@@ -31,16 +30,16 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
                             <DropdownMenuContent>
                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                 <DropdownMenuSeparator/>
-                                <DeleteChallengeFileButton name={fileName} callback={async () => {
+                                <DeleteChallengeFileButton name={file.name} callback={async () => {
                                     "use server"
-                                    await deleteChallengeFile(file.name)
+                                    await deleteChallengeFile(file.path)
                                     return true
                                 }}/>
                                 <DownloadChallengeFileButton
-                                    filePath={file.name}
-                                    fileName={fileName}/>
+                                    filePath={file.path}
+                                    fileName={file.name}/>
                                 <CopyChallengeFileUrlView
-                                    filePath={file.name}/>
+                                    filePath={file.path}/>
                             </DropdownMenuContent>
                         </DropdownMenu>
                     </div>

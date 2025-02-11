@@ -5,10 +5,11 @@ import {minio} from "@/src/lib/globals";
 import EnvironmentVariables from "@/src/lib/environment";
 
 export type BucketFile = {
-    name: string;
-    size: number;
-    etag: string;
-    lastModified: Date;
+    path: string
+    name: string
+    size: number
+    etag: string
+    lastModified: Date
 }
 
 export async function readChallengeFiles(challenge: Challenge): Promise<BucketFile[]> {
@@ -18,7 +19,8 @@ export async function readChallengeFiles(challenge: Challenge): Promise<BucketFi
         stream.on("data", chunk => {
             if (!chunk.name) return
             files.push({
-                name: chunk.name,
+                path: chunk.name,
+                name: chunk.name.split("/")[2],
                 size: chunk.size,
                 etag: chunk.etag,
                 lastModified: chunk.lastModified,

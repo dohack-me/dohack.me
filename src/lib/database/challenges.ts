@@ -3,6 +3,7 @@
 import {prisma} from '@/src/lib/globals'
 import {Repository, readRepository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
+import {deleteChallengeFile} from "@/src/lib/storage";
 
 export type Challenge = {
     id: string
@@ -138,6 +139,17 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
 }
 
 export async function deleteChallenge(id: string) {
+    const {repositoryId} = await prisma.challenge.findUniqueOrThrow({
+        where: {
+            id: id
+        },
+        select: {
+            repositoryId: true
+        }
+    })
+
+    await deleteChallengeFile(`${repositoryId}/${id}`)
+
     const result = await prisma.challenge.delete({
         where: {
             id: id
