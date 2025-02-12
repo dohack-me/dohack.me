@@ -1,6 +1,5 @@
 import {Button} from "@/src/components/ui/button"
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
-import Link from "next/link";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {SiDiscord, SiGithub} from "@icons-pack/react-simple-icons"
 import {signIn} from "@/src/lib/auth/auth"
 
@@ -34,11 +33,6 @@ export default async function LoginPage() {
                         </form>
                     </div>
                 </CardContent>
-                <CardFooter className={"w-full"}>
-                    <p className="w-full text-center">Don&apos;t have an account? Sign up{" "}
-                        <Link href={"/signup"} className={"underline"}>here</Link>
-                    </p>
-                </CardFooter>
             </Card>
         </div>
     )

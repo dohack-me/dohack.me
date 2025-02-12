@@ -36,10 +36,7 @@ export default function Home() {
                   <CardTitle>Ready to begin?</CardTitle>
                   <CardDescription>Start your journey now</CardDescription>
               </CardHeader>
-              <CardContent className={"grid grid-cols-3 gap-x-4"}>
-                  <Button asChild>
-                      <Link href={"/signup"}>Sign Up</Link>
-                  </Button>
+              <CardContent className={"grid grid-cols-2 gap-x-4"}>
                   <Button asChild>
                       <Link href={"/login"}>Login</Link>
                   </Button>
