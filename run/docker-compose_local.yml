@@ -1,4 +1,12 @@
 services:
+  dohackme:
+    image: dohack.me/dohack.me
+    container_name: dohackme
+    restart: no
+    env_file:
+      - ../.env.local
+    ports:
+      - "3000:3000"
   database:
     image: postgres
     container_name: dohackme_db
