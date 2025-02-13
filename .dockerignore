@@ -1,4 +1,3 @@
-Dockerfile
 .dockerignore
 node_modules
 README.md
@@ -7,3 +6,4 @@ README.md
 .idea
 run/
 .gitea
+docker

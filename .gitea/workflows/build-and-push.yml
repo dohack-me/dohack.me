@@ -25,7 +25,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
-          context: .
-          file: ./docker/production/Dockerfile
           push: true
           tags: dohackme.azurecr.io/dohack.me/dohack.me:latest
