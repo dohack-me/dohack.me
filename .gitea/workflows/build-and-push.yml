@@ -8,9 +8,10 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Login to Dockerhub
+      - name: Login to Azure Registry
         uses: docker/login-action@v3
         with:
+          registry: dohackme.azurecr.io
           username: ${{ vars.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_TOKEN }}
 
@@ -24,5 +25,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64
+          context: .
+          file: docker/production/Dockerfile
           push: true
-          tags: diffusehyperion/dohack.me:latest
+          tags: dohackme.azurecr.io/dohack.me/dohack.me:latest
