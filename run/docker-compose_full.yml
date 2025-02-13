@@ -5,6 +5,8 @@ services:
       dockerfile: docker/local/Dockerfile
     container_name: dohackme
     restart: no
+    env_file:
+      - ../.env.local
     ports:
       - "3000:3000"
   database:
