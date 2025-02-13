@@ -14,6 +14,7 @@ const EnvironmentVariablesObject = z.object({
 
     MINIO_HOST: z.string(),
     MINIO_PORT: z.string(),
+    MINIO_SSL: z.string(),
     MINIO_ACCESS_KEY: z.string(),
     MINIO_SECRET_KEY: z.string(),
     MINIO_BUCKET: z.string(),
