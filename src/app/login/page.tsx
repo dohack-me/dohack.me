@@ -15,7 +15,7 @@ export default async function LoginPage() {
                     <div className={"flex flex-col gap-y-4"}>
                         <form action={async() => {
                             "use server"
-                            await signIn("github", { redirectTo: "/" })
+                            await signIn("github", { redirectTo: "/dashboard" })
                         }}>
                             <Button type={"submit"} className={"w-full"}>
                                 <SiGithub />
@@ -24,7 +24,7 @@ export default async function LoginPage() {
                         </form>
                         <form action={async () => {
                             "use server"
-                            await signIn("discord", { redirectTo: "/" })
+                            await signIn("discord", { redirectTo: "/dashboard" })
                         }}>
                             <Button type={"submit"} className={"w-full"}>
                                 <SiDiscord />
