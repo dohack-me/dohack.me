@@ -1,7 +1,7 @@
 import {z} from "zod";
 
 const EnvironmentVariablesObject = z.object({
-    NEXT_PUBLIC_BACKEND_PORT: z.string(),
+    NEXT_PUBLIC_BACKEND_HOST: z.string(),
 
     BACKEND_URL: z.string(),
     BACKEND_SECRET_KEY: z.string(),

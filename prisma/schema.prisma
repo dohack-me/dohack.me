@@ -107,7 +107,7 @@ model SocketInstance {
   userId   String @db.Uuid
   socketId String @db.Uuid
   id       String @db.Uuid
-  url      String
+  port     Int
 
   user   CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
   socket Socket     @relation(fields: [socketId], references: [id], onDelete: Cascade)
