@@ -82,3 +82,13 @@ export async function readSocketService(socketId: string) {
 
     return await objectToSocket(result)
 }
+
+export async function deleteSocketService(socketId: string) {
+    const result = await prisma.socket.delete({
+        where: {
+            id: socketId,
+        }
+    })
+
+    return await objectToSocket(result)
+}

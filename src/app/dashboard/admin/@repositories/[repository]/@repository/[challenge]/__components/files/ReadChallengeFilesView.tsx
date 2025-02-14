@@ -1,7 +1,7 @@
 import React from "react";
 import {EllipsisVerticalIcon, FileIcon} from "lucide-react";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
-import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/UploadChallengeFilesButtons";
+import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesOptionButtons";
 import Link from "next/link";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {deleteChallengeFile, readChallengeFiles, getChallengeFileUrl} from "@/src/lib/storage";

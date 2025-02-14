@@ -1,14 +1,15 @@
 import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/src/components/ui/card";
-import {readChallengeWebsiteServices} from "@/src/lib/services/websites";
+import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/services/websites";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
-import CreateWebsiteServiceButton
-    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateWebsiteServiceButton";
+import CreateWebsiteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateWebsiteServiceButton";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
-import CreateSocketServiceButton
-    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateSocketServiceButton";
-import {readChallengeSocketServices} from "@/src/lib/services/sockets";
-
+import CreateSocketServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateSocketServiceButton";
+import {deleteSocketService, readChallengeSocketServices} from "@/src/lib/services/sockets";
+import DeleteChallengeServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/DeleteChallengeServiceButton";
+import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu";
+import {EllipsisVerticalIcon} from "lucide-react";
+import React from "react";
 
 export default async function ChallegeServicesView({challengeId}: {challengeId: string}) {
     const websites = await readChallengeWebsiteServices(challengeId);
@@ -17,24 +18,24 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
     if (!challenge) notFound();
 
     return (
-        <Card>
+        <Card className={"grow-col"}>
             <CardHeader className={"header-with-button"}>
                 <div className={"header-with-button-description"}>
                     <CardTitle>Challenge Services</CardTitle>
-                    <CardDescription>Testing</CardDescription>
+                    <CardDescription>Services are additional programs users need to run to solve a challenge.</CardDescription>
                 </div>
                 <div className={"flex flex-row gap-x-2"}>
                     <CreateWebsiteServiceButton challenge={challenge}/>
                     <CreateSocketServiceButton challenge={challenge}/>
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className={"grow-col"}>
                 <Table>
                     <TableHeader>
                         <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>Type</TableHead>
-                            <TableHead>Actions</TableHead>
+                            <TableHead className={"text-right"}>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -42,14 +43,44 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
                             <TableRow key={website.id}>
                                 <TableCell>{`${website.image}:${website.tag}`}</TableCell>
                                 <TableCell>Website</TableCell>
-                                <TableCell>Button</TableCell>
+                                <TableCell className={"flex items-center justify-end"}>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <EllipsisVerticalIcon/>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                            <DropdownMenuSeparator/>
+                                            <DeleteChallengeServiceButton type={"website"} callback={async () => {
+                                                "use server"
+                                                await deleteWebsiteService(website.id)
+                                                return true
+                                            }}/>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </TableCell>
                             </TableRow>
                         ))}
                         {sockets.map(socket => (
                             <TableRow key={socket.id}>
                                 <TableCell>{`${socket.image}:${socket.tag}`}</TableCell>
                                 <TableCell>Socket</TableCell>
-                                <TableCell>Button</TableCell>
+                                <TableCell className={"flex items-center justify-end"}>
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger>
+                                            <EllipsisVerticalIcon/>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent>
+                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                            <DropdownMenuSeparator/>
+                                            <DeleteChallengeServiceButton type={"socket"} callback={async () => {
+                                                "use server"
+                                                await deleteSocketService(socket.id)
+                                                return true
+                                            }}/>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

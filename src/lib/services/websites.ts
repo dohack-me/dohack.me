@@ -82,3 +82,13 @@ export async function readWebsiteService(websiteId: string) {
 
     return await objectToWebsite(result)
 }
+
+export async function deleteWebsiteService(websiteId: string) {
+    const result = await prisma.website.delete({
+        where: {
+            id: websiteId,
+        }
+    })
+
+    return await objectToWebsite(result)
+}
