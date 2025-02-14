@@ -43,10 +43,6 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                                             <CardTitle>{challenge.name}</CardTitle>
                                             <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
                                         </CardHeader>
-                                        <CardContent>
-                                            <CardDescription>{`Last Updated: ${challenge.updatedAt}`}</CardDescription>
-                                            <CardDescription>{`Created At: ${challenge.createdAt}`}</CardDescription>
-                                        </CardContent>
                                         <CardFooter className={"grid grid-cols-2 gap-x-3"}>
                                             <Button asChild>
                                                 <Link href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>

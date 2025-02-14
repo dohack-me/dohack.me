@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
@@ -11,6 +11,7 @@ import {useRouter} from "next/navigation";
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {SaveIcon} from "lucide-react";
 import React from "react";
+import {useToast} from "@/src/hooks/use-toast";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -29,6 +30,7 @@ const formSchema = z.object({
 
 export default function EditRepositoryForm({repository}: {repository: Repository}) {
     const router = useRouter()
+    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -42,7 +44,14 @@ export default function EditRepositoryForm({repository}: {repository: Repository
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        toast({
+            title: "Updating repository details...",
+            description: "Please be patient!",
+        })
         await updateRepository(repository.id, values)
+        toast({
+            title: "Updated repository details.",
+        })
         router.refresh()
     }
 
@@ -52,7 +61,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Organization Details</CardTitle>
-                        <CardDescription>Edit repository details here</CardDescription>
+                        <CardDescription>Edit repository details here.</CardDescription>
                     </div>
                     <Button type={"submit"}>
                         <SaveIcon/>

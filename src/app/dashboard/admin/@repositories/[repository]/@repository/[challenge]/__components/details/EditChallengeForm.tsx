@@ -16,6 +16,7 @@ import {Textarea} from "@/src/components/ui/textarea";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
 import {cn} from "@/src/lib/utils";
 import {Repository} from "@/src/lib/database/repositories";
+import {useToast} from "@/src/hooks/use-toast";
 
 const categories = Object.keys(Category)
 
@@ -46,6 +47,7 @@ const formSchema = z.object({
 
 export default function EditChallengeForm({repository, challenge}: {repository: Repository, challenge: Challenge}) {
     const router = useRouter()
+    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -60,6 +62,10 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
+        toast({
+            title: "Updating challenge details...",
+            description: "Please be patient!",
+        })
         await updateChallenge(challenge.id, {
             name: values.name,
             description: values.description,
@@ -67,6 +73,9 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
             repository: repository,
+        })
+        toast({
+            title: "Updated challenge details.",
         })
         router.refresh()
     }

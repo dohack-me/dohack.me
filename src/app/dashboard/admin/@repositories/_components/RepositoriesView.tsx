@@ -1,4 +1,4 @@
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
@@ -19,10 +19,6 @@ export default async function RepositoriesView() {
                             <CardDescription><a href={repository.organizationLink}
                                                 className={"underline"}>{`Created by: ${repository.organization}`}</a></CardDescription>
                         </CardHeader>
-                        <CardContent>
-                            <CardDescription>{`Last Updated: ${repository.updatedAt}`}</CardDescription>
-                            <CardDescription>{`Created At: ${repository.createdAt}`}</CardDescription>
-                        </CardContent>
                         <CardFooter className={"grid grid-cols-2 gap-x-3"}>
                             <Button asChild>
                                 <Link href={`/dashboard/admin/${repository.id}`}>Open</Link>

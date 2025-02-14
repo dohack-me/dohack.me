@@ -14,7 +14,10 @@ export default async function ChallengeFiles({challenge}: {challenge: Challenge}
         <Card className={"h-fit flex flex-col"}>
             <CardHeader>
                 <CardTitle>Required Files</CardTitle>
-                <CardDescription>Download these files to solve the challenge</CardDescription>
+                <div>
+                    <CardDescription>This challenge requires additional files.</CardDescription>
+                    <CardDescription>Download these files to solve the challenge.</CardDescription>
+                </div>
             </CardHeader>
             <CardContent className={"small-column"}>
                 {files.map(async (file) => {

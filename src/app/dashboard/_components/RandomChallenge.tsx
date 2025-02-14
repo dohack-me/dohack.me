@@ -60,7 +60,7 @@ export default async function RandomChallenge() {
                 <div className={"header-with-button-description"}>
                     <CardTitle>{challenge.name}</CardTitle>
                     <CardDescription>
-                        {`A ${challenge.category} challenge in `}
+                        {`${challenge.category} challenge in `}
                         <Link href={`/dashboard/challenges/${challenge.repository.id}`}
                               className={"underline"}>{challenge.repository.name}</Link>
                         {" by "}

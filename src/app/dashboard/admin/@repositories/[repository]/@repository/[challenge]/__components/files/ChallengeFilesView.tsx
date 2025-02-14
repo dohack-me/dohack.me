@@ -11,8 +11,8 @@ export default async function ChallengeFilesView({challengeId}: {challengeId: st
         <Card className={"grow-col"}>
             <CardHeader className={"flex flex-row justify-between"}>
                 <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle>{"Distributed Files"}</CardTitle>
-                    <CardDescription>{"Distributed files are available to all users, used in order to solve challenges"}</CardDescription>
+                    <CardTitle>Distributed Files</CardTitle>
+                    <CardDescription>Distributed files are available to all users, used in order to solve challenges.</CardDescription>
                 </div>
             </CardHeader>
             <CardContent className={"grow-col"}>
