@@ -9,14 +9,14 @@ export type SocketInstance = {
     socket: Socket,
     userId: string,
     id: string,
-    port: number,
+    url: string,
 }
 
 export type RawSocketInstance = {
     socketId: string,
     userId: string,
     id: string,
-    port: number,
+    url: string,
 }
 
 async function objectToSocketInstance(result: RawSocketInstance) {
@@ -24,7 +24,7 @@ async function objectToSocketInstance(result: RawSocketInstance) {
         socket: (await readSocketService(result.socketId))!,
         userId: result.userId,
         id: result.id,
-        port: result.port,
+        url: result.url,
     } as SocketInstance
 }
 
@@ -34,7 +34,7 @@ async function objectToSocketInstances(results: RawSocketInstance[]) {
             socket: (await readSocketService(result.socketId))!,
             userId: result.userId,
             id: result.id,
-            port: result.port,
+            url: result.url,
         }) as SocketInstance)
     )
 }
@@ -86,7 +86,7 @@ export async function createSocketInstance(socket: Socket) {
     if (!response.ok) return null
     const data: {
         id: string
-        port: number
+        url: string
     } = await response.json()
 
     const result = await prisma.socketInstance.create({
@@ -94,7 +94,7 @@ export async function createSocketInstance(socket: Socket) {
             socketId: socket.id,
             userId: userId,
             id: data.id,
-            port: data.port
+            url: data.url
         }
     })
     return await objectToSocketInstance(result)
