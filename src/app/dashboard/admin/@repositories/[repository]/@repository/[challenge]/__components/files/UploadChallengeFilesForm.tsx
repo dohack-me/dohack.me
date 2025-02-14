@@ -36,6 +36,11 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
             return
         }
 
+        toast({
+            title: "Uploading files...",
+            description: "Please be patient!"
+        })
+
         // forEach not used so that await can be used
         for (const file of Array.from(files)) {
             const filePath = `${challenge.repository.id}/${challenge.id}/${file.name}`
