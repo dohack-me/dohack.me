@@ -71,7 +71,7 @@ export async function createWebsiteInstance(website: Website) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website/`, {
         method: "POST",
         body: JSON.stringify({
             "image": website.image,
@@ -104,11 +104,8 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website/${instance.id}/`, {
         method: "DELETE",
-        body: JSON.stringify({
-            "id": instance.id,
-        }),
         headers: {
             "Content-Type": "application/json",
             "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY

@@ -71,7 +71,7 @@ export async function createSocketInstance(socket: Socket) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/socket`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/socket/`, {
         method: "POST",
         body: JSON.stringify({
             "image": socket.image,
@@ -104,11 +104,8 @@ export async function deleteSocketInstance(instance: SocketInstance) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service`, {
+    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/socket/${instance.id}/`, {
         method: "DELETE",
-        body: JSON.stringify({
-            "id": instance.id,
-        }),
         headers: {
             "Content-Type": "application/json",
             "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
