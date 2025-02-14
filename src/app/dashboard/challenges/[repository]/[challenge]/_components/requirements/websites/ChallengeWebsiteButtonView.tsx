@@ -27,7 +27,7 @@ export default async function ChallengeWebsiteButtonView({website}: {website: We
                 confirmation={"Successfully deleted instance."}
                 fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
-                    'use server'
+                    "use server"
                     const {error} = await shutdownWebsiteInstance(website.id)
                     return error == null
                 }}

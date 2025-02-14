@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {useRouter} from "next/navigation";
 import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog";
@@ -15,8 +15,12 @@ export function DeleteDialogButton({description, confirmation, fail, callback, c
     const form = useForm()
 
     async function onSubmit() {
-        const success = await callback()
+        toast({
+            title: "Deleting...",
+            description: "Please be patient!"
+        })
         setOpen(false)
+        const success = await callback()
         toast({
             title: (success ? confirmation : "Something went wrong."),
             description: (success ? null : fail),
