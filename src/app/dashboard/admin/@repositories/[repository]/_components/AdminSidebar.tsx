@@ -16,7 +16,7 @@ export default async function AdminSidebar({repositoryId}: {repositoryId: string
         <Card className={"h-full w-full flex flex-col gap-y-1"}>
             <CardHeader>
                 <Button variant={"ghost"} asChild>
-                    <Link href={`/dashboard/admin/${repositoryId}`} className={"flex flex-row justify-between"}>
+                    <Link href={`/dashboard/admin/${repositoryId}`} className={"flex flex-row !justify-between"}>
                         Overview
                         <InfoIcon/>
                     </Link>
@@ -34,7 +34,7 @@ export default async function AdminSidebar({repositoryId}: {repositoryId: string
                                         <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
                                             {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
                                                 <Button key={challenge.id} variant={"ghost"} asChild>
-                                                    <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-between"}>
+                                                    <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-start"}>
                                                         {challenge.name}
                                                     </Link>
                                                 </Button>
