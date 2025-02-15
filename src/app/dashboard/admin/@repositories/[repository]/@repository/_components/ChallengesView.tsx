@@ -28,7 +28,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                 <CreateChallengeButton repository={repository} />
             </CardHeader>
             <CardContent>
-                <Tabs defaultValue={categories[0]}>
+                <Tabs defaultValue={categories[0]} className={"small-column"}>
                     <TabsList className={"tabs-list grid-cols-6"}>
                         {categories.map((category) => (
                             <TabsTrigger key={category} value={category}>{category}</TabsTrigger>
@@ -38,7 +38,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                         <TabsContent key={category} value={category}>
                             <div className={"grid-view"}>
                                 {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
-                                    <Card key={challenge.id}>
+                                    <Card key={challenge.id} className={"flex flex-col justify-between"}>
                                         <CardHeader>
                                             <CardTitle>{challenge.name}</CardTitle>
                                             <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
