@@ -51,7 +51,7 @@ export default function CreateSocketInstanceButton({socketId}: {socketId: string
     }
 
     return (
-        <Button className={"cursor-pointer"} onClick={onSubmit}>
+        <Button onClick={onSubmit}>
             <ServerIcon/>
             Launch Instance
         </Button>

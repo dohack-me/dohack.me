@@ -51,7 +51,7 @@ export default function CreateWebsiteInstanceButton({websiteId}: {websiteId: str
     }
 
     return (
-        <Button className={"cursor-pointer"} onClick={onSubmit}>
+        <Button onClick={onSubmit}>
             <ServerIcon/>
             Launch Instance
         </Button>

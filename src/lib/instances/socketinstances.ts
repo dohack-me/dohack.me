@@ -112,7 +112,7 @@ export async function deleteSocketInstance(instance: SocketInstance) {
         }
     })
 
-    if (!response.ok) return null
+    if (!response.ok && response.status != 404) return null
 
     const result = await prisma.socketInstance.delete({
         where: {
