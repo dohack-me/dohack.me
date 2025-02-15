@@ -5,8 +5,8 @@ import {signIn} from "@/src/lib/auth/auth"
 
 export default async function LoginPage() {
     return (
-        <div className={"flex-grow flex flex-col items-center justify-center bg-muted"}>
-            <Card className={"flex flex-col items-center justify-center w-full rounded-none lg:rounded-xl lg:w-[40%] flex-grow lg:flex-grow-0"}>
+        <div className={"grow flex flex-col items-center justify-center bg-muted"}>
+            <Card className={"flex flex-col items-center justify-center w-full rounded-none lg:rounded-xl lg:w-[40%] grow lg:grow-0"}>
                 <CardHeader className={"w-full text-center"}>
                     <CardTitle>Welcome back</CardTitle>
                     <CardDescription>Ready to get started?</CardDescription>

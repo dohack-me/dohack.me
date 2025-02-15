@@ -4,7 +4,7 @@ import {Button} from "@/src/components/ui/button";
 
 export default function Home() {
   return (
-      <div className={"flex-grow padding column"}>
+      <div className={"grow padding column"}>
           <Card>
               <CardHeader className={"text-center"}>
                   <CardTitle>Welcome to dohack.me</CardTitle>

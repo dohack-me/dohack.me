@@ -14,27 +14,27 @@ import {useMemo} from "react";
 const chartConfig = {
     CRYPTO: {
         label: "CRYPTO",
-        color: "hsl(var(--chart-1))",
+        color: "var(--chart-1)",
     },
     FORENSICS: {
         label: "FORENSICS",
-        color: "hsl(var(--chart-2))",
+        color: "var(--chart-2)",
     },
     WEB: {
         label: "WEB",
-        color: "hsl(var(--chart-3))",
+        color: "var(--chart-3)",
     },
     REV: {
         label: "REV",
-        color: "hsl(var(--chart-4))",
+        color: "var(--chart-4)",
     },
     PWN: {
         label: "PWN",
-        color: "hsl(var(--chart-5))",
+        color: "var(--chart-5)",
     },
     MISC: {
         label: "MISC",
-        color: "hsl(var(--chart-1))",
+        color: "var(--chart-1)",
     }
 } satisfies ChartConfig
 
@@ -45,7 +45,7 @@ export default function CategoriesChart({chartData}: { chartData: {category: Cat
     }, [chartData])
     
     return (
-        <ChartContainer config={chartConfig} className={"flex-grow min-h-[1rem]"}>
+        <ChartContainer config={chartConfig} className={"grow min-h-[1rem]"}>
             <PieChart accessibilityLayer>
                 <ChartTooltip
                     content={<ChartTooltipContent/>}

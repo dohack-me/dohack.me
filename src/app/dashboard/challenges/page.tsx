@@ -8,7 +8,7 @@ import {Skeleton} from "@/src/components/ui/skeleton";
 
 export default async function ChallengesPage() {
     return (
-        <div className={"flex-grow padding small-column"}>
+        <div className={"grow padding small-column"}>
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>
@@ -24,7 +24,7 @@ export default async function ChallengesPage() {
                     </Button>
                 </CardHeader>
             </Card>
-            <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+            <Suspense fallback={<Skeleton className={"grow"}/>}>
                 <RepositoriesView/>
             </Suspense>
         </div>

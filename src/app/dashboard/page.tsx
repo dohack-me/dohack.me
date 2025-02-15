@@ -14,7 +14,7 @@ export default async function DashboardPage() {
     }
 
     return (
-        <div className={"flex-grow padding column"}>
+        <div className={"grow padding column"}>
             <Card>
                 <CardHeader>
                     <CardTitle className={"text-center"}>Welcome, {(session.user && session.user.name) ? session.user.name : "User"}!</CardTitle>
@@ -33,7 +33,7 @@ export default async function DashboardPage() {
                 </CardHeader>
                 <CardContent className={"grid-view"}>
                     <Card className={"aspect-square flex flex-col"}>
-                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                        <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <CategoriesChartView/>
                         </Suspense>
                     </Card>

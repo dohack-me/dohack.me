@@ -19,7 +19,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
     if (!challenge) notFound()
 
     return (
-        <Card className={"flex-grow flex flex-col"}>
+        <Card className={"grow flex flex-col"}>
             <CardHeader className={"header-with-button"}>
                 <div className={"header-with-button-description"}>
                     <CardTitle>{challenge.name}</CardTitle>
@@ -33,7 +33,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                     </Link>
                 </Button>
             </CardHeader>
-            <CardContent className={"flex-grow"}>
+            <CardContent className={"grow"}>
                 <ResizablePanelGroup direction={"horizontal"}>
                     <ResizablePanel defaultSize={70}>
                         {challenge.description.split("\n").map((line) => (
@@ -42,13 +42,13 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                     </ResizablePanel>
                     <ResizableHandle className={"mx-4"}/>
                     <ResizablePanel defaultSize={30} className={"small-column"}>
-                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                        <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeFiles challenge={challenge}/>
                         </Suspense>
-                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                        <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeWebsites challenge={challenge}/>
                         </Suspense>
-                        <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+                        <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeSockets challenge={challenge}/>
                         </Suspense>
                     </ResizablePanel>

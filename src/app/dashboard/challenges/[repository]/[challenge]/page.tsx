@@ -7,8 +7,8 @@ export default async function ChallengesPage({ params }: { params: Promise<{ rep
     const challengeId = (await params).challenge
 
     return (
-        <div className={"flex-grow padding small-column"}>
-            <Suspense fallback={<Skeleton className={"flex-grow"}/>}>
+        <div className={"grow padding small-column"}>
+            <Suspense fallback={<Skeleton className={"grow"}/>}>
                 <ChallengeView repositoryId={repositoryId} challengeId={challengeId} />
             </Suspense>
         </div>

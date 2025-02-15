@@ -11,7 +11,7 @@ export default async function CategoriesChartView() {
     ))
 
     if (solves.length === 0) return (
-        <div className={"flex-grow flex flex-col items-center justify-center"}>
+        <div className={"grow flex flex-col items-center justify-center"}>
             <p className={"text-3xl font-bold"}>No solves</p>
             <p className={"text-muted-foreground"}>Try a challenge!</p>
 

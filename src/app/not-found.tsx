@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function NotFound() {
     return (
-        <div className={"flex-grow flex items-center justify-center"}>
+        <div className={"grow flex items-center justify-center"}>
             <Card>
                 <CardHeader className={"text-center"}>
                     <CardTitle>404 Error</CardTitle>

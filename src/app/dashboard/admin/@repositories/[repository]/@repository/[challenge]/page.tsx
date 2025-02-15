@@ -44,21 +44,21 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                     </TabsList>
                 </CardContent>
             </Card>
-            <TabsContent value={"details"} className={"flex-grow mt-0"}>
+            <TabsContent value={"details"} className={"grow mt-0"}>
                 <div className={"h-full w-full flex flex-col"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
                         <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>
-            <TabsContent value={"files"} className={"flex-grow mt-0"}>
+            <TabsContent value={"files"} className={"grow mt-0"}>
                 <div className={"h-full w-full flex flex-col"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
                         <ChallengeFilesView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>
-            <TabsContent value={"services"} className={"flex-grow mt-0"}>
+            <TabsContent value={"services"} className={"grow mt-0"}>
                 <div className={"h-full w-full small-column"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
                         <ChallegeServicesView challengeId={challengeId}/>

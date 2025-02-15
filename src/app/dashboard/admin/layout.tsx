@@ -10,7 +10,7 @@ export default async function Layout({repositories}: {repositories: React.ReactN
     if (!role || role != UserRole.ADMIN) {redirect("/dashboard")}
 
     return (
-        <div className={"flex-grow padding small-column"}>
+        <div className={"grow padding small-column"}>
             <Card className={"flex flex-col"}>
                 <CardHeader className={"text-center"}>
                     <CardTitle>Admin Panel</CardTitle>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function ErrorPage() {
     return (
-        <div className={"flex-grow flex items-center justify-center"}>
+        <div className={"grow flex items-center justify-center"}>
             <Card>
                 <CardHeader className={"text-center"}>
                     <CardTitle>Sorry, something went wrong.</CardTitle>

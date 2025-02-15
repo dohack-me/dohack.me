@@ -78,7 +78,7 @@ export default function ChallengeAnswerInputForm({challengeId}: {challengeId: st
                     control={form.control}
                     name={"answer"}
                     render={({ field }) => (
-                        <FormItem className={"flex-grow"}>
+                        <FormItem className={"grow"}>
                             <FormControl>
                                 <Input placeholder={"Flag"} {...field} />
                             </FormControl>

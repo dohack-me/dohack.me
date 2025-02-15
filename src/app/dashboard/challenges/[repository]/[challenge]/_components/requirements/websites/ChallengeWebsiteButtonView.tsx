@@ -16,7 +16,7 @@ export default async function ChallengeWebsiteButtonView({website}: {website: We
     )
     return (
         <div className={"w-full small-row justify-between"}>
-            <Button asChild className={"flex-grow"}>
+            <Button asChild className={"grow"}>
                 <Link href={instance.url} rel={"noopener noreferrer"} target={"_blank"}>
                     <ExternalLinkIcon/>
                     {instance.url}

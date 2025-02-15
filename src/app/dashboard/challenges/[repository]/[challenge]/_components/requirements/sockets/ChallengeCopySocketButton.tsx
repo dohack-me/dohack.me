@@ -8,7 +8,7 @@ import {useToast} from "@/src/hooks/use-toast";
 export default function ChallengeCopySocketButton({value}: {value: string}) {
     const {toast} = useToast()
     return (
-        <Button className={"flex-grow"} onClick={async () => {
+        <Button className={"grow"} onClick={async () => {
             await navigator.clipboard.writeText(value);
             toast({
                 title: "Copied command into your clipboard."

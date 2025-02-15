@@ -8,7 +8,7 @@ export default async function LoadingTitleCard() {
     return (
         <Card>
             <CardHeader className={"header-with-button"}>
-                <div className={"flex-grow header-with-button-description"}>
+                <div className={"grow header-with-button-description"}>
                     <TitleCardTextSkeleton/>
                 </div>
                 <Button disabled>
