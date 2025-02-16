@@ -14,12 +14,11 @@ const EnvironmentVariablesObject = z.object({
     AUTH_DISCORD_ID: z.string(),
     AUTH_DISCORD_SECRET: z.string(),
 
-    MINIO_HOST: z.string(),
-    MINIO_PORT: z.string(),
-    MINIO_SSL: z.string(),
-    MINIO_ACCESS_KEY: z.string(),
-    MINIO_SECRET_KEY: z.string(),
-    MINIO_BUCKET: z.string(),
+    S3_ENDPOINT: z.string(),
+    S3_REGION: z.string(),
+    S3_ACCESS_KEY: z.string(),
+    S3_SECRET_KEY: z.string(),
+    S3_BUCKET: z.string(),
 
     NODE_ENV: z.string()
 })

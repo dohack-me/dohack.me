@@ -1,8 +1,10 @@
 "use server"
 
 import {Challenge} from "@/src/lib/database/challenges"
-import {minio} from "@/src/lib/globals";
+import {S3} from "@/src/lib/globals";
 import EnvironmentVariables from "@/src/lib/environment";
+import {ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand} from "@aws-sdk/client-s3";
+import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 
 export type BucketFile = {
     path: string
@@ -13,36 +15,39 @@ export type BucketFile = {
 }
 
 export async function readChallengeFiles(challenge: Challenge): Promise<BucketFile[]> {
-    return new Promise((resolve, reject) => {
-        const files: BucketFile[] = []
-        const stream = minio.listObjectsV2(EnvironmentVariables.MINIO_BUCKET, `${challenge.repository.id}/${challenge.id}`, true)
-        stream.on("data", chunk => {
-            if (!chunk.name) return
-            files.push({
-                path: chunk.name,
-                name: chunk.name.split("/")[2],
-                size: chunk.size,
-                etag: chunk.etag,
-                lastModified: chunk.lastModified,
-            })
-        })
-        stream.on("end", () => {
-            resolve(files)
-        })
-        stream.on("error", (err) => {
-            reject(err)
-        })
+    const command = new ListObjectsV2Command({
+        Bucket: EnvironmentVariables.S3_BUCKET,
+        Prefix: `${challenge.repository.id}/${challenge.id}`
     })
+    const response = await S3.send(command)
+    if (!response.Contents) return []
+    return response.Contents
+        .filter((file) => !(file.Key!.endsWith(".emptyFolderPlaceholder")))
+        .map((file) => ({
+            path: file.Key!,
+            name: file.Key!.split("/")[2],
+            size: file.Size!,
+            etag: file.ETag!,
+            lastModified: file.LastModified!,
+        }))
 }
 
 export async function getChallengeFileUrl(filePath: string) {
-    return minio.presignedGetObject(EnvironmentVariables.MINIO_BUCKET, filePath, 60 * 60)
+    return `${EnvironmentVariables.S3_ENDPOINT.substring(0, EnvironmentVariables.S3_ENDPOINT.length - 3)}/object/public/${EnvironmentVariables.S3_BUCKET}/${filePath}`
 }
 
 export async function getChallengeFileUploadUrl(filePath: string) {
-    return minio.presignedPutObject(EnvironmentVariables.MINIO_BUCKET, filePath, 60 * 60)
+    const command = new PutObjectCommand({
+        Bucket: EnvironmentVariables.S3_BUCKET,
+        Key: filePath,
+    })
+    return await getSignedUrl(S3, command)
 }
 
 export async function deleteChallengeFile(filePath: string) {
-    await minio.removeObject(EnvironmentVariables.MINIO_BUCKET, filePath)
+    const command = new DeleteObjectCommand({
+        Bucket: EnvironmentVariables.S3_BUCKET,
+        Key: filePath
+    })
+    await S3.send(command)
 }
