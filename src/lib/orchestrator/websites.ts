@@ -1,7 +1,7 @@
 "use server"
 
 import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors";
-import {readWebsiteService} from "@/src/lib/services/websites";
+import {readWebsiteService} from "@/src/lib/database/websites";
 import {createWebsiteInstance, deleteWebsiteInstance, readWebsiteInstance, readWebsiteInstances} from "@/src/lib/instances/websiteinstances";
 import {getUserId} from "@/src/lib/auth/users";
 

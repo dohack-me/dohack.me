@@ -1,8 +1,8 @@
-import {Website} from "@/src/lib/services/websites";
+import {Website} from "@/src/lib/database/websites";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {ExternalLinkIcon, XIcon} from "lucide-react";
-import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
 import React from "react";
 import CreateWebsiteInstanceButton
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/CreateWebsiteInstanceButton";

@@ -15,6 +15,8 @@ import {ChevronLeftIcon} from "lucide-react";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs";
 import ChallegeServicesView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/ChallegeServicesView";
+import ChallengeHintsView
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/hints/ChallegeHintsView";
 
 export default async function AdminChallengeOverviewPage({ params }: { params: Promise<{ repository: string, challenge: string }>}) {
     const paramsObj = await params
@@ -41,6 +43,7 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                         <TabsTrigger value={"details"}>Details</TabsTrigger>
                         <TabsTrigger value={"files"}>Files</TabsTrigger>
                         <TabsTrigger value={"services"}>Services</TabsTrigger>
+                        <TabsTrigger value={"hints"}>Hints</TabsTrigger>
                     </TabsList>
                 </CardContent>
             </Card>
@@ -62,6 +65,13 @@ export default async function AdminChallengeOverviewPage({ params }: { params: P
                 <div className={"h-full w-full small-column"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
                         <ChallegeServicesView challengeId={challengeId}/>
+                    </Suspense>
+                </div>
+            </TabsContent>
+            <TabsContent value={"hints"} className={"grow mt-0"}>
+                <div className={"h-full w-full small-column"}>
+                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                        <ChallengeHintsView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>

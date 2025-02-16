@@ -3,7 +3,7 @@
 import React from "react";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
 import {useToast} from "@/src/hooks/use-toast";
-import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
 
 export function DeleteChallengeFileButton({name, callback}: {name: string, callback(): Promise<boolean>}) {
     return (

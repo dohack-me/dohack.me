@@ -1,7 +1,7 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import React, {Suspense} from "react";
 import {Challenge} from "@/src/lib/database/challenges";
-import {readChallengeWebsiteServices} from "@/src/lib/services/websites";
+import {readChallengeWebsiteServices} from "@/src/lib/database/websites";
 import {Button} from "@/src/components/ui/button";
 import {Loader2Icon} from "lucide-react";
 import ChallengeWebsiteButtonView

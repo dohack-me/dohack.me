@@ -13,6 +13,7 @@ import ChallengeWebsites
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites";
 import ChallengeSockets
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
+import MarkdownContent from "@/src/components/MarkdownContent";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
@@ -36,9 +37,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
             <CardContent className={"grow"}>
                 <ResizablePanelGroup direction={"horizontal"}>
                     <ResizablePanel defaultSize={70}>
-                        {challenge.description.split("\n").map((line) => (
-                            <p key={line} className={"text-wrap"}>{line}</p>
-                        ))}
+                        <MarkdownContent text={challenge.description}/>
                     </ResizablePanel>
                     <ResizableHandle className={"mx-4"}/>
                     <ResizablePanel defaultSize={30} className={"small-column"}>

@@ -1,21 +1,24 @@
 import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/src/components/ui/card";
-import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/services/websites";
+import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/database/websites";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
-import CreateWebsiteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateWebsiteServiceButton";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
-import CreateSocketServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateSocketServiceButton";
-import {deleteSocketService, readChallengeSocketServices} from "@/src/lib/services/sockets";
-import DeleteChallengeServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/DeleteChallengeServiceButton";
+import {deleteSocketService, readChallengeSocketServices} from "@/src/lib/database/sockets";
+import DeleteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/DeleteServiceButton";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu";
 import {EllipsisVerticalIcon} from "lucide-react";
 import React from "react";
+import CreateServiceButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateServiceButton";
 
 export default async function ChallegeServicesView({challengeId}: {challengeId: string}) {
-    const websites = await readChallengeWebsiteServices(challengeId);
-    const sockets = await readChallengeSocketServices(challengeId);
-    const challenge = await readChallenge(challengeId);
-    if (!challenge) notFound();
+    const challenge = await readChallenge(challengeId)
+    if (!challenge) notFound()
+
+    const websites = await readChallengeWebsiteServices(challengeId)
+    const sockets = await readChallengeSocketServices(challengeId)
+
+    // TODO: join websites and sockets arrays together, which might require complete database restructuring lol
 
     return (
         <Card className={"grow-col"}>
@@ -25,8 +28,8 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
                     <CardDescription>Services are additional programs users need to run to solve a challenge.</CardDescription>
                 </div>
                 <div className={"flex flex-row gap-x-2"}>
-                    <CreateWebsiteServiceButton challenge={challenge}/>
-                    <CreateSocketServiceButton challenge={challenge}/>
+                    <CreateServiceButton type={"website"} challenge={challenge} />
+                    <CreateServiceButton type={"socket"} challenge={challenge} />
                 </div>
             </CardHeader>
             <CardContent className={"grow-col"}>
@@ -51,7 +54,7 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                             <DropdownMenuSeparator/>
-                                            <DeleteChallengeServiceButton type={"website"} callback={async () => {
+                                            <DeleteServiceButton type={"website"} callback={async () => {
                                                 "use server"
                                                 await deleteWebsiteService(website.id)
                                                 return true
@@ -73,7 +76,7 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
                                         <DropdownMenuContent>
                                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                                             <DropdownMenuSeparator/>
-                                            <DeleteChallengeServiceButton type={"socket"} callback={async () => {
+                                            <DeleteServiceButton type={"socket"} callback={async () => {
                                                 "use server"
                                                 await deleteSocketService(socket.id)
                                                 return true

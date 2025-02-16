@@ -4,14 +4,14 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
-import {Input} from "@/src/components/ui/input"
+import {Form} from "@/src/components/ui/form"
 import {Repository, updateRepository} from "@/src/lib/database/repositories";
 import {useRouter} from "next/navigation";
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {SaveIcon} from "lucide-react";
 import React from "react";
 import {useToast} from "@/src/hooks/use-toast";
+import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -69,70 +69,32 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                     </Button>
                 </CardHeader>
                 <CardContent className={"small-column"}>
-                    <FormField
-                        control={form.control}
-                        name={"name"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Repository Name</FormLabel>
-                                <FormControl>
-                                    <Input{...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The display name of this repository.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"sourceLink"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Repository Source</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The link to your repository&apos;s source code.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"organization"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Organization Name</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The name of the organization this repository comes from.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"organizationLink"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Organization Link</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The link to your organization&apos;s socials.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <CreateSheetFormFields form={form} inputs={[
+                        {
+                            name: "name",
+                            title: "Repository Name",
+                            description: "The display name of this repository.",
+                            type: "input",
+                        },
+                        {
+                            name: "sourceLink",
+                            title: "Repository Source",
+                            description: "The link to your repository's source code.",
+                            type: "input",
+                        },
+                        {
+                            name: "organization",
+                            title: "Organization Name",
+                            description: "The name of the organization this repository comes from.",
+                            type: "input",
+                        },
+                        {
+                            name: "organizationLink",
+                            title: "Organization Link",
+                            description: "The link to your organization's socials.",
+                            type: "input",
+                        }
+                    ]}/>
                 </CardContent>
             </form>
         </Form>

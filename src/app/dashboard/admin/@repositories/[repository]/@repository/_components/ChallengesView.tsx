@@ -3,7 +3,7 @@ import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repo
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
-import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
 import {deleteChallenge, readChallenges} from "@/src/lib/database/challenges";
 import React from "react";
 import {readRepository} from "@/src/lib/database/repositories";
@@ -52,13 +52,8 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                                                 confirmation={"Successfully deleted challenge."}
                                                 fail={"Could not delete challenge. Please try again later."}
                                                 callback={async() => {
-                                                    'use server'
-                                                    try {
-                                                        await deleteChallenge(challenge.id)
-                                                        return true
-                                                    } catch {
-                                                        return false
-                                                    }
+                                                    "use server"
+                                                    return (await deleteChallenge(challenge.id)) != null
                                                 }}>
                                                 <Button variant={"destructive"}>Delete</Button>
                                             </DeleteDialogButton>

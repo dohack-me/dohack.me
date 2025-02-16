@@ -54,6 +54,7 @@ model Challenge {
   solves   Solve[]
   websites Website[]
   sockets  Socket[]
+  hints    Hint[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -126,6 +127,17 @@ model Solve {
 
   @@id([userId, challengeId])
   @@map("solve")
+}
+
+model Hint {
+  id          String @id @unique @default(uuid()) @db.Uuid
+  challengeId String @db.Uuid
+  title       String
+  hint        String
+
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@map("hint")
 }
 
 model CustomUser {

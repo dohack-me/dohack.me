@@ -12,11 +12,11 @@ import {PlusIcon, SaveIcon, XIcon} from "lucide-react";
 import React from "react";
 import {Category} from "@prisma/client";
 import {Challenge, updateChallenge} from "@/src/lib/database/challenges";
-import {Textarea} from "@/src/components/ui/textarea";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
 import {cn} from "@/src/lib/utils";
 import {Repository} from "@/src/lib/database/repositories";
 import {useToast} from "@/src/hooks/use-toast";
+import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
 
 const categories = Object.keys(Category)
 
@@ -99,38 +99,20 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                     </Button>
                 </CardHeader>
                 <CardContent className={"small-column"}>
-                    <FormField
-                        control={form.control}
-                        name={"name"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Challenge Name</FormLabel>
-                                <FormControl>
-                                    <Input{...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The display name of this challenge.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name={"description"}
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Challenge Description</FormLabel>
-                                <FormControl>
-                                    <Textarea {...field} />
-                                </FormControl>
-                                <FormDescription>
-                                    The challenge&apos;s description.
-                                </FormDescription>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+                    <CreateSheetFormFields form={form} inputs={[
+                        {
+                            name: "name",
+                            title: "Challenge Name",
+                            description: "The display name of this challenge.",
+                            type: "input",
+                        },
+                        {
+                            name: "description",
+                            title: "Challenge Description",
+                            description: "The challenge's description.",
+                            type: "textarea",
+                        }
+                    ]}/>
                     <FormField
                         control={form.control}
                         name={"category"}

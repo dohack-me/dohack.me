@@ -1,7 +1,7 @@
-import {Socket} from "@/src/lib/services/sockets";
+import {Socket} from "@/src/lib/database/sockets";
 import {Button} from "@/src/components/ui/button";
 import {XIcon} from "lucide-react";
-import {DeleteDialogButton} from "@/src/components/DeleteDialogButton";
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
 import React from "react";
 import CreateSocketInstanceButton
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/CreateSocketInstanceButton";

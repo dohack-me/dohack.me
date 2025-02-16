@@ -2,7 +2,7 @@
 
 import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
-import {readWebsiteService, Website} from "@/src/lib/services/websites";
+import {readWebsiteService, Website} from "@/src/lib/database/websites";
 import EnvironmentVariables from "@/src/lib/environment";
 
 export type WebsiteInstance = {

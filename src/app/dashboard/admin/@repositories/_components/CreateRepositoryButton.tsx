@@ -3,15 +3,13 @@
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
-import {Button} from "@/src/components/ui/button"
-import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
-import {Input} from "@/src/components/ui/input"
 import {createRepository} from "@/src/lib/database/repositories";
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {PlusIcon} from "lucide-react";
 import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast"
+import CreateSheetButton from "@/src/components/sheet/CreateSheetButton";
+import CreateSheetForm from "@/src/components/sheet/CreateSheetForm";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -54,91 +52,42 @@ export default function CreateRepositoryButton() {
     }
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-                <Button>
-                    <PlusIcon/>
-                    <p className={"hidden lg:block"}>Create Repository</p>
-                    <p className={"hidden sm:block lg:hidden"}>Create</p>
-                </Button>
-            </SheetTrigger>
-            <SheetContent className={"small-column"}>
-                <SheetHeader>
-                    <SheetTitle>Creating Repository</SheetTitle>
-                    <SheetDescription>
-                        Fill in the repository details as required
-                    </SheetDescription>
-                </SheetHeader>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
-                        <FormField
-                            control={form.control}
-                            name={"name"}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Repository Name</FormLabel>
-                                    <FormControl>
-                                        <Input{...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        The display name of this repository.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name={"sourceLink"}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Repository Source</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        The link to your repository&apos;s source code.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name={"organization"}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Organization Name</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        The name of the organization this repository comes from.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name={"organizationLink"}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Organization Link</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        The link to your organization&apos;s socials.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <Button type={"submit"}>Submit</Button>
-                    </form>
-                </Form>
-            </SheetContent>
-        </Sheet>
+        <CreateSheetButton
+            form={form}
+            open={open}
+            changeOpen={setOpen}
+            icon={<PlusIcon/>}
+            longName={"Create Repository"}
+            shortName={"Create"}
+            title={"Creating Repository"}
+            description={"Fill in the repository details as required"}
+        >
+            <CreateSheetForm form={form} inputs={[
+                {
+                    name: "name",
+                    title: "Repository Name",
+                    description: "The display name of this repository.",
+                    type: "input",
+                },
+                {
+                    name: "sourceLink",
+                    title: "Repository Source",
+                    description: "The link to your repository's source code.",
+                    type: "input",
+                },
+                {
+                    name: "organization",
+                    title: "Organization Name",
+                    description: "The name of the organization this repository comes from.",
+                    type: "input",
+                },
+                {
+                    name: "organizationLink",
+                    title: "Organization Link",
+                    description: "The link to your organization's socials.",
+                    type: "input",
+                }
+            ]} onSubmit={onSubmit}/>
+        </CreateSheetButton>
     )
 }

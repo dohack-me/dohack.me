@@ -2,7 +2,7 @@
 
 import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
-import {readSocketService, Socket} from "@/src/lib/services/sockets";
+import {readSocketService, Socket} from "@/src/lib/database/sockets";
 import EnvironmentVariables from "@/src/lib/environment";
 
 export type SocketInstance = {
