@@ -3,7 +3,7 @@
 import {Challenge} from "@/src/lib/database/challenges"
 import {S3} from "@/src/lib/globals";
 import EnvironmentVariables from "@/src/lib/environment";
-import {ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand} from "@aws-sdk/client-s3";
+import {ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand, GetObjectCommand} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 
 export type BucketFile = {
@@ -32,9 +32,12 @@ export async function readChallengeFiles(challenge: Challenge): Promise<BucketFi
         }))
 }
 
-export async function getChallengeFileUrl(filePath: string) {
-    return `${EnvironmentVariables.S3_ENDPOINT.substring(0, EnvironmentVariables.S3_ENDPOINT.length - 3)}/object/public/${EnvironmentVariables.S3_BUCKET}/${filePath}`
-}
+export async function getChallengeFileDownloadUrl(filePath: string) {
+    const command = new GetObjectCommand({
+        Bucket: EnvironmentVariables.S3_BUCKET,
+        Key: filePath,
+    })
+    return await getSignedUrl(S3, command)}
 
 export async function getChallengeFileUploadUrl(filePath: string) {
     const command = new PutObjectCommand({
