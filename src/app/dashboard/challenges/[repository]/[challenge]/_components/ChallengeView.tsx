@@ -14,6 +14,8 @@ import ChallengeWebsites
 import ChallengeSockets
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
 import MarkdownContent from "@/src/components/MarkdownContent";
+import ChallengeHints
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
@@ -49,6 +51,9 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                         </Suspense>
                         <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeSockets challenge={challenge}/>
+                        </Suspense>
+                        <Suspense fallback={<Skeleton className={"grow"}/>}>
+                            <ChallengeHints challenge={challenge}/>
                         </Suspense>
                     </ResizablePanel>
                 </ResizablePanelGroup>

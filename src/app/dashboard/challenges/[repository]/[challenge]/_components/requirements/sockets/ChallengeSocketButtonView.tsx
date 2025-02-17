@@ -24,7 +24,7 @@ export default async function ChallengeSocketButtonView({socket}: {socket: Socke
                 confirmation={"Successfully deleted instance."}
                 fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
-                    'use server'
+                    "use server"
                     const {error} = await shutdownSocketInstance(socket.id)
                     return error == null
                 }}
