@@ -91,7 +91,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Challenge Details</CardTitle>
-                        <CardDescription>Edit challenge details here.</CardDescription>
+                        <CardDescription>Edit challenge details here</CardDescription>
                     </div>
                     <Button type={"submit"}>
                         <SaveIcon />

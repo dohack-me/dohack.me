@@ -18,14 +18,12 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
     const websites = await readChallengeWebsiteServices(challengeId)
     const sockets = await readChallengeSocketServices(challengeId)
 
-    // TODO: join websites and sockets arrays together, which might require complete database restructuring lol
-
     return (
         <Card className={"grow-col"}>
             <CardHeader className={"header-with-button"}>
                 <div className={"header-with-button-description"}>
                     <CardTitle>Challenge Services</CardTitle>
-                    <CardDescription>Services are additional programs users need to run to solve a challenge.</CardDescription>
+                    <CardDescription>Services are additional programs users need to run to solve a challenge</CardDescription>
                 </div>
                 <div className={"flex flex-row gap-x-2"}>
                     <CreateServiceButton type={"website"} challenge={challenge} />

@@ -61,7 +61,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Organization Details</CardTitle>
-                        <CardDescription>Edit repository details here.</CardDescription>
+                        <CardDescription>Edit repository details here</CardDescription>
                     </div>
                     <Button type={"submit"}>
                         <SaveIcon/>

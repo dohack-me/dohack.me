@@ -13,7 +13,7 @@ export default async function ChallengesPage() {
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>
                         <CardTitle>Select a repository</CardTitle>
-                        <CardDescription>Repositories are publicly available <Link href={"https://github.com/dohack-me/repository-archive"} className={"underline"}>here</Link></CardDescription>
+                        <CardDescription>Repositories are publicly available <Link href={"https://git.diffusehyperion.com/dohack.me/repositories"} className={"underline"}>here</Link></CardDescription>
                     </div>
                     <Button asChild>
                         <Link href={`/dashboard`}>

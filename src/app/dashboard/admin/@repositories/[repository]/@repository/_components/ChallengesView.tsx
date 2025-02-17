@@ -22,7 +22,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                     <CardTitle>Challenges</CardTitle>
                     <CardDescription>
                         Challenges make up the bulk of repositories, where users must solve puzzles for an
-                        answer to submit.
+                        answer to submit
                     </CardDescription>
                 </div>
                 <CreateChallengeButton repository={repository} />

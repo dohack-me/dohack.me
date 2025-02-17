@@ -23,7 +23,7 @@ export default async function ChallengeHintsView({challengeId}: {challengeId: st
             <CardHeader className={"header-with-button"}>
                 <div className={"header-with-button-description"}>
                     <CardTitle>Challenge Hints</CardTitle>
-                    <CardDescription>Hints are optional clues that help players solve a challenge.</CardDescription>
+                    <CardDescription>Hints are optional clues that help players solve a challenge</CardDescription>
                 </div>
                 <div className={"flex flex-row gap-x-2"}>
                     <CreateHintButton challenge={challenge}/>
