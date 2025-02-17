@@ -25,10 +25,28 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 
-COPY --exclude=.env.* . .
-COPY .env.local .env.local
+COPY . .
 
-RUN npm run build
+RUN --mount=type=secret,id=NEXT_PUBLIC_BACKEND_HOST,env=NEXT_PUBLIC_BACKEND_HOST,required=true \
+    --mount=type=secret,id=BACKEND_URL,env=BACKEND_URL,required=true \
+    --mount=type=secret,id=BACKEND_SECRET_KEY,env=BACKEND_SECRET_KEY,required=true \
+    --mount=type=secret,id=DATABASE_URL,env=DATABASE_URL,required=true \
+    --mount=type=secret,id=DIRECT_URL,env=DIRECT_URL,required=true \
+    --mount=type=secret,id=AUTH_TRUST_HOST,env=AUTH_TRUST_HOST,required=true \
+    --mount=type=secret,id=AUTH_URL,env=AUTH_URL,required=true \
+    --mount=type=secret,id=AUTH_SECRET,env=AUTH_SECRET,required=true \
+    --mount=type=secret,id=AUTH_GITHUB_ID,env=AUTH_GITHUB_ID,required=true \
+    --mount=type=secret,id=AUTH_GITHUB_SECRET,env=AUTH_GITHUB_SECRET,required=true \
+    --mount=type=secret,id=AUTH_DISCORD_ID,env=AUTH_DISCORD_ID,required=true \
+    --mount=type=secret,id=AUTH_DISCORD_SECRET,env=AUTH_DISCORD_SECRET,required=true \
+    --mount=type=secret,id=AUTH_GOOGLE_ID,env=AUTH_GOOGLE_ID,required=true \
+    --mount=type=secret,id=AUTH_GOOGLE_SECRET,env=AUTH_GOOGLE_SECRET,required=true \
+    --mount=type=secret,id=S3_ENDPOINT,env=S3_ENDPOINT,required=true \
+    --mount=type=secret,id=S3_REGION,env=S3_REGION,required=true \
+    --mount=type=secret,id=S3_ACCESS_KEY,env=S3_ACCESS_KEY,required=true \
+    --mount=type=secret,id=S3_SECRET_KEY,env=S3_SECRET_KEY,required=true \
+    --mount=type=secret,id=S3_BUCKET,env=S3_BUCKET,required=true \
+    npm run build
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner

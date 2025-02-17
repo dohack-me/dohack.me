@@ -2,7 +2,7 @@ services:
   dohackme:
     build:
       context: ..
-      dockerfile: docker/local/Dockerfile
+      dockerfile: ../docker/local/Dockerfile
     container_name: dohackme
     restart: no
     env_file:
