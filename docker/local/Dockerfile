@@ -28,6 +28,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN --mount=type=secret,id=NEXT_PUBLIC_BACKEND_HOST,env=NEXT_PUBLIC_BACKEND_HOST,required=true \
+    --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_KEY,env=NEXT_PUBLIC_POSTHOG_KEY,required=true \
+    --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_HOST,env=NEXT_PUBLIC_POSTHOG_HOST,required=true \
     --mount=type=secret,id=BACKEND_URL,env=BACKEND_URL,required=true \
     --mount=type=secret,id=BACKEND_SECRET_KEY,env=BACKEND_SECRET_KEY,required=true \
     --mount=type=secret,id=DATABASE_URL,env=DATABASE_URL,required=true \
@@ -47,6 +49,7 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_BACKEND_HOST,env=NEXT_PUBLIC_BACKEND_HOST
     --mount=type=secret,id=S3_SECRET_KEY,env=S3_SECRET_KEY,required=true \
     --mount=type=secret,id=S3_BUCKET,env=S3_BUCKET,required=true \
     npm run build
+
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner

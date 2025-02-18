@@ -30,6 +30,8 @@ jobs:
           tags: dohackme.azurecr.io/dohack.me/dohack.me:latest
           secrets: |
             "NEXT_PUBLIC_BACKEND_HOST=${{ secrets.NEXT_PUBLIC_BACKEND_HOST }}"
+            "NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}"
+            "NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}"
             "BACKEND_URL=${{ secrets.BACKEND_URL }}"
             "BACKEND_SECRET_KEY=${{ secrets.BACKEND_SECRET_KEY }}"
             "DATABASE_URL=${{ secrets.DATABASE_URL }}"
