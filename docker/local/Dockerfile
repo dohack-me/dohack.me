@@ -21,6 +21,8 @@ RUN \
 # 2. Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
+ENV NODE_ENV=development
+
 COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
@@ -49,8 +51,6 @@ RUN --mount=type=secret,id=NEXT_PUBLIC_BACKEND_HOST,env=NEXT_PUBLIC_BACKEND_HOST
 # 3. Production image, copy all the files and run next
 FROM base AS runner
 WORKDIR /app
-
-ENV NODE_ENV=development
 
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001

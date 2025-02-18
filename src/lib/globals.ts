@@ -4,13 +4,7 @@ import {S3Client} from '@aws-sdk/client-s3'
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 const globalForS3 = globalThis as unknown as { S3: S3Client }
 
-export const prisma = globalForPrisma.prisma || new PrismaClient({
-    datasources: {
-        db: {
-            url: process.env.DATABASE_URL!,
-        }
-    }
-})
+export const prisma = globalForPrisma.prisma || new PrismaClient()
 
 export const S3 = globalForS3.S3 || new S3Client({
     endpoint: process.env.S3_ENDPOINT!,
