@@ -28,7 +28,9 @@ function PostHogPageView() {
 // from de-opting the whole app into client-side rendering
 // See: https://nextjs.org/docs/messages/deopted-into-client-rendering
 export default function SuspendedPostHogPageView() {
-    return <Suspense fallback={null}>
-        <PostHogPageView />
-    </Suspense>
+    return (
+        <Suspense fallback={null}>
+            <PostHogPageView />
+        </Suspense>
+    )
 }
