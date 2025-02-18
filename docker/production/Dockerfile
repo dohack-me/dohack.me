@@ -44,7 +44,7 @@ RUN --mount=type=secret,id=AUTH_TRUST_HOST,required=true \
 RUN --mount=type=secret,id=AUTH_URL,required=true \
     echo "AUTH_URL=$(cat /run/secrets/AUTH_URL)" >> .env.production
 RUN --mount=type=secret,id=AUTH_SECRET,required=true \
-    echo "AUTH_SECRET=$(cat /run/secrets/AUTH_SECRET)" >> .env.production \
+    echo "AUTH_SECRET=$(cat /run/secrets/AUTH_SECRET)" >> .env.production
 RUN --mount=type=secret,id=AUTH_GITHUB_ID,required=true \
     echo "AUTH_GITHUB_ID=$(cat /run/secrets/AUTH_GITHUB_ID)" >> .env.production
 RUN --mount=type=secret,id=AUTH_GITHUB_SECRET,required=true \
