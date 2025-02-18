@@ -3,7 +3,6 @@
 import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
 import {readWebsiteService, Website} from "@/src/lib/database/websites";
-import EnvironmentVariables from "@/src/lib/environment";
 
 export type WebsiteInstance = {
     website: Website,
@@ -71,7 +70,7 @@ export async function createWebsiteInstance(website: Website) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website/`, {
+    const response = await fetch(`${process.env.BACKEND_URL!}/api/v1/service/website/`, {
         method: "POST",
         body: JSON.stringify({
             "image": website.image,
@@ -79,7 +78,7 @@ export async function createWebsiteInstance(website: Website) {
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
+            "Authorization": process.env.BACKEND_SECRET_KEY!
         }
     })
 
@@ -104,11 +103,11 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
     const userId = await getUserId()
     if (!userId) return null;
 
-    const response = await fetch(`${EnvironmentVariables.BACKEND_URL}/api/v1/service/website/${instance.id}/`, {
+    const response = await fetch(`${process.env.BACKEND_URL!}/api/v1/service/website/${instance.id}/`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": EnvironmentVariables.BACKEND_SECRET_KEY
+            "Authorization": process.env.BACKEND_SECRET_KEY!
         }
     })
 
