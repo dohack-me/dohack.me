@@ -3,6 +3,7 @@
 import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
 import {readWebsiteService, Website} from "@/src/lib/database/websites";
+import posthog from "posthog-js";
 
 export type WebsiteInstance = {
     website: Website,
@@ -88,6 +89,9 @@ export async function createWebsiteInstance(website: Website) {
         url: string
     } = await response.json()
 
+    posthog.capture("Website instance created", { image: website.image, tag: website.tag })
+    console.log("logged")
+
     const result = await prisma.websiteInstance.create({
         data: {
             websiteId: website.id,
@@ -112,6 +116,8 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
     })
 
     if (!response.ok && response.status != 404) return null
+
+    posthog.capture("Website instance deleted", { image: instance.website.image, tag: instance.website.tag })
 
     const result = await prisma.websiteInstance.delete({
         where: {

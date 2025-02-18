@@ -3,6 +3,7 @@
 import {getUserId} from "@/src/lib/auth/users";
 import {prisma} from "@/src/lib/globals";
 import {readSocketService, Socket} from "@/src/lib/database/sockets";
+import posthog from "posthog-js";
 
 export type SocketInstance = {
     socket: Socket,
@@ -88,6 +89,8 @@ export async function createSocketInstance(socket: Socket) {
         port: number
     } = await response.json()
 
+    posthog.capture("Socket instance created", { image: socket.image, tag: socket.tag })
+
     const result = await prisma.socketInstance.create({
         data: {
             socketId: socket.id,
@@ -112,6 +115,8 @@ export async function deleteSocketInstance(instance: SocketInstance) {
     })
 
     if (!response.ok && response.status != 404) return null
+
+    posthog.capture("Socket instance deleted", { image: instance.socket.image, tag: instance.socket.tag })
 
     const result = await prisma.socketInstance.delete({
         where: {
