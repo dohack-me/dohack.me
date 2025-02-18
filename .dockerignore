@@ -4,7 +4,7 @@ README.md
 .next
 .git
 .idea
-run/
+run
 .gitea
 docker
 .env.*
