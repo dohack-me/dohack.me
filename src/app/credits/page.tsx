@@ -32,8 +32,9 @@ export default async function Credits() {
                 <CardContent>
                     <OrganizationCreditsView/>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className={"flex flex-col items-start"}>
                     <p>Want to suggest a repository? Make an issue <Link href={"https://git.diffusehyperion.com/dohack.me/dohack.me/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</p>
+                    <p>Organization credits may not appear until the next website update.</p>
                 </CardFooter>
             </Card>
         </div>
