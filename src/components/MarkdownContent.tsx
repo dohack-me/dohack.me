@@ -12,6 +12,6 @@ export default async function MarkdownContent({text}: {text: string}) {
 
     // XSS is not a concern: https://github.com/remarkjs/remark-html#Security
     return (
-        <div className={"prose-code:bg-secondary prose-a:underline"} dangerouslySetInnerHTML={{__html: content}}/>
+        <div className={"prose-code:bg-secondary prose-a:underline prose-ul:list-disc prose-ul:list-inside"} dangerouslySetInnerHTML={{__html: content}}/>
     )
 }
