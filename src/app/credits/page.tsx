@@ -33,7 +33,7 @@ export default async function Credits() {
                     <OrganizationCreditsView/>
                 </CardContent>
                 <CardFooter className={"flex flex-col items-start"}>
-                    <p>Want to suggest a repository? Make an issue <Link href={"https://git.diffusehyperion.com/dohack.me/dohack.me/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</p>
+                    <p>Want to suggest a repository? Make an issue <Link href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</p>
                     <p>This page is updated every website update. If an organization is missing here, please wait until then!</p>
                 </CardFooter>
             </Card>
