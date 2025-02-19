@@ -31,8 +31,10 @@ export default async function OrganizationCreditsView() {
                 <Card key={organization}>
                     <CardHeader>
                         <CardTitle><Link href={organizationsToLink.get(organization)!} className={"underline"}>{organization}</Link></CardTitle>
-                        <CardDescription>{`Organization behind ${organizationsToRepositories.get(organization)!.length} repositories`}</CardDescription>
-                        <CardDescription>{`Source of ${organizationsToChallengeCount.get(organization)!} challenges`}</CardDescription>
+                        <div>
+                            <CardDescription>{`Organization behind ${organizationsToRepositories.get(organization)!.length} repositories`}</CardDescription>
+                            <CardDescription>{`Source of ${organizationsToChallengeCount.get(organization)!} challenges`}</CardDescription>
+                        </div>
                     </CardHeader>
                     <CardContent>
                         <ul className={"list-disc list-inside"}>

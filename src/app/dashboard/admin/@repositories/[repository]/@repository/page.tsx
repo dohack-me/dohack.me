@@ -31,10 +31,10 @@ export default async function AdminRepositoryOverviewPage({ params }: { params: 
                 </CardHeader>
             </Card>
             <Suspense fallback={<AdminRepositoryOverviewLoading/>}>
-                <EditRepositoriesView repositoryId={repositoryId}/>
+                <ChallengesView repositoryId={repositoryId}/>
             </Suspense>
             <Suspense fallback={<AdminRepositoryOverviewLoading/>}>
-                <ChallengesView repositoryId={repositoryId}/>
+                <EditRepositoriesView repositoryId={repositoryId}/>
             </Suspense>
         </div>
     )
