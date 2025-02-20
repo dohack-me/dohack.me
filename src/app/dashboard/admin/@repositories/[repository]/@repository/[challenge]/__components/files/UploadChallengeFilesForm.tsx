@@ -7,7 +7,7 @@ import React from "react";
 import {CloudUploadIcon} from "lucide-react";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast";
-import {getChallengeFileUploadUrl} from "@/src/lib/storage";
+import {getFileUploadUrl} from "@/src/lib/storage";
 
 export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
     const router = useRouter()
@@ -44,7 +44,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
         // forEach not used so that await can be used
         for (const file of Array.from(files)) {
             const filePath = `${challenge.repository.id}/${challenge.id}/${file.name}`
-            const uploadUrl = await getChallengeFileUploadUrl(filePath);
+            const uploadUrl = await getFileUploadUrl(filePath);
             await fetch(uploadUrl, {
                 method: "PUT",
                 body: file,

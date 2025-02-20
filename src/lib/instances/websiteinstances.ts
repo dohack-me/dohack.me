@@ -90,7 +90,6 @@ export async function createWebsiteInstance(website: Website) {
     } = await response.json()
 
     posthog.capture("Website instance created", { image: website.image, tag: website.tag })
-    console.log("logged")
 
     const result = await prisma.websiteInstance.create({
         data: {

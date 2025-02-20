@@ -3,7 +3,7 @@
 import {prisma} from '@/src/lib/globals'
 import {Repository, readRepository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
-import {deleteChallengeFile, readChallengeFiles} from "@/src/lib/storage";
+import {deleteFolder, readFolderFiles} from "@/src/lib/storage";
 
 export type Challenge = {
     id: string
@@ -143,8 +143,8 @@ export async function deleteChallenge(id: string) {
 
     if (!challenge) return null
 
-    const files = await readChallengeFiles(challenge)
-    if (files.length > 0) await deleteChallengeFile(`${challenge.repository.id}/${id}`)
+    const files = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`)
+    if (files.length > 0) await deleteFolder(`${challenge.repository.id}/${id}`)
 
     const result = await prisma.challenge.delete({
         where: {

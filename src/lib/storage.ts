@@ -1,6 +1,5 @@
 "use server"
 
-import {Challenge} from "@/src/lib/database/challenges"
 import {S3} from "@/src/lib/globals";
 import {ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand, GetObjectCommand} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
@@ -13,10 +12,10 @@ export type BucketFile = {
     lastModified: Date
 }
 
-export async function readChallengeFiles(challenge: Challenge): Promise<BucketFile[]> {
+export async function readFolderFiles(folderPath: string): Promise<BucketFile[]> {
     const command = new ListObjectsV2Command({
         Bucket: process.env.S3_BUCKET!,
-        Prefix: `${challenge.repository.id}/${challenge.id}`
+        Prefix: folderPath
     })
     const response = await S3.send(command)
     if (!response.Contents) return []
@@ -31,14 +30,14 @@ export async function readChallengeFiles(challenge: Challenge): Promise<BucketFi
         }))
 }
 
-export async function getChallengeFileDownloadUrl(filePath: string) {
+export async function getFileDownloadUrl(filePath: string) {
     const command = new GetObjectCommand({
         Bucket: process.env.S3_BUCKET!,
         Key: filePath,
     })
     return await getSignedUrl(S3, command)}
 
-export async function getChallengeFileUploadUrl(filePath: string) {
+export async function getFileUploadUrl(filePath: string) {
     const command = new PutObjectCommand({
         Bucket: process.env.S3_BUCKET!,
         Key: filePath,
@@ -46,7 +45,18 @@ export async function getChallengeFileUploadUrl(filePath: string) {
     return await getSignedUrl(S3, command)
 }
 
-export async function deleteChallengeFile(filePath: string) {
+export async function deleteFolder(folderPath: string) {
+    const files = await readFolderFiles(folderPath)
+    for (const file of files) {
+        const command = new DeleteObjectCommand({
+            Bucket: process.env.S3_BUCKET!,
+            Key: file.path,
+        })
+        await S3.send(command)
+    }
+}
+
+export async function deleteFile(filePath: string) {
     const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET!,
         Key: filePath

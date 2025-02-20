@@ -4,14 +4,14 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, 
 import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesOptionButtons";
 import Link from "next/link";
 import {readChallenge} from "@/src/lib/database/challenges";
-import {deleteChallengeFile, readChallengeFiles, getChallengeFileDownloadUrl} from "@/src/lib/storage";
+import {deleteFile, readFolderFiles, getFileDownloadUrl} from "@/src/lib/storage";
 import {notFound} from "next/navigation";
 
 export default async function ReadChallengeFilesView({challengeId}: {challengeId: string}) {
     const challenge = await readChallenge(challengeId)
     if (!challenge) notFound()
 
-    const data = await readChallengeFiles(challenge);
+    const data = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`);
 
     return (
         <div className={"h-full w-full flex flex-col"}>
@@ -32,7 +32,7 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
                                 <DropdownMenuSeparator/>
                                 <DeleteChallengeFileButton name={file.name} callback={async () => {
                                     "use server"
-                                    await deleteChallengeFile(file.path)
+                                    await deleteFile(file.path)
                                     return true
                                 }}/>
                                 <DownloadChallengeFileButton
@@ -51,14 +51,14 @@ export default async function ReadChallengeFilesView({challengeId}: {challengeId
 
 
 async function DownloadChallengeFileButton({filePath, fileName}: {filePath: string, fileName: string}) {
-    const url = await getChallengeFileDownloadUrl(filePath)
+    const url = await getFileDownloadUrl(filePath)
     return (
         <DropdownMenuItem><Link href={url} download={fileName}>Download</Link></DropdownMenuItem>
     )
 }
 
 async function CopyChallengeFileUrlView({filePath}: {filePath: string}) {
-    const url = await getChallengeFileDownloadUrl(filePath)
+    const url = await getFileDownloadUrl(filePath)
     return (
         <CopyChallengeFileUrlButton url={url}/>
     )

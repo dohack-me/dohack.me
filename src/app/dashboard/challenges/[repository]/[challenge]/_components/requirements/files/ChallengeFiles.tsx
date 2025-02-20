@@ -3,11 +3,11 @@ import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {DownloadIcon} from "lucide-react";
 import React from "react";
-import {getChallengeFileDownloadUrl, readChallengeFiles} from "@/src/lib/storage";
+import {getFileDownloadUrl, readFolderFiles} from "@/src/lib/storage";
 import {Challenge} from "@/src/lib/database/challenges";
 
 export default async function ChallengeFiles({challenge}: {challenge: Challenge}) {
-    const files = await readChallengeFiles(challenge)
+    const files = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`)
     if (files.length <= 0) return null
 
     return (
@@ -21,7 +21,7 @@ export default async function ChallengeFiles({challenge}: {challenge: Challenge}
             </CardHeader>
             <CardContent className={"small-column"}>
                 {files.map(async (file) => {
-                        const url = await getChallengeFileDownloadUrl(file.path)
+                        const url = await getFileDownloadUrl(file.path)
                         return (
                             <Button key={file.etag} asChild>
                                 <Link href={url}>
