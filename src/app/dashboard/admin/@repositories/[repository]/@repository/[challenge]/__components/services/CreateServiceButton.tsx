@@ -34,7 +34,7 @@ export default function CreateServiceButton({type, challenge}: {type: "website" 
         mode: "onChange",
         defaultValues: {
             image: "",
-            tag: ""
+            tag: "latest"
         }
     })
 
