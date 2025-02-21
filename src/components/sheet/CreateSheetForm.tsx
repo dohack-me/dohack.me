@@ -3,7 +3,7 @@ import {Input} from "@/src/components/ui/input";
 import {Textarea} from "@/src/components/ui/textarea";
 import {Button} from "@/src/components/ui/button";
 import React from "react";
-import {UseFormReturn} from "react-hook-form";
+import {ControllerRenderProps, FieldValues, UseFormReturn} from "react-hook-form";
 import {z, ZodSchema} from "zod";
 
 export type FormInput = {
@@ -11,6 +11,19 @@ export type FormInput = {
     title: string;
     description: string;
     type: "input" | "textarea";
+}
+
+function getFieldInput(type: "input" | "textarea", field: ControllerRenderProps<FieldValues, string>) {
+    switch (type) {
+        case "input":
+            return (
+                <Input {...field} />
+            )
+        case "textarea":
+            return (
+                <Textarea {...field} />
+            )
+    }
 }
 
 export default function CreateSheetForm({form, inputs, onSubmit}: {form: UseFormReturn<z.infer<ZodSchema>>, inputs: FormInput[], onSubmit(value: object): void}) {
@@ -25,7 +38,7 @@ export default function CreateSheetForm({form, inputs, onSubmit}: {form: UseForm
                         <FormItem>
                             <FormLabel>{input.title}</FormLabel>
                             <FormControl>
-                                { input.type === "input" ? <Input {...field} /> : <Textarea {...field} />}
+                                { getFieldInput(input.type, field) }
                             </FormControl>
                             <FormDescription>
                                 {input.description}
@@ -52,7 +65,7 @@ export function CreateSheetFormFields({form, inputs}: {form: UseFormReturn<z.inf
                         <FormItem>
                             <FormLabel>{input.title}</FormLabel>
                             <FormControl>
-                                { input.type === "input" ? <Input {...field} /> : <Textarea {...field} />}
+                                { getFieldInput(input.type, field) }
                             </FormControl>
                             <FormDescription>
                                 {input.description}

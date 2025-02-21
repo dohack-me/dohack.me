@@ -4,7 +4,8 @@ import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_compone
 import {BookDashedIcon} from "lucide-react";
 
 export default async function RepositoriesView() {
-    const repositories = await readRepositories();
+    const allRepositories = await readRepositories();
+    const repositories = allRepositories.filter((repository) => repository.visible);
 
     if (repositories.length <= 0) return (
         <Card className={"grow-col"}>

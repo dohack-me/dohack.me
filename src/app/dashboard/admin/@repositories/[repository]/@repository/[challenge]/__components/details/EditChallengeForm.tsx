@@ -17,6 +17,7 @@ import {cn} from "@/src/lib/utils";
 import {Repository} from "@/src/lib/database/repositories";
 import {useToast} from "@/src/hooks/use-toast";
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
+import {Switch} from "@/src/components/ui/switch";
 
 const categories = Object.keys(Category)
 
@@ -42,7 +43,8 @@ const formSchema = z.object({
         }),
     ).min(1, {
         message: "Challenge authors are required",
-    })
+    }),
+    visible: z.boolean()
 })
 
 export default function EditChallengeForm({repository, challenge}: {repository: Repository, challenge: Challenge}) {
@@ -58,6 +60,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
             category: challenge.category as Category,
             answer: challenge.answer,
             authors: challenge.authors.map((author) => ({value: author})),
+            visible: challenge.visible,
         }
     })
 
@@ -73,6 +76,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
             repository: repository,
+            visible: values.visible,
         })
         toast({
             title: "Updated challenge details.",
@@ -158,8 +162,28 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name={"visible"}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className={"header-with-button"}>
+                                    <div className={"header-with-button-description"}>
+                                        <FormLabel>Challenge Visibility</FormLabel>
+                                        <FormDescription>
+                                            Whether to show this challenge to normal users.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                    </FormControl>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <div className={"flex flex-col gap-y-4"}>
-                        <div>
+                        <div className={"flex flex-col gap-y-0.5"}>
                             {fields.map((field, index) => (
                                 <FormField
                                     control={form.control}

@@ -9,6 +9,7 @@ export type Repository = {
     sourceLink: string
     organization: string
     organizationLink: string
+    visible: boolean
     createdAt: Date
     updatedAt: Date
 }
@@ -18,6 +19,7 @@ export type EditableRepository = {
     sourceLink: string
     organization: string
     organizationLink: string
+    visible: boolean
 }
 
 export async function createRepository(data: EditableRepository) {
@@ -27,6 +29,7 @@ export async function createRepository(data: EditableRepository) {
             sourceLink: data.sourceLink,
             organization: data.organization,
             organizationLink: data.organizationLink,
+            visible: data.visible,
         }
     })) as Repository
 }
@@ -53,6 +56,7 @@ export async function updateRepository(id: string, data: EditableRepository) {
             sourceLink: data.sourceLink,
             organization: data.organization,
             organizationLink: data.organizationLink,
+            visible: data.visible,
         }
     })) as Repository
 }

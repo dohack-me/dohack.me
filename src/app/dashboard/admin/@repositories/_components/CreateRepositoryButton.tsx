@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
@@ -9,7 +9,9 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast"
 import CreateSheetButton from "@/src/components/sheet/CreateSheetButton";
-import CreateSheetForm from "@/src/components/sheet/CreateSheetForm";
+import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
+import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form";
+import {Switch} from "@/src/components/ui/switch";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -23,7 +25,8 @@ const formSchema = z.object({
     }),
     organizationLink: z.string().min(1, {
         message: "Repository organization link is required",
-    }).url()
+    }).url(),
+    visible: z.boolean(),
 })
 
 export default function CreateRepositoryButton() {
@@ -39,6 +42,7 @@ export default function CreateRepositoryButton() {
             sourceLink: "",
             organization: "",
             organizationLink: "",
+            visible: false,
         }
     })
 
@@ -62,32 +66,54 @@ export default function CreateRepositoryButton() {
             title={"Creating Repository"}
             description={"Fill in the repository details as required"}
         >
-            <CreateSheetForm form={form} inputs={[
-                {
-                    name: "name",
-                    title: "Repository Name",
-                    description: "The display name of this repository.",
-                    type: "input",
-                },
-                {
-                    name: "sourceLink",
-                    title: "Repository Source",
-                    description: "The link to your repository's source code.",
-                    type: "input",
-                },
-                {
-                    name: "organization",
-                    title: "Organization Name",
-                    description: "The name of the organization this repository comes from.",
-                    type: "input",
-                },
-                {
-                    name: "organizationLink",
-                    title: "Organization Link",
-                    description: "The link to your organization's socials.",
-                    type: "input",
-                }
-            ]} onSubmit={onSubmit}/>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                <CreateSheetFormFields form={form} inputs={[
+                    {
+                        name: "name",
+                        title: "Repository Name",
+                        description: "The display name of this repository.",
+                        type: "input",
+                    },
+                    {
+                        name: "sourceLink",
+                        title: "Repository Source",
+                        description: "The link to your repository's source code.",
+                        type: "input",
+                    },
+                    {
+                        name: "organization",
+                        title: "Organization Name",
+                        description: "The name of the organization this repository comes from.",
+                        type: "input",
+                    },
+                    {
+                        name: "organizationLink",
+                        title: "Organization Link",
+                        description: "The link to your organization's socials.",
+                        type: "input",
+                    }
+                ]}/>
+                <FormField
+                    control={form.control}
+                    name={"visible"}
+                    render={({ field }) => (
+                        <FormItem>
+                            <div className={"header-with-button"}>
+                                <div className={"header-with-button-description"}>
+                                    <FormLabel>Repository Visibility</FormLabel>
+                                    <FormDescription>
+                                        Whether to show this repository to normal users.
+                                    </FormDescription>
+                                </div>
+                                <FormControl>
+                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                </FormControl>
+                            </div>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+            </form>
         </CreateSheetButton>
     )
 }

@@ -3,10 +3,7 @@ import React from "react";
 import {readRepository} from "@/src/lib/database/repositories";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
-
-function isUUID(text: string): boolean {
-    return text.match(new RegExp("^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$")) != null;
-}
+import {isUUID} from "@/src/lib/utils";
 
 export default async function BreadcrumbsSlot({ params }: { params: Promise<{ paths: string[] }>}) {
     const paths = (await params).paths
@@ -23,13 +20,13 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
                 name = challenge.name
             }
         } else {
-            name = path
+            name = path.charAt(0).toUpperCase() + path.slice(1).toLowerCase()
         }
 
         if (index === paths.length - 1) {
             return (
                 <BreadcrumbItem key={path}>
-                    <BreadcrumbPage className={"capitalize"}>{name}</BreadcrumbPage>
+                    <BreadcrumbPage>{name}</BreadcrumbPage>
                 </BreadcrumbItem>
             )
         }
@@ -42,7 +39,7 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
         return (
             <>
                 <BreadcrumbItem key={path}>
-                    <BreadcrumbLink href={href} className={"capitalize"}>{name}</BreadcrumbLink>
+                    <BreadcrumbLink href={href}>{name}</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator key={path + "-separator"} />
             </>

@@ -4,7 +4,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
-import {Form} from "@/src/components/ui/form"
+import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Repository, updateRepository} from "@/src/lib/database/repositories";
 import {useRouter} from "next/navigation";
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
@@ -12,6 +12,7 @@ import {SaveIcon} from "lucide-react";
 import React from "react";
 import {useToast} from "@/src/hooks/use-toast";
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
+import {Switch} from "@/src/components/ui/switch";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -25,7 +26,8 @@ const formSchema = z.object({
     }),
     organizationLink: z.string().min(1, {
         message: "Repository organization link is required",
-    }).url()
+    }).url(),
+    visible: z.boolean(),
 })
 
 export default function EditRepositoryForm({repository}: {repository: Repository}) {
@@ -40,6 +42,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
             sourceLink: repository.sourceLink,
             organization: repository.organization,
             organizationLink: repository.organizationLink,
+            visible: false
         }
     })
 
@@ -94,7 +97,28 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                             description: "The link to your organization's socials.",
                             type: "input",
                         }
+
                     ]}/>
+                    <FormField
+                        control={form.control}
+                        name={"visible"}
+                        render={({ field }) => (
+                            <FormItem>
+                                <div className={"header-with-button"}>
+                                    <div className={"header-with-button-description"}>
+                                        <FormLabel>Repository Visibility</FormLabel>
+                                        <FormDescription>
+                                            Whether to show this repository to normal users.
+                                        </FormDescription>
+                                    </div>
+                                    <FormControl>
+                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                    </FormControl>
+                                </div>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 </CardContent>
             </form>
         </Form>

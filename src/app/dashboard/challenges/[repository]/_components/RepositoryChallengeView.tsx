@@ -7,7 +7,8 @@ import {BookDashedIcon} from "lucide-react";
 import {hasSolvedChallenge} from "@/src/lib/users";
 
 export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
-    const challenges = await readRepositoryChallenges(repositoryId);
+    const allChallenges = await readRepositoryChallenges(repositoryId);
+    const challenges = allChallenges.filter((challenge) => challenge.visible)
 
     if (challenges.length <= 0) return (
         <div className={"grow small-column"}>

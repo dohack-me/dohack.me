@@ -19,7 +19,7 @@ import ChallengeHints
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
-    if (!challenge) notFound()
+    if (!challenge || !challenge.visible) notFound()
 
     return (
         <Card className={"grow flex flex-col"}>

@@ -12,6 +12,7 @@ export type Challenge = {
     category: Category
     answer: string
     authors: string[]
+    visible: boolean
 
     createdAt: Date
     updatedAt: Date
@@ -25,6 +26,7 @@ export type EditableChallenge = {
     category: Category
     answer: string
     authors: string[]
+    visible: boolean
 
     repository: Repository
 }
@@ -36,6 +38,7 @@ type RawChallenge = {
     category: Category
     answer: string
     authors: string[]
+    visible: boolean
     createdAt: Date
     updatedAt: Date
     repositoryId: string
@@ -49,6 +52,7 @@ async function objectToChallenge(result: RawChallenge) {
         category: result.category,
         answer: result.answer,
         authors: result.authors,
+        visible: result.visible,
 
         createdAt: result.createdAt,
         updatedAt: result.updatedAt,
@@ -66,6 +70,7 @@ async function objectsToChallenges(results: RawChallenge[]) {
             category: result.category,
             answer: result.answer,
             authors: result.authors,
+            visible: result.visible,
 
             createdAt: result.createdAt,
             updatedAt: result.updatedAt,
@@ -83,6 +88,7 @@ export async function createChallenge(data: EditableChallenge) {
             category: data.category,
             answer: data.answer,
             authors: data.authors,
+            visible: data.visible,
 
             repositoryId: data.repository.id,
         }
@@ -130,6 +136,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
             category: data.category,
             answer: data.answer,
             authors: data.authors,
+            visible: data.visible,
 
             repositoryId: data.repository.id,
         }

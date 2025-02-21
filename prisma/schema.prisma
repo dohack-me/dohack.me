@@ -29,11 +29,12 @@ enum Category {
 }
 
 model Repository {
-  id               String @id @unique @default(uuid()) @db.Uuid
+  id               String  @id @unique @default(uuid()) @db.Uuid
   name             String
   sourceLink       String
   organization     String
   organizationLink String
+  visible          Boolean @default(false)
 
   challenges Challenge[]
 
@@ -45,11 +46,12 @@ model Repository {
 
 model Challenge {
   id          String   @id @unique @default(uuid()) @db.Uuid
-  name        String   @unique
+  name        String
   description String
   category    Category
   answer      String
   authors     String[]
+  visible     Boolean  @default(false)
 
   solves   Solve[]
   websites Website[]
