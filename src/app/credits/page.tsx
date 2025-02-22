@@ -15,7 +15,10 @@ export default async function Credits() {
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>
                         <CardTitle>Repository Credits</CardTitle>
-                        <CardDescription>This website wouldn&apos;t have been possible without these organizations open sourcing their challenges. Thank you!</CardDescription>
+                        <div>
+                            <CardDescription>This website wouldn&apos;t have been possible without these organizations open sourcing their challenges. Thank you!</CardDescription>
+                            <CardDescription>Want to suggest a repository? Make an issue <Link href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</CardDescription>
+                        </div>
                     </div>
                     <div className={"flex flex-row gap-x-2"}>
                         <Button asChild>
@@ -32,9 +35,6 @@ export default async function Credits() {
                         </Button>
                     </div>
                 </CardHeader>
-                <CardFooter className={"flex flex-col items-start"}>
-                    <p>Want to suggest a repository? Make an issue <Link href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</p>
-                </CardFooter>
             </Card>
             <Suspense fallback={<Skeleton className={"grow"}/>}>
                 <OrganizationCreditsView/>
