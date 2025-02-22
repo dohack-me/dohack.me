@@ -42,7 +42,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
             sourceLink: repository.sourceLink,
             organization: repository.organization,
             organizationLink: repository.organizationLink,
-            visible: false
+            visible: repository.visible,
         }
     })
 

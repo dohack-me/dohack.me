@@ -26,7 +26,7 @@ export default async function OrganizationCreditsView() {
     }
 
     return (
-        <div className="grid-view">
+        <div className={"grid-view"}>
             {Array.from(organizationsToRepositories.keys()).map(organization => (
                 <Card key={organization}>
                     <CardHeader>

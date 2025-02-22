@@ -1,13 +1,16 @@
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
 import OrganizationCreditsView from "@/src/app/credits/_components/OrganizationCreditsView";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {ChevronLeftIcon} from "lucide-react";
-import React from "react";
+import React, {Suspense} from "react";
+import {Skeleton} from "@/src/components/ui/skeleton";
+
+export const dynamic = "force-dynamic";
 
 export default async function Credits() {
     return (
-        <div className={"grow-col padding justify-center"}>
+        <div className={"min-h-screen small-column padding"}>
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>
@@ -29,14 +32,13 @@ export default async function Credits() {
                         </Button>
                     </div>
                 </CardHeader>
-                <CardContent>
-                    <OrganizationCreditsView/>
-                </CardContent>
                 <CardFooter className={"flex flex-col items-start"}>
                     <p>Want to suggest a repository? Make an issue <Link href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"} className={"underline hover:text-accent"} rel={"noopener noreferrer"} target={"_blank"}>here</Link>.</p>
-                    <p>This page is updated every website update. If an organization is missing here, please wait until then!</p>
                 </CardFooter>
             </Card>
+            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                <OrganizationCreditsView/>
+            </Suspense>
         </div>
     );
 }
