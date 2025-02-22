@@ -1,4 +1,4 @@
-import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import OrganizationCreditsView from "@/src/app/credits/_components/OrganizationCreditsView";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
