@@ -3,7 +3,7 @@ import {cookies} from "next/headers";
 import {Separator} from "@/src/components/ui/separator";
 import React, {Suspense} from "react";
 import Link from "next/link";
-import {AppWindow, Home, LogOut, Settings, Swords} from "lucide-react";
+import {AppWindow, Home, LogOut, Swords} from "lucide-react";
 import {ModeToggle} from "@/src/components/ModeToggle";
 import DashboardLoadingPage from "@/src/app/dashboard/loading";
 import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading";
@@ -74,6 +74,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 }
+                                <ModeToggle />
                                 <SidebarMenuItem key={"Log Out"}>
                                     <form action={async () => {
                                         "use server"
@@ -85,15 +86,6 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                                         </SidebarMenuButton>
                                     </form>
                                 </SidebarMenuItem>
-                                <SidebarMenuItem key={"Settings"}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={"/dashboard/settings"}>
-                                            <Settings />
-                                            <span>Settings</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                                <ModeToggle />
                             </SidebarMenu>
                         </SidebarGroupContent>
                     </SidebarGroup>
