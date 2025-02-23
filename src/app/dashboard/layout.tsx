@@ -12,7 +12,7 @@ import {redirect} from "next/navigation";
 import {getUserRole} from "@/src/lib/auth/users";
 import {UserRole} from "@prisma/client";
 
-const topitems = [
+const topItems = [
     {
         title: "Home",
         url: "/dashboard",
@@ -46,7 +46,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                         </SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                {topitems.map((item) => (
+                                {topItems.map((item) => (
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
                                             <a href={item.url}>

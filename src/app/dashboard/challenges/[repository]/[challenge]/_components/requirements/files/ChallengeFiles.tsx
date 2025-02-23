@@ -24,7 +24,7 @@ export default async function ChallengeFiles({challenge}: {challenge: Challenge}
                         const url = await getFileDownloadUrl(file.path)
                         return (
                             <Button key={file.etag} asChild>
-                                <Link href={url}>
+                                <Link href={url} download={file.name} target={"_blank"} rel={"noopener noreferrer"}>
                                     <DownloadIcon/>
                                     {file.name}
                                 </Link>

@@ -10,9 +10,7 @@ import Link from "next/link";
 
 export default async function DashboardPage() {
     const session = await auth()
-    if (!session) {
-        redirect("/")
-    }
+    if (!session) redirect("/")
 
     return (
         <div className={"grow padding column"}>

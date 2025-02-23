@@ -35,7 +35,8 @@ export async function getFileDownloadUrl(filePath: string) {
         Bucket: process.env.S3_BUCKET!,
         Key: filePath,
     })
-    return await getSignedUrl(S3, command)}
+    return await getSignedUrl(S3, command)
+}
 
 export async function getFileUploadUrl(filePath: string) {
     const command = new PutObjectCommand({

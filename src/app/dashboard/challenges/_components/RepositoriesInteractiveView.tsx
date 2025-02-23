@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {Repository} from "@/src/lib/database/repositories";
 import {Input} from "@/src/components/ui/input";

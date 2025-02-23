@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {Button} from "@/src/components/ui/button";
 import {ServerIcon} from "lucide-react";
@@ -30,7 +30,6 @@ export default function CreateSocketInstanceButton({socketId}: {socketId: string
                     toast({
                         title: "You already have a socket instance.",
                         description: "Please stop your instance to request another one."
-
                     })
                     return;
                 case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:

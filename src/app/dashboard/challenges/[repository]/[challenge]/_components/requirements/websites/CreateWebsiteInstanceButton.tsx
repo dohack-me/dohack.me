@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {Button} from "@/src/components/ui/button";
 import {ServerIcon} from "lucide-react";
