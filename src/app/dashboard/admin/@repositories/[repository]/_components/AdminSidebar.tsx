@@ -21,31 +21,26 @@ export default async function AdminSidebar({repositoryId}: {repositoryId: string
                         <InfoIcon/>
                     </Link>
                 </Button>
-                <Collapsible className={"group/collapsible"}>
-                    <CollapsibleButton title={"Challenges"}/>
-                    <CollapsibleContent>
-                        <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
-                            {categories.map((category) => (
-                                <Collapsible key={category}>
-                                    <CollapsibleTrigger asChild className={"w-full"}>
-                                        <CollapsibleButton title={category}/>
-                                    </CollapsibleTrigger>
-                                    <CollapsibleContent>
-                                        <div className={"mx-3.5 px-2.5 border-l-2 border-secondary flex flex-col gap-y-1"}>
-                                            {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
-                                                <Button key={challenge.id} variant={"ghost"} asChild>
-                                                    <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-start"}>
-                                                        {challenge.name}
-                                                    </Link>
-                                                </Button>
-                                            ))}
-                                        </div>
-                                    </CollapsibleContent>
-                                </Collapsible>
-                            ))}
-                        </div>
-                    </CollapsibleContent>
-                </Collapsible>
+                {categories.map((category) => (
+                    <Collapsible key={category}>
+                        <CollapsibleTrigger asChild className={"w-full"}>
+                            <CollapsibleButton>
+                                <p>{category}</p>
+                            </CollapsibleButton>
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                            <div className={"flex flex-col"}>
+                                {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
+                                    <Button key={challenge.id} variant={"ghost"} asChild>
+                                        <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-end"}>
+                                            {challenge.name}
+                                        </Link>
+                                    </Button>
+                                ))}
+                            </div>
+                        </CollapsibleContent>
+                    </Collapsible>
+                ))}
             </CardHeader>
         </Card>
     )
