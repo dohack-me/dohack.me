@@ -1,10 +1,10 @@
-import { Button } from "@/src/components/ui/button";
-import {Card, CardContent, CardTitle, CardDescription, CardHeader} from "@/src/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {readRepositoryChallenges} from "@/src/lib/database/challenges";
 import {Category} from "@prisma/client";
-import Link from "next/link";
 import {BookDashedIcon} from "lucide-react";
 import {hasSolvedChallenge} from "@/src/lib/users";
+import {Button} from "@/src/components/ui/button";
+import Link from "next/link";
 
 export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
     const allChallenges = await readRepositoryChallenges(repositoryId);
@@ -43,17 +43,26 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
                 <Card key={category}>
                     <CardHeader>
                         <CardTitle>{category}</CardTitle>
-                        <CardDescription>{`${challenges.filter((challenge) => challenge.solved).length}/${challenges.length} Solved`}</CardDescription>
+                        <CardDescription>{`${challenges.reduce(
+                            (solves, solvedChallenge) => (
+                                solves + (solvedChallenge.solved ? 1 : 0)
+                            ), 0
+                        )}/${challenges.length} Solved`}</CardDescription>
                     </CardHeader>
                     <CardContent className={"grid-view"}>
                         {
-                            challenges.map(async (challenge) => {
-                                return (
-                                    <Button key={challenge.challenge.id} asChild variant={challenge.solved ? "outline" : "default"}>
-                                        <Link href={`/dashboard/challenges/${repositoryId}/${challenge.challenge.id}`} className={challenge.solved ? "line-through" : undefined}>{challenge.challenge.name}</Link>
+                            challenges
+                                .sort((a, b) => {
+                                    if (a.solved === b.solved) {
+                                        return a.challenge.name.localeCompare(b.challenge.name)
+                                    }
+                                    return a.solved ? 1 : -1
+                                })
+                                .map(async ({solved, challenge}) => (
+                                    <Button key={challenge.id} asChild variant={solved ? "outline" : "default"}>
+                                        <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`} className={solved ? "line-through" : undefined}>{challenge.name}</Link>
                                     </Button>
-                                )
-                            })
+                                ))
                         }
                     </CardContent>
                 </Card>
