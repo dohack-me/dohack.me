@@ -2,12 +2,13 @@ import {Card, CardHeader, CardTitle, CardContent, CardDescription} from '@/src/c
 import RandomChallenge from "@/src/app/dashboard/_components/RandomChallenge";
 import React, {Suspense} from "react";
 import LoadingTitleCard from "@/src/components/skeletons/LoadingTitleCard";
-import CategoriesChartView from "@/src/app/dashboard/_components/CategoriesChartView";
+import SolvesCategoriesChartView from "@/src/app/dashboard/_components/charts/SolvesCategoriesChartView";
 import {Skeleton} from "@/src/components/ui/skeleton";
 import {auth} from "@/src/lib/auth/auth";
 import {redirect} from "next/navigation";
 import Link from "next/link";
 import ImportantChallengesView from "@/src/app/dashboard/_components/ImportantChallengesView";
+import SolvesTotalChartView from "@/src/app/dashboard/_components/charts/SolvesTotalChartView";
 
 export default async function DashboardPage() {
     const session = await auth()
@@ -33,16 +34,12 @@ export default async function DashboardPage() {
                         <CardDescription>View your overall progress.</CardDescription>
                     </CardHeader>
                     <CardContent className={"grid grid-flow-col auto-cols-fr gap-x-8"}>
-                        <Card className={"aspect-square flex flex-col"}>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <CategoriesChartView/>
-                            </Suspense>
-                        </Card>
-                        <Card className={"aspect-square flex flex-col"}>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <CategoriesChartView/>
-                            </Suspense>
-                        </Card>
+                        <Suspense fallback={<Skeleton className={"aspect-square"}/>}>
+                            <SolvesCategoriesChartView/>
+                        </Suspense>
+                        <Suspense fallback={<Skeleton className={"aspect-square"}/>}>
+                            <SolvesTotalChartView/>
+                        </Suspense>
                     </CardContent>
                 </Card>
                 <Card className={"flex flex-col"}>

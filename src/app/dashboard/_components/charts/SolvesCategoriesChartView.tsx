@@ -1,13 +1,12 @@
 import {readUserSolves} from "@/src/lib/database/solves";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {Category} from "@prisma/client";
-import CategoriesChart from "@/src/app/dashboard/_components/CategoriesChart";
+import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/SolvesCategoriesChart";
 
-export default async function CategoriesChartView() {
+export default async function SolvesCategoriesChartView() {
     const solves = (await Promise.all(
         (await readUserSolves())!
             .map(async(solve) => ((await readChallenge(solve.challengeId))!.category))
-            // assertion is fine here as the challengeId is taken from the db
     ))
 
     if (solves.length === 0) return (
@@ -26,6 +25,6 @@ export default async function CategoriesChartView() {
     }))
 
     return (
-        <CategoriesChart chartData={chartData}/>
+        <SolvesCategoriesChart chartData={chartData}/>
     )
 }
