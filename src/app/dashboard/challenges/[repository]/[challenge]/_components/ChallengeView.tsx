@@ -16,6 +16,8 @@ import ChallengeSockets
 import MarkdownContent from "@/src/components/MarkdownContent";
 import ChallengeHints
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints";
+import ChallengeBookmarkView
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView";
 
 export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
     const challenge = await readChallenge(challengeId)
@@ -28,13 +30,18 @@ export default async function ChallengeView({repositoryId, challengeId}: {reposi
                     <CardTitle>{challenge.name}</CardTitle>
                     <CardDescription>Category: {challenge.category}</CardDescription>
                 </div>
-                <Button asChild>
-                    <Link href={`/dashboard/challenges/${repositoryId}`}>
-                        <ChevronLeftIcon/>
-                        <p className={"hidden lg:block"}>Back to Challenges</p>
-                        <p className={"hidden sm:block lg:hidden"}>Back</p>
-                    </Link>
-                </Button>
+                <div className={"small-row"}>
+                    <Suspense fallback={null}>
+                        <ChallengeBookmarkView challengeId={challengeId}/>
+                    </Suspense>
+                    <Button asChild>
+                        <Link href={`/dashboard/challenges/${repositoryId}`}>
+                            <ChevronLeftIcon/>
+                            <p className={"hidden lg:block"}>Back to Challenges</p>
+                            <p className={"hidden sm:block lg:hidden"}>Back</p>
+                        </Link>
+                    </Button>
+                </div>
             </CardHeader>
             <CardContent className={"grow"}>
                 <ResizablePanelGroup direction={"horizontal"}>

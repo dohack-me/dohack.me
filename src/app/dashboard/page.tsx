@@ -7,6 +7,7 @@ import {Skeleton} from "@/src/components/ui/skeleton";
 import {auth} from "@/src/lib/auth/auth";
 import {redirect} from "next/navigation";
 import Link from "next/link";
+import ImportantChallengesView from "@/src/app/dashboard/_components/ImportantChallengesView";
 
 export default async function DashboardPage() {
     const session = await auth()
@@ -25,19 +26,37 @@ export default async function DashboardPage() {
                     </Suspense>
                 </CardContent>
             </Card>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Statistics</CardTitle>
-                    <CardDescription>View your overall progress.</CardDescription>
-                </CardHeader>
-                <CardContent className={"grid-view"}>
-                    <Card className={"aspect-square flex flex-col"}>
+            <div className={"grid grid-cols-2 gap-x-8"}>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Statistics</CardTitle>
+                        <CardDescription>View your overall progress.</CardDescription>
+                    </CardHeader>
+                    <CardContent className={"grid grid-flow-col auto-cols-fr gap-x-8"}>
+                        <Card className={"aspect-square flex flex-col"}>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <CategoriesChartView/>
+                            </Suspense>
+                        </Card>
+                        <Card className={"aspect-square flex flex-col"}>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <CategoriesChartView/>
+                            </Suspense>
+                        </Card>
+                    </CardContent>
+                </Card>
+                <Card className={"flex flex-col"}>
+                    <CardHeader>
+                        <CardTitle>Previous Challenges</CardTitle>
+                        <CardDescription>Return to bookmarked challenges and challenges with active instances.</CardDescription>
+                    </CardHeader>
+                    <CardContent className={"grow-col"}>
                         <Suspense fallback={<Skeleton className={"grow"}/>}>
-                            <CategoriesChartView/>
+                            <ImportantChallengesView/>
                         </Suspense>
-                    </Card>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+            </div>
             <Card>
                 <CardHeader>
                     <CardTitle>dohack.me is in Alpha!</CardTitle>

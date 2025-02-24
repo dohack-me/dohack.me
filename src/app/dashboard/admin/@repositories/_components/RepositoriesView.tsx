@@ -28,7 +28,7 @@ export default async function RepositoriesView() {
                                 confirmation={"Successfully deleted repository."}
                                 fail={"Could not delete repository. Please try again later"}
                                 callback={async () => {
-                                    'use server'
+                                    "use server"
                                     try {
                                         await deleteRepository(repository.id)
                                         return true

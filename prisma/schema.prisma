@@ -53,10 +53,11 @@ model Challenge {
   authors     String[]
   visible     Boolean  @default(false)
 
-  solves   Solve[]
-  websites Website[]
-  sockets  Socket[]
-  hints    Hint[]
+  solves    Solve[]
+  websites  Website[]
+  sockets   Socket[]
+  hints     Hint[]
+  bookmarks Bookmark[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -142,12 +143,24 @@ model Hint {
   @@map("hint")
 }
 
+model Bookmark {
+  userId      String @db.Uuid
+  challengeId String @db.Uuid
+
+  user      CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge  @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+
+  @@id([userId, challengeId])
+  @@map("bookmark")
+}
+
 model CustomUser {
   id     String   @id @unique @default(uuid()) @db.Uuid
   userId String   @unique
   role   UserRole @default(USER)
 
   solves           Solve[]
+  bookmarks        Bookmark[]
   websiteInstances WebsiteInstance[]
   socketInstances  SocketInstance[]
 
