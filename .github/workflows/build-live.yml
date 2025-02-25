@@ -1,7 +1,9 @@
-name: Build and Push Image
+name: Build and Push Live Image
 
 on:
   push:
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
