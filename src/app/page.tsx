@@ -36,7 +36,7 @@ export default async function Home() {
                 </CardHeader>
                 <CardContent>
                     <ul className={"list-disc list-inside"}>
-                        <li>Free as in Freedom - There will never be any restrictions or paywalls for any challenge.
+                        <li>Free for everybody - There will never be any restrictions or paywalls for any challenge.
                         </li>
                         <li>No competitiveness - No global leaderboard or solves to encourage growing at your own
                             pace.
