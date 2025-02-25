@@ -1,14 +1,14 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
-import RandomChallenge from "@/src/app/dashboard/_components/RandomChallenge";
-import React, {Suspense} from "react";
-import LoadingTitleCard from "@/src/components/skeletons/LoadingTitleCard";
-import SolvesCategoriesChartView from "@/src/app/dashboard/_components/charts/SolvesCategoriesChartView";
-import {Skeleton} from "@/src/components/ui/skeleton";
-import {auth} from "@/src/lib/auth/auth";
-import {redirect} from "next/navigation";
-import Link from "next/link";
-import ImportantChallengesView from "@/src/app/dashboard/_components/ImportantChallengesView";
-import SolvesTotalChartView from "@/src/app/dashboard/_components/charts/SolvesTotalChartView";
+import RandomChallenge from "@/src/app/dashboard/_components/RandomChallenge"
+import React, {Suspense} from "react"
+import LoadingTitleCard from "@/src/components/skeletons/LoadingTitleCard"
+import SolvesCategoriesChartView from "@/src/app/dashboard/_components/charts/SolvesCategoriesChartView"
+import {Skeleton} from "@/src/components/ui/skeleton"
+import {auth} from "@/src/lib/auth/auth"
+import {redirect} from "next/navigation"
+import Link from "next/link"
+import ImportantChallengesView from "@/src/app/dashboard/_components/ImportantChallengesView"
+import SolvesTotalChartView from "@/src/app/dashboard/_components/charts/SolvesTotalChartView"
 
 export default async function DashboardPage() {
     const session = await auth()

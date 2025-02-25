@@ -1,6 +1,6 @@
-import Link from "next/link";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {Button} from "@/src/components/ui/button";
+import Link from "next/link"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Button} from "@/src/components/ui/button"
 
 export default async function Home() {
     return (
@@ -30,5 +30,5 @@ export default async function Home() {
                 </CardHeader>
             </Card>
         </div>
-    );
+    )
 }

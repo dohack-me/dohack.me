@@ -6,18 +6,18 @@ import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Input} from "@/src/components/ui/input"
-import {useRouter} from "next/navigation";
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {PlusIcon, SaveIcon, XIcon} from "lucide-react";
-import React from "react";
-import {Category} from "@prisma/client";
-import {Challenge, updateChallenge} from "@/src/lib/database/challenges";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
-import {cn} from "@/src/lib/utils";
-import {Repository} from "@/src/lib/database/repositories";
-import {useToast} from "@/src/hooks/use-toast";
-import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
-import {Switch} from "@/src/components/ui/switch";
+import {useRouter} from "next/navigation"
+import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {PlusIcon, SaveIcon, XIcon} from "lucide-react"
+import React from "react"
+import {Category} from "@prisma/client"
+import {Challenge, updateChallenge} from "@/src/lib/database/challenges"
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
+import {cn} from "@/src/lib/utils"
+import {Repository} from "@/src/lib/database/repositories"
+import {useToast} from "@/src/hooks/use-toast"
+import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
+import {Switch} from "@/src/components/ui/switch"
 
 const categories = Object.keys(Category)
 
@@ -87,7 +87,7 @@ export default function EditChallengeForm({repository, challenge}: { repository:
     const {fields, append, remove} = useFieldArray({
         control: form.control,
         name: "authors",
-    });
+    })
 
     return (
         <Form {...form}>

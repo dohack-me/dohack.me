@@ -1,9 +1,9 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {readRepository, Repository} from "@/src/lib/database/repositories";
-import {Category} from "@prisma/client";
-import {deleteFolder, readFolderFiles} from "@/src/lib/storage";
+import {readRepository, Repository} from "@/src/lib/database/repositories"
+import {Category} from "@prisma/client"
+import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
 
 export type Challenge = {
     id: string

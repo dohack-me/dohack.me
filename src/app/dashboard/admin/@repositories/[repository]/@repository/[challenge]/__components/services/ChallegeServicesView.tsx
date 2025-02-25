@@ -1,14 +1,14 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/database/websites";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/database/websites"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
-import {readChallenge} from "@/src/lib/database/challenges";
-import {notFound} from "next/navigation";
-import {deleteSocketService, readChallengeSocketServices} from "@/src/lib/database/sockets";
-import DeleteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/DeleteServiceButton";
-import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu";
-import {EllipsisVerticalIcon} from "lucide-react";
-import React from "react";
-import CreateServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateServiceButton";
+import {readChallenge} from "@/src/lib/database/challenges"
+import {notFound} from "next/navigation"
+import {deleteSocketService, readChallengeSocketServices} from "@/src/lib/database/sockets"
+import DeleteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/DeleteServiceButton"
+import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
+import {EllipsisVerticalIcon} from "lucide-react"
+import React from "react"
+import CreateServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateServiceButton"
 
 export default async function ChallegeServicesView({challengeId}: { challengeId: string }) {
     const challenge = await readChallenge(challengeId)

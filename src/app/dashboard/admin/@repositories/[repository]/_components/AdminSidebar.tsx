@@ -1,15 +1,15 @@
-import {Card, CardHeader} from "@/src/components/ui/card";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {InfoIcon} from "lucide-react";
-import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/src/components/ui/collapsible";
-import {CollapsibleButton} from "@/src/components/CollapsibleButton";
-import React from "react";
-import {readRepositoryChallenges} from "@/src/lib/database/challenges";
-import {Category} from "@prisma/client";
+import {Card, CardHeader} from "@/src/components/ui/card"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
+import {InfoIcon} from "lucide-react"
+import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/src/components/ui/collapsible"
+import {CollapsibleButton} from "@/src/components/CollapsibleButton"
+import React from "react"
+import {readRepositoryChallenges} from "@/src/lib/database/challenges"
+import {Category} from "@prisma/client"
 
 export default async function AdminSidebar({repositoryId}: { repositoryId: string }) {
-    const challenges = await readRepositoryChallenges(repositoryId);
+    const challenges = await readRepositoryChallenges(repositoryId)
     const categories = Object.keys(Category)
 
     return (

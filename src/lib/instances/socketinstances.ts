@@ -1,9 +1,9 @@
 "use server"
 
-import {getUserId} from "@/src/lib/auth/users";
-import {prisma} from "@/src/lib/globals";
-import {readSocketService, Socket} from "@/src/lib/database/sockets";
-import posthog from "posthog-js";
+import {getUserId} from "@/src/lib/auth/users"
+import {prisma} from "@/src/lib/globals"
+import {readSocketService, Socket} from "@/src/lib/database/sockets"
+import posthog from "posthog-js"
 
 export type SocketInstance = {
     socket: Socket,
@@ -41,7 +41,7 @@ async function objectToSocketInstances(results: RawSocketInstance[]) {
 
 export async function readSocketInstance(socketId: string) {
     const userId = await getUserId()
-    if (!userId) return null;
+    if (!userId) return null
     const result = await prisma.socketInstance.findUnique({
         where: {
             userId_socketId: {
@@ -57,7 +57,7 @@ export async function readSocketInstance(socketId: string) {
 
 export async function readSocketInstances() {
     const userId = await getUserId()
-    if (!userId) return null;
+    if (!userId) return null
     const results = await prisma.socketInstance.findMany({
         where: {
             userId: userId,
@@ -69,7 +69,7 @@ export async function readSocketInstances() {
 
 export async function createSocketInstance(socket: Socket) {
     const userId = await getUserId()
-    if (!userId) return null;
+    if (!userId) return null
 
     const response = await fetch(`${process.env.BACKEND_URL!}/api/v1/service/socket/`, {
         method: "POST",
@@ -104,7 +104,7 @@ export async function createSocketInstance(socket: Socket) {
 
 export async function deleteSocketInstance(instance: SocketInstance) {
     const userId = await getUserId()
-    if (!userId) return null;
+    if (!userId) return null
 
     const response = await fetch(`${process.env.BACKEND_URL!}/api/v1/service/socket/${instance.id}/`, {
         method: "DELETE",

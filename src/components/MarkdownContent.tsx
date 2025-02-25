@@ -1,6 +1,6 @@
-import remarkHtml from "remark-html";
-import remarkParse from "remark-parse";
-import {unified} from "unified";
+import remarkHtml from "remark-html"
+import remarkParse from "remark-parse"
+import {unified} from "unified"
 
 export default async function MarkdownContent({text}: { text: string }) {
     const content = (

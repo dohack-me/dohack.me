@@ -1,12 +1,12 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import OrganizationCreditsView from "@/src/app/credits/_components/OrganizationCreditsView";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
-import React, {Suspense} from "react";
-import {Skeleton} from "@/src/components/ui/skeleton";
+import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import OrganizationCreditsView from "@/src/app/credits/_components/OrganizationCreditsView"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
+import {ChevronLeftIcon} from "lucide-react"
+import React, {Suspense} from "react"
+import {Skeleton} from "@/src/components/ui/skeleton"
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic"
 
 export default async function Credits() {
     return (
@@ -44,5 +44,5 @@ export default async function Credits() {
                 <OrganizationCreditsView/>
             </Suspense>
         </div>
-    );
+    )
 }

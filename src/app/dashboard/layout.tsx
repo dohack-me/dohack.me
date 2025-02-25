@@ -1,16 +1,16 @@
-import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger} from "@/src/components/ui/sidebar";
-import {cookies} from "next/headers";
-import {Separator} from "@/src/components/ui/separator";
-import React, {Suspense} from "react";
-import Link from "next/link";
-import {AppWindow, Home, LogOut, Swords} from "lucide-react";
-import {ModeToggle} from "@/src/components/ModeToggle";
-import DashboardLoadingPage from "@/src/app/dashboard/loading";
-import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading";
+import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger} from "@/src/components/ui/sidebar"
+import {cookies} from "next/headers"
+import {Separator} from "@/src/components/ui/separator"
+import React, {Suspense} from "react"
+import Link from "next/link"
+import {AppWindow, Home, LogOut, Swords} from "lucide-react"
+import {ModeToggle} from "@/src/components/ModeToggle"
+import DashboardLoadingPage from "@/src/app/dashboard/loading"
+import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading"
 import {auth, signOut} from "@/src/lib/auth/auth"
-import {redirect} from "next/navigation";
-import {getUserRole} from "@/src/lib/auth/users";
-import {UserRole} from "@prisma/client";
+import {redirect} from "next/navigation"
+import {getUserRole} from "@/src/lib/auth/users"
+import {UserRole} from "@prisma/client"
 
 const topItems = [
     {

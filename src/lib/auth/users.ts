@@ -1,7 +1,7 @@
 "use server"
 
-import {auth} from "@/src/lib/auth/auth";
-import {prisma} from "@/src/lib/globals";
+import {auth} from "@/src/lib/auth/auth"
+import {prisma} from "@/src/lib/globals"
 
 export async function getUserId() {
     const session = await auth()

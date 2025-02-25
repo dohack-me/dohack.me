@@ -1,19 +1,19 @@
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
-import React, {Suspense} from "react";
-import {readChallenge} from "@/src/lib/database/challenges";
-import {notFound} from "next/navigation";
-import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm";
-import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/files/ChallengeFiles";
-import {Skeleton} from "@/src/components/ui/skeleton";
-import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable";
-import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites";
-import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
-import MarkdownContent from "@/src/components/MarkdownContent";
-import ChallengeHints from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints";
-import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
+import {ChevronLeftIcon} from "lucide-react"
+import React, {Suspense} from "react"
+import {readChallenge} from "@/src/lib/database/challenges"
+import {notFound} from "next/navigation"
+import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm"
+import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/files/ChallengeFiles"
+import {Skeleton} from "@/src/components/ui/skeleton"
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable"
+import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites"
+import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets"
+import MarkdownContent from "@/src/components/MarkdownContent"
+import ChallengeHints from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints"
+import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
 
 export default async function ChallengeView({repositoryId, challengeId}: {
     repositoryId: string,

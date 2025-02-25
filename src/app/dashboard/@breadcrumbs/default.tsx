@@ -1,5 +1,5 @@
-import {Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage} from "@/src/components/ui/breadcrumb";
-import React from "react";
+import {Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage} from "@/src/components/ui/breadcrumb"
+import React from "react"
 
 export default async function DefaultBreadcrumbsSlot() {
     return (

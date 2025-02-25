@@ -1,17 +1,17 @@
 "use client"
 
-import {z} from "zod";
-import {useRouter} from "next/navigation";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {Form, FormControl, FormField, FormItem, FormMessage} from "@/src/components/ui/form";
-import {Input} from "@/src/components/ui/input";
-import {Button} from "@/src/components/ui/button";
-import {hasSolvedChallenge, submitChallengeAnswer} from "@/src/lib/users";
-import {useToast} from "@/src/hooks/use-toast";
-import {useState} from "react";
-import {TConductorInstance} from "react-canvas-confetti/src/types";
-import Fireworks from "react-canvas-confetti/dist/presets/fireworks";
+import {z} from "zod"
+import {useRouter} from "next/navigation"
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+import {Form, FormControl, FormField, FormItem, FormMessage} from "@/src/components/ui/form"
+import {Input} from "@/src/components/ui/input"
+import {Button} from "@/src/components/ui/button"
+import {hasSolvedChallenge, submitChallengeAnswer} from "@/src/lib/users"
+import {useToast} from "@/src/hooks/use-toast"
+import {useState} from "react"
+import {TConductorInstance} from "react-canvas-confetti/src/types"
+import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 
 const formSchema = z.object({
     answer: z.string().min(1, {

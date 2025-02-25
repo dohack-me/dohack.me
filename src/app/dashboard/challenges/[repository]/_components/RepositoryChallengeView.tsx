@@ -1,13 +1,13 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {readRepositoryChallenges} from "@/src/lib/database/challenges";
-import {Category} from "@prisma/client";
-import {BookDashedIcon} from "lucide-react";
-import {hasSolvedChallenge} from "@/src/lib/users";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {readRepositoryChallenges} from "@/src/lib/database/challenges"
+import {Category} from "@prisma/client"
+import {BookDashedIcon} from "lucide-react"
+import {hasSolvedChallenge} from "@/src/lib/users"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
 
 export default async function RepositoryChallengeView({repositoryId}: { repositoryId: string }) {
-    const allChallenges = await readRepositoryChallenges(repositoryId);
+    const allChallenges = await readRepositoryChallenges(repositoryId)
     const challenges = allChallenges.filter((challenge) => challenge.visible)
 
     if (challenges.length <= 0) return (

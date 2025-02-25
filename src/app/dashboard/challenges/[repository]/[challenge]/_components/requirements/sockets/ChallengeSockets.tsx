@@ -1,10 +1,10 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import React, {Suspense} from "react";
-import {Challenge} from "@/src/lib/database/challenges";
-import {readChallengeSocketServices} from "@/src/lib/database/sockets";
-import {Button} from "@/src/components/ui/button";
-import {Loader2Icon} from "lucide-react";
-import ChallengeSocketButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketButtonView";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import React, {Suspense} from "react"
+import {Challenge} from "@/src/lib/database/challenges"
+import {readChallengeSocketServices} from "@/src/lib/database/sockets"
+import {Button} from "@/src/components/ui/button"
+import {Loader2Icon} from "lucide-react"
+import ChallengeSocketButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketButtonView"
 
 export default async function ChallengeSockets({challenge}: { challenge: Challenge }) {
     const sockets = await readChallengeSocketServices(challenge.id)

@@ -1,8 +1,8 @@
-import React, {Suspense} from "react";
-import ChallengeView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeView";
-import {Skeleton} from "@/src/components/ui/skeleton";
-import {isUUID} from "@/src/lib/utils";
-import {notFound} from "next/navigation";
+import React, {Suspense} from "react"
+import ChallengeView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeView"
+import {Skeleton} from "@/src/components/ui/skeleton"
+import {isUUID} from "@/src/lib/utils"
+import {notFound} from "next/navigation"
 
 export default async function ChallengesPage({params}: { params: Promise<{ repository: string, challenge: string }> }) {
     const repositoryId = (await params).repository

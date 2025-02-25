@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {getUserId} from "@/src/lib/auth/users";
+import {getUserId} from "@/src/lib/auth/users"
 
 export async function createSolve(challengeId: string) {
     const userId = await getUserId()

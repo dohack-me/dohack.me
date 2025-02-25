@@ -1,34 +1,34 @@
 "use client"
 
-import {Challenge} from "@/src/lib/database/challenges";
-import {Input} from "@/src/components/ui/input";
-import {Button} from "@/src/components/ui/button";
-import React from "react";
-import {CloudUploadIcon} from "lucide-react";
-import {useRouter} from "next/navigation";
-import {useToast} from "@/src/hooks/use-toast";
-import {getFileUploadUrl} from "@/src/lib/storage";
+import {Challenge} from "@/src/lib/database/challenges"
+import {Input} from "@/src/components/ui/input"
+import {Button} from "@/src/components/ui/button"
+import React from "react"
+import {CloudUploadIcon} from "lucide-react"
+import {useRouter} from "next/navigation"
+import {useToast} from "@/src/hooks/use-toast"
+import {getFileUploadUrl} from "@/src/lib/storage"
 
 export default function UploadChallengeFilesForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
     const {toast} = useToast()
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
-        const inputElement = event.currentTarget.querySelector("input[type=\"file\"]")! as HTMLInputElement;
-        inputElement.click();
+        const inputElement = event.currentTarget.querySelector("input[type=\"file\"]")! as HTMLInputElement
+        inputElement.click()
     }
 
     async function onDrop(event: React.DragEvent<HTMLButtonElement>) {
         event.preventDefault()
-        const files = event.dataTransfer.files;
-        await uploadFiles(files);
+        const files = event.dataTransfer.files
+        await uploadFiles(files)
     }
 
     async function onChange(event: React.ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
-        const files = event.target.files;
+        const files = event.target.files
         if (!files) return
-        await uploadFiles(files);
+        await uploadFiles(files)
     }
 
     async function uploadFiles(files: FileList) {
@@ -44,7 +44,7 @@ export default function UploadChallengeFilesForm({challenge}: { challenge: Chall
         // forEach not used so that await can be used
         for (const file of Array.from(files)) {
             const filePath = `${challenge.repository.id}/${challenge.id}/${file.name}`
-            const uploadUrl = await getFileUploadUrl(filePath);
+            const uploadUrl = await getFileUploadUrl(filePath)
             await fetch(uploadUrl, {
                 method: "PUT",
                 body: file,
@@ -61,7 +61,7 @@ export default function UploadChallengeFilesForm({challenge}: { challenge: Chall
         <Button className={"h-full w-full rounded-r-none"} variant={"ghost"} type={"button"}
                 onDragOver={(e) => {
                     e.stopPropagation()
-                    e.preventDefault();
+                    e.preventDefault()
                 }}
                 onDrop={onDrop}
                 onClick={onClick}>

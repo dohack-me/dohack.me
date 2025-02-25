@@ -1,12 +1,12 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {readUserSolves} from "@/src/lib/database/solves";
-import {readRepository} from "@/src/lib/database/repositories";
-import {Challenge} from "@/src/lib/database/challenges";
-import Link from "next/link";
-import {Button} from "@/src/components/ui/button";
-import {SwordIcon} from "lucide-react";
-import React from "react";
-import {prisma} from "@/src/lib/globals";
+import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {readUserSolves} from "@/src/lib/database/solves"
+import {readRepository} from "@/src/lib/database/repositories"
+import {Challenge} from "@/src/lib/database/challenges"
+import Link from "next/link"
+import {Button} from "@/src/components/ui/button"
+import {SwordIcon} from "lucide-react"
+import React from "react"
+import {prisma} from "@/src/lib/globals"
 
 export default async function RandomChallenge() {
     const userSolves = await readUserSolves()
@@ -52,7 +52,7 @@ export default async function RandomChallenge() {
         </Card>
     )
 
-    const challenge = challenges[Math.floor(Math.random() * challenges.length)];
+    const challenge = challenges[Math.floor(Math.random() * challenges.length)]
 
     return (
         <Card>

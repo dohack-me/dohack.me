@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {Challenge, readChallenge} from "@/src/lib/database/challenges";
+import {Challenge, readChallenge} from "@/src/lib/database/challenges"
 
 export type Website = {
     id: string

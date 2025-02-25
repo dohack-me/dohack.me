@@ -3,7 +3,7 @@
 import * as React from "react"
 import {Moon, Sun} from "lucide-react"
 import {useTheme} from "next-themes"
-import {SidebarMenuButton, SidebarMenuItem} from "@/src/components/ui/sidebar";
+import {SidebarMenuButton, SidebarMenuItem} from "@/src/components/ui/sidebar"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
 
 export function ModeToggle() {

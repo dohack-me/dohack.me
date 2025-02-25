@@ -1,10 +1,10 @@
-import {readUserSolves} from "@/src/lib/database/solves";
-import {readChallenges} from "@/src/lib/database/challenges";
-import {Category} from "@prisma/client";
-import SolvesTotalChart from "@/src/app/dashboard/_components/charts/SolvesTotalChart";
+import {readUserSolves} from "@/src/lib/database/solves"
+import {readChallenges} from "@/src/lib/database/challenges"
+import {Category} from "@prisma/client"
+import SolvesTotalChart from "@/src/app/dashboard/_components/charts/SolvesTotalChart"
 
 export default async function SolvesTotalChartView() {
-    const solvedChallengeIds = (await readUserSolves())!.map(({challengeId}) => challengeId);
+    const solvedChallengeIds = (await readUserSolves())!.map(({challengeId}) => challengeId)
 
     if (solvedChallengeIds.length === 0) return (
         <div className={"grow flex flex-col items-center justify-center"}>

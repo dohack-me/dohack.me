@@ -3,15 +3,15 @@
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useForm} from "react-hook-form"
 import {z} from "zod"
-import {PlusIcon} from "lucide-react";
-import React, {useState} from "react";
-import {useRouter} from "next/navigation";
+import {PlusIcon} from "lucide-react"
+import React, {useState} from "react"
+import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
 import {Challenge} from "@/src/lib/database/challenges"
-import {createSocketService} from "@/src/lib/database/sockets";
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton";
-import CreateSheetForm from "@/src/components/sheet/CreateSheetForm";
-import {createWebsiteService} from "@/src/lib/database/websites";
+import {createSocketService} from "@/src/lib/database/sockets"
+import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
+import CreateSheetForm from "@/src/components/sheet/CreateSheetForm"
+import {createWebsiteService} from "@/src/lib/database/websites"
 
 const formSchema = z.object({
     image: z.string().min(1, {

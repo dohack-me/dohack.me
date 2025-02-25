@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./globals.css"
 
 import {ThemeProvider} from "@/src/components/ThemeProvider"
 import {Toaster} from "@/src/components/ui/toaster"
@@ -21,5 +21,5 @@ export default async function RootLayout({children}: Readonly<{ children: React.
         </PostHogProvider>
         </body>
         </html>
-    );
+    )
 }

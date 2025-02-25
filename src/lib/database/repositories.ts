@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {deleteFile} from "@/src/lib/storage";
+import {deleteFile} from "@/src/lib/storage"
 
 export type Repository = {
     id: string

@@ -1,8 +1,8 @@
 "use server"
 
-import {S3} from "@/src/lib/globals";
-import {DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, PutObjectCommand} from "@aws-sdk/client-s3";
-import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
+import {S3} from "@/src/lib/globals"
+import {DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, PutObjectCommand} from "@aws-sdk/client-s3"
+import {getSignedUrl} from "@aws-sdk/s3-request-presigner"
 
 export type BucketFile = {
     path: string

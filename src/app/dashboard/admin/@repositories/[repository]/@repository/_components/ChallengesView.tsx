@@ -1,13 +1,13 @@
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card";
-import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton";
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
-import {deleteChallenge, readChallenges} from "@/src/lib/database/challenges";
-import React from "react";
-import {readRepository} from "@/src/lib/database/repositories";
-import {Category} from "@prisma/client";
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
+import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton"
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import {deleteChallenge, readChallenges} from "@/src/lib/database/challenges"
+import React from "react"
+import {readRepository} from "@/src/lib/database/repositories"
+import {Category} from "@prisma/client"
 
 export default async function ChallengesView({repositoryId}: { repositoryId: string }) {
     const repository = await readRepository(repositoryId)

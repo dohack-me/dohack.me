@@ -1,12 +1,12 @@
 "use client"
 
-import {useRouter} from "next/navigation";
-import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog";
-import {Button} from "@/src/components/ui/button";
-import React, {useState} from "react";
-import {useToast} from "@/src/hooks/use-toast";
-import {useForm} from "react-hook-form";
-import {Form} from "@/src/components/ui/form";
+import {useRouter} from "next/navigation"
+import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog"
+import {Button} from "@/src/components/ui/button"
+import React, {useState} from "react"
+import {useToast} from "@/src/hooks/use-toast"
+import {useForm} from "react-hook-form"
+import {Form} from "@/src/components/ui/form"
 
 export function DeleteDialogButton({description, confirmation, fail, callback, children}: {
     description: string,

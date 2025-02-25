@@ -1,7 +1,7 @@
 import {readRepositories, Repository} from "@/src/lib/database/repositories"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import Link from "next/link";
-import {prisma} from "@/src/lib/globals";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import Link from "next/link"
+import {prisma} from "@/src/lib/globals"
 
 export default async function OrganizationCreditsView() {
     const repositories = await readRepositories()

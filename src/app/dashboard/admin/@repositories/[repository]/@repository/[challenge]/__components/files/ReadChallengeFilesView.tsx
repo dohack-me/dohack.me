@@ -1,17 +1,17 @@
-import React from "react";
-import {EllipsisVerticalIcon, FileIcon} from "lucide-react";
+import React from "react"
+import {EllipsisVerticalIcon, FileIcon} from "lucide-react"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
-import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesOptionButtons";
-import Link from "next/link";
-import {readChallenge} from "@/src/lib/database/challenges";
-import {deleteFile, getFileDownloadUrl, readFolderFiles} from "@/src/lib/storage";
-import {notFound} from "next/navigation";
+import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesOptionButtons"
+import Link from "next/link"
+import {readChallenge} from "@/src/lib/database/challenges"
+import {deleteFile, getFileDownloadUrl, readFolderFiles} from "@/src/lib/storage"
+import {notFound} from "next/navigation"
 
 export default async function ReadChallengeFilesView({challengeId}: { challengeId: string }) {
     const challenge = await readChallenge(challengeId)
     if (!challenge) notFound()
 
-    const data = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`);
+    const data = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`)
 
     return (
         <div className={"h-full w-full flex flex-col"}>

@@ -1,10 +1,10 @@
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form";
-import {Input} from "@/src/components/ui/input";
-import {Textarea} from "@/src/components/ui/textarea";
-import {Button} from "@/src/components/ui/button";
-import React from "react";
-import {ControllerRenderProps, FieldValues, UseFormReturn} from "react-hook-form";
-import {z, ZodSchema} from "zod";
+import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
+import {Input} from "@/src/components/ui/input"
+import {Textarea} from "@/src/components/ui/textarea"
+import {Button} from "@/src/components/ui/button"
+import React from "react"
+import {ControllerRenderProps, FieldValues, UseFormReturn} from "react-hook-form"
+import {z, ZodSchema} from "zod"
 
 export type FormInput = {
     name: string;

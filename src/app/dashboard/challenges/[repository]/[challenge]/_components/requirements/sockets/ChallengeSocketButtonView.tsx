@@ -1,15 +1,15 @@
-import {Socket} from "@/src/lib/database/sockets";
-import {Button} from "@/src/components/ui/button";
-import {XIcon} from "lucide-react";
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
-import React from "react";
-import CreateSocketInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/CreateSocketInstanceButton";
-import {readSocketInstance} from "@/src/lib/instances/socketinstances";
-import {shutdownSocketInstance} from "@/src/lib/orchestrator/sockets";
-import ChallengeCopySocketButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeCopySocketButton";
+import {Socket} from "@/src/lib/database/sockets"
+import {Button} from "@/src/components/ui/button"
+import {XIcon} from "lucide-react"
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import React from "react"
+import CreateSocketInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/CreateSocketInstanceButton"
+import {readSocketInstance} from "@/src/lib/instances/socketinstances"
+import {shutdownSocketInstance} from "@/src/lib/orchestrator/sockets"
+import ChallengeCopySocketButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeCopySocketButton"
 
 export default async function ChallengeSocketButtonView({socket}: { socket: Socket }) {
-    const instance = await readSocketInstance(socket.id);
+    const instance = await readSocketInstance(socket.id)
     if (!instance) return (
         <CreateSocketInstanceButton socketId={socket.id}/>
     )

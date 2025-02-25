@@ -1,7 +1,7 @@
-import React, {Suspense} from "react";
-import AdminRepositoryLoading from "@/src/app/dashboard/admin/@repositories/[repository]/loading";
-import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable";
-import AdminSidebar from "@/src/app/dashboard/admin/@repositories/[repository]/_components/AdminSidebar";
+import React, {Suspense} from "react"
+import AdminRepositoryLoading from "@/src/app/dashboard/admin/@repositories/[repository]/loading"
+import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable"
+import AdminSidebar from "@/src/app/dashboard/admin/@repositories/[repository]/_components/AdminSidebar"
 
 export default async function AdminRepositoryLayout({params, repository}: {
     params: Promise<{ repository: string }>,

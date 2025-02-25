@@ -1,15 +1,15 @@
 "use client"
 
-import {Button} from "@/src/components/ui/button";
-import {ServerIcon} from "lucide-react";
-import React from "react";
-import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors";
-import {useToast} from "@/src/hooks/use-toast";
-import {useRouter} from "next/navigation";
-import {deployWebsiteInstance} from "@/src/lib/orchestrator/websites";
+import {Button} from "@/src/components/ui/button"
+import {ServerIcon} from "lucide-react"
+import React from "react"
+import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors"
+import {useToast} from "@/src/hooks/use-toast"
+import {useRouter} from "next/navigation"
+import {deployWebsiteInstance} from "@/src/lib/orchestrator/websites"
 
 export default function CreateWebsiteInstanceButton({websiteId}: { websiteId: string }) {
-    const {toast} = useToast();
+    const {toast} = useToast()
     const router = useRouter()
 
     async function onSubmit() {
@@ -25,20 +25,20 @@ export default function CreateWebsiteInstanceButton({websiteId}: { websiteId: st
                         title: "You already have another website instance.",
                         description: "Please stop all instances before requesting another one.",
                     })
-                    return;
+                    return
                 case ServiceActionErrors.ALREADY_HAVE_INSTANCE:
                     toast({
                         title: "You already have a website instance.",
                         description: "Please stop your instance to request another one.",
 
                     })
-                    return;
+                    return
                 case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:
                     toast({
                         title: "Something went wrong.",
                         description: "Please try again later.",
                     })
-                    return;
+                    return
             }
         }
         if (data) {

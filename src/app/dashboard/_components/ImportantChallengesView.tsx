@@ -1,15 +1,15 @@
-import {readWebsiteInstances} from "@/src/lib/instances/websiteinstances";
-import {readSocketInstances} from "@/src/lib/instances/socketinstances";
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import Link from "next/link";
-import React from "react";
-import {Button} from "@/src/components/ui/button";
-import {BookDashedIcon, SwordIcon, XIcon} from "lucide-react";
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
-import {shutdownSocketInstance} from "@/src/lib/orchestrator/sockets";
-import {readUserBookmarks} from "@/src/lib/database/bookmarks";
-import {Challenge, readChallenge} from "@/src/lib/database/challenges";
-import {shutdownWebsiteInstance} from "@/src/lib/orchestrator/websites";
+import {readWebsiteInstances} from "@/src/lib/instances/websiteinstances"
+import {readSocketInstances} from "@/src/lib/instances/socketinstances"
+import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import Link from "next/link"
+import React from "react"
+import {Button} from "@/src/components/ui/button"
+import {BookDashedIcon, SwordIcon, XIcon} from "lucide-react"
+import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import {shutdownSocketInstance} from "@/src/lib/orchestrator/sockets"
+import {readUserBookmarks} from "@/src/lib/database/bookmarks"
+import {Challenge, readChallenge} from "@/src/lib/database/challenges"
+import {shutdownWebsiteInstance} from "@/src/lib/orchestrator/websites"
 
 export default async function ImportantChallengesView() {
     const websiteInstances = (await readWebsiteInstances())!

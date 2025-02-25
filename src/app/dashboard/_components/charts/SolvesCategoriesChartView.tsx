@@ -1,7 +1,7 @@
-import {readUserSolves} from "@/src/lib/database/solves";
-import {readChallenge} from "@/src/lib/database/challenges";
-import {Category} from "@prisma/client";
-import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/SolvesCategoriesChart";
+import {readUserSolves} from "@/src/lib/database/solves"
+import {readChallenge} from "@/src/lib/database/challenges"
+import {Category} from "@prisma/client"
+import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/SolvesCategoriesChart"
 
 export default async function SolvesCategoriesChartView() {
     const solves = (await Promise.all(

@@ -1,17 +1,17 @@
 "use client"
 
-import {Repository} from "@/src/lib/database/repositories";
-import {Input} from "@/src/components/ui/input";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import Link from "next/link";
-import {Button} from "@/src/components/ui/button";
-import {useState} from "react";
+import {Repository} from "@/src/lib/database/repositories"
+import {Input} from "@/src/components/ui/input"
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import Link from "next/link"
+import {Button} from "@/src/components/ui/button"
+import {useState} from "react"
 
 export default function RepositoriesInteractiveView({repositories}: { repositories: Repository[] }) {
-    const [finalRepositories, setFinalRepositories] = useState(repositories);
+    const [finalRepositories, setFinalRepositories] = useState(repositories)
 
     function onChange(input: string) {
-        setFinalRepositories(repositories.filter((repository) => repository.name.toLowerCase().startsWith(input.toLowerCase())));
+        setFinalRepositories(repositories.filter((repository) => repository.name.toLowerCase().startsWith(input.toLowerCase())))
     }
 
     return (

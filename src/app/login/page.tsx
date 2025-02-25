@@ -1,10 +1,10 @@
 import {Button} from "@/src/components/ui/button"
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {SiDiscord, SiGithub, SiGoogle} from "@icons-pack/react-simple-icons"
 import {signIn} from "@/src/lib/auth/auth"
-import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
-import React from "react";
+import Link from "next/link"
+import {ChevronLeftIcon} from "lucide-react"
+import React from "react"
 
 export default async function LoginPage() {
     return (

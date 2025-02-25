@@ -1,10 +1,10 @@
 "use client"
 
-import {Category} from "@prisma/client";
-import {type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/src/components/ui/chart";
-import {Label, Pie, PieChart} from "recharts";
-import {useMemo} from "react";
-import {Card} from "@/src/components/ui/card";
+import {Category} from "@prisma/client"
+import {type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/src/components/ui/chart"
+import {Label, Pie, PieChart} from "recharts"
+import {useMemo} from "react"
+import {Card} from "@/src/components/ui/card"
 
 const chartConfig = {
     CRYPTO: {

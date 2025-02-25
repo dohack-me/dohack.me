@@ -1,10 +1,10 @@
-import React, {Suspense} from "react";
-import RepositoriesView from "@/src/app/dashboard/challenges/_components/RepositoriesView";
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
-import {Button} from "@/src/components/ui/button";
-import Link from "next/link";
-import {ChevronLeftIcon} from "lucide-react";
-import {Skeleton} from "@/src/components/ui/skeleton";
+import React, {Suspense} from "react"
+import RepositoriesView from "@/src/app/dashboard/challenges/_components/RepositoriesView"
+import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Button} from "@/src/components/ui/button"
+import Link from "next/link"
+import {ChevronLeftIcon} from "lucide-react"
+import {Skeleton} from "@/src/components/ui/skeleton"
 
 export default async function ChallengesPage() {
     return (

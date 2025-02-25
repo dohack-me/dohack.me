@@ -1,11 +1,11 @@
-import {Card, CardDescription, CardHeader} from "@/src/components/ui/card";
-import {readRepositories} from "@/src/lib/database/repositories";
-import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView";
-import {BookDashedIcon} from "lucide-react";
+import {Card, CardDescription, CardHeader} from "@/src/components/ui/card"
+import {readRepositories} from "@/src/lib/database/repositories"
+import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
+import {BookDashedIcon} from "lucide-react"
 
 export default async function RepositoriesView() {
-    const allRepositories = await readRepositories();
-    const repositories = allRepositories.filter((repository) => repository.visible);
+    const allRepositories = await readRepositories()
+    const repositories = allRepositories.filter((repository) => repository.visible)
 
     if (repositories.length <= 0) return (
         <Card className={"grow-col"}>

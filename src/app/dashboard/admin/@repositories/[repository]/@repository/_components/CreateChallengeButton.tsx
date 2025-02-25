@@ -6,18 +6,18 @@ import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Input} from "@/src/components/ui/input"
-import {Repository} from "@/src/lib/database/repositories";
-import {PlusIcon, XIcon} from "lucide-react";
-import React, {useState} from "react";
-import {createChallenge} from "@/src/lib/database/challenges";
+import {Repository} from "@/src/lib/database/repositories"
+import {PlusIcon, XIcon} from "lucide-react"
+import React, {useState} from "react"
+import {createChallenge} from "@/src/lib/database/challenges"
 import {cn} from "@/src/lib/utils"
-import {Category} from "@prisma/client";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
-import {useRouter} from "next/navigation";
+import {Category} from "@prisma/client"
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
+import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton";
-import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm";
-import {Switch} from "@/src/components/ui/switch";
+import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
+import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
+import {Switch} from "@/src/components/ui/switch"
 
 const categories = Object.keys(Category)
 
@@ -68,7 +68,7 @@ export default function CreateChallengeButton({repository}: { repository: Reposi
     const {fields, append, remove} = useFieldArray({
         control: form.control,
         name: "authors",
-    });
+    })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         await createChallenge({
