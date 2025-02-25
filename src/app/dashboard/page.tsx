@@ -64,7 +64,7 @@ export default async function DashboardPage() {
                         <CardDescription>Features, UI and challenges are subject to change.</CardDescription>
                         <CardDescription>Any problems or suggestions? Contact me on <Link
                             href={"https://discord.com/users/301279262994857987"} className={"underline"}
-                            rel={"noopener noreferrer"} target={"_blank"}>Discord</Link>.</CardDescription>
+                            target={"_blank"}>Discord</Link>.</CardDescription>
                     </div>
                 </CardHeader>
             </Card>

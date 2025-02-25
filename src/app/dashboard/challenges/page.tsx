@@ -12,10 +12,10 @@ export default async function ChallengesPage() {
             <Card>
                 <CardHeader className={"header-with-button"}>
                     <div className={"header-with-button-description"}>
-                        <CardTitle>Select a repository</CardTitle>
+                        <CardTitle>Select A Repository</CardTitle>
                         <CardDescription>Repositories are publicly available <Link
-                            href={"https://github.com/dohack-me/dohack.me"}
-                            className={"underline"}>here</Link></CardDescription>
+                            href={"https://github.com/dohack-me/repositories-archive"}
+                            className={"underline"} target={"_blank"}>here</Link></CardDescription>
                     </div>
                     <Button asChild>
                         <Link href={`/dashboard`}>

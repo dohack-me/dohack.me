@@ -8,8 +8,9 @@ export default async function RepositoryTitleView({repositoryId}: { repositoryId
 
     return (
         <div className={"header-with-button-description"}>
-            <CardTitle><Link href={repository.sourceLink} className={"underline"}>{repository.name}</Link></CardTitle>
-            <CardDescription>Created by: <Link href={repository.organizationLink}
+            <CardTitle><Link href={repository.sourceLink} target={"_blank"}
+                             className={"underline"}>{repository.name}</Link></CardTitle>
+            <CardDescription>Created by: <Link href={repository.organizationLink} target={"_blank"}
                                                className={"underline"}>{repository.organization}</Link></CardDescription>
         </div>
     )

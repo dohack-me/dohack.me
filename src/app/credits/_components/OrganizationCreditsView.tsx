@@ -25,16 +25,18 @@ export default async function OrganizationCreditsView() {
         organizationsToChallengeCount.set(repository.organization, challengeCount)
     }
 
+    const organizationsArray = Array.from(organizationsToChallengeCount).sort((a, b) => b[1] - a[1])
+
     return (
         <div className={"grid-view"}>
-            {Array.from(organizationsToRepositories.keys()).map(organization => (
+            {organizationsArray.map(([organization, challengeCount]) => (
                 <Card key={organization}>
                     <CardHeader>
                         <CardTitle><Link href={organizationsToLink.get(organization)!}
                                          className={"underline"}>{organization}</Link></CardTitle>
                         <div>
                             <CardDescription>{`Organization behind ${organizationsToRepositories.get(organization)!.length} repositories`}</CardDescription>
-                            <CardDescription>{`Source of ${organizationsToChallengeCount.get(organization)!} challenges`}</CardDescription>
+                            <CardDescription>{`Source of ${challengeCount} challenges`}</CardDescription>
                         </div>
                     </CardHeader>
                     <CardContent>

@@ -22,10 +22,10 @@ export default function RepositoriesInteractiveView({repositories}: { repositori
                     <Card key={repository.id}>
                         <CardHeader>
                             <CardTitle>
-                                <Link href={repository.sourceLink}
+                                <Link href={repository.sourceLink} target={"_blank"}
                                       className={"underline"}>{repository.name}</Link>
                             </CardTitle>
-                            <CardDescription>Created by: <Link href={repository.organizationLink}
+                            <CardDescription>Created by: <Link href={repository.organizationLink} target={"_blank"}
                                                                className={"underline"}>{repository.organization}</Link></CardDescription>
                         </CardHeader>
                         <CardContent>
