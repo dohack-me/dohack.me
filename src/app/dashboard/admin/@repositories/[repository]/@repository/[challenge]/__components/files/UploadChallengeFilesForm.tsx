@@ -9,12 +9,12 @@ import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast";
 import {getFileUploadUrl} from "@/src/lib/storage";
 
-export default function UploadChallengeFilesForm({challenge}: {challenge: Challenge}) {
+export default function UploadChallengeFilesForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
     const {toast} = useToast()
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
-        const inputElement = event.currentTarget.querySelector('input[type="file"]')! as HTMLInputElement;
+        const inputElement = event.currentTarget.querySelector("input[type=\"file\"]")! as HTMLInputElement;
         inputElement.click();
     }
 
@@ -38,7 +38,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
 
         toast({
             title: "Uploading files...",
-            description: "Please be patient!"
+            description: "Please be patient!",
         })
 
         // forEach not used so that await can be used
@@ -53,7 +53,7 @@ export default function UploadChallengeFilesForm({challenge}: {challenge: Challe
 
         router.refresh()
         toast({
-            title: "Successfully uploaded files."
+            title: "Successfully uploaded files.",
         })
     }
 

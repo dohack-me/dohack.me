@@ -22,8 +22,11 @@ export default async function Home() {
             <Card>
                 <CardHeader className={"text-center"}>
                     <CardTitle className={"text-2xl"}>What is this?</CardTitle>
-                    <p>This is a website where users can attempt challenges from past CTF events without having to worry about finding and hosting challenges themselves.</p>
-                    <p>Collated CTFs can be found <Link href={"/credits"} className={"underline hover:text-accent"}>here</Link>, with more on its way.</p>
+                    <p>This is a website where users can attempt challenges from past CTF events without having to worry
+                        about finding and hosting challenges themselves.</p>
+                    <p>Collated CTFs can be found <Link href={"/credits"}
+                                                        className={"underline hover:text-accent"}>here</Link>, with more
+                        on its way.</p>
                 </CardHeader>
             </Card>
         </div>

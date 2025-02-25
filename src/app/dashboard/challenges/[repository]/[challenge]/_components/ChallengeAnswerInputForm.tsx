@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {z} from "zod";
 import {useRouter} from "next/navigation";
@@ -19,7 +19,7 @@ const formSchema = z.object({
     }),
 })
 
-export default function ChallengeAnswerInputForm({challengeId}: {challengeId: string}) {
+export default function ChallengeAnswerInputForm({challengeId}: { challengeId: string }) {
     const router = useRouter()
     const {toast} = useToast()
     const [conductor, setConductor] = useState<TConductorInstance>()
@@ -29,7 +29,7 @@ export default function ChallengeAnswerInputForm({challengeId}: {challengeId: st
         mode: "onChange",
         defaultValues: {
             answer: "",
-        }
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -77,12 +77,12 @@ export default function ChallengeAnswerInputForm({challengeId}: {challengeId: st
                 <FormField
                     control={form.control}
                     name={"answer"}
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem className={"grow"}>
                             <FormControl>
                                 <Input placeholder={"Flag"} {...field} />
                             </FormControl>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />

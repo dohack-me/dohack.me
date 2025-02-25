@@ -4,15 +4,14 @@ import Link from "next/link";
 import {ExternalLinkIcon, XIcon} from "lucide-react";
 import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton";
 import React from "react";
-import CreateWebsiteInstanceButton
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/CreateWebsiteInstanceButton";
+import CreateWebsiteInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/CreateWebsiteInstanceButton";
 import {readWebsiteInstance} from "@/src/lib/instances/websiteinstances";
 import {shutdownWebsiteInstance} from "@/src/lib/orchestrator/websites";
 
-export default async function ChallengeWebsiteButtonView({website}: {website: Website}) {
+export default async function ChallengeWebsiteButtonView({website}: { website: Website }) {
     const instance = await readWebsiteInstance(website.id);
     if (!instance) return (
-        <CreateWebsiteInstanceButton websiteId={website.id} />
+        <CreateWebsiteInstanceButton websiteId={website.id}/>
     )
     return (
         <div className={"w-full small-row justify-between"}>

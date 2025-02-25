@@ -9,7 +9,7 @@ import React from "react";
 import {readRepository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
 
-export default async function ChallengesView({repositoryId}: {repositoryId: string}) {
+export default async function ChallengesView({repositoryId}: { repositoryId: string }) {
     const repository = await readRepository(repositoryId)
     const allChallenges = await readChallenges()
     const challenges = allChallenges.filter((challenge) => challenge.repository.id === repositoryId)
@@ -25,7 +25,7 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                         answer to submit
                     </CardDescription>
                 </div>
-                <CreateChallengeButton repository={repository} />
+                <CreateChallengeButton repository={repository}/>
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue={categories[0]} className={"small-column"}>
@@ -45,13 +45,14 @@ export default async function ChallengesView({repositoryId}: {repositoryId: stri
                                         </CardHeader>
                                         <CardFooter className={"grid grid-cols-2 gap-x-3"}>
                                             <Button asChild>
-                                                <Link href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
+                                                <Link
+                                                    href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
                                             </Button>
                                             <DeleteDialogButton
                                                 description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
                                                 confirmation={"Successfully deleted challenge."}
                                                 fail={"Could not delete challenge. Please try again later."}
-                                                callback={async() => {
+                                                callback={async () => {
                                                     "use server"
                                                     return (await deleteChallenge(challenge.id)) != null
                                                 }}>

@@ -33,18 +33,20 @@ export default async function ImportantChallengesView() {
     return (
         <div className={"small-column"}>
             {websiteInstances.map((instance) => (
-                <ServiceChallengeView key={instance.id} challenge={instance.website.challenge} deleteCallback={async () => {
-                    "use server"
-                    const {error} = await shutdownWebsiteInstance(instance.website.id)
-                    return error === null
-                }}/>
+                <ServiceChallengeView key={instance.id} challenge={instance.website.challenge}
+                                      deleteCallback={async () => {
+                                          "use server"
+                                          const {error} = await shutdownWebsiteInstance(instance.website.id)
+                                          return error === null
+                                      }}/>
             ))}
             {socketInstances.map((instance) => (
-                <ServiceChallengeView key={instance.id} challenge={instance.socket.challenge} deleteCallback={async () => {
-                    "use server"
-                    const {error} = await shutdownSocketInstance(instance.socket.id)
-                    return error === null
-                }}/>
+                <ServiceChallengeView key={instance.id} challenge={instance.socket.challenge}
+                                      deleteCallback={async () => {
+                                          "use server"
+                                          const {error} = await shutdownSocketInstance(instance.socket.id)
+                                          return error === null
+                                      }}/>
             ))}
             {bookmarkedChallenges.map(async ({challengeId}) => {
                 const challenge = (await readChallenge(challengeId))!
@@ -63,7 +65,10 @@ export default async function ImportantChallengesView() {
     )
 }
 
-function ServiceChallengeView({challenge, deleteCallback}: {challenge: Challenge, deleteCallback(): Promise<boolean>}) {
+function ServiceChallengeView({challenge, deleteCallback}: {
+    challenge: Challenge,
+    deleteCallback(): Promise<boolean>
+}) {
     return (
         <ServiceChallengeWrapper challenge={challenge}>
             <div className={"small-row"}>
@@ -89,7 +94,7 @@ function ServiceChallengeView({challenge, deleteCallback}: {challenge: Challenge
     )
 }
 
-function ServiceChallengeWrapper({challenge, children}: {challenge: Challenge, children: React.ReactNode}) {
+function ServiceChallengeWrapper({challenge, children}: { challenge: Challenge, children: React.ReactNode }) {
     return (
         <Card>
             <CardHeader className={"header-with-button"}>

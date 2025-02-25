@@ -18,10 +18,10 @@ const formSchema = z.object({
     }),
     hint: z.string().min(1, {
         message: "Hint message is required",
-    })
+    }),
 })
 
-export default function CreateHintButton({challenge}: {challenge: Challenge}) {
+export default function CreateHintButton({challenge}: { challenge: Challenge }) {
     const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
@@ -31,15 +31,15 @@ export default function CreateHintButton({challenge}: {challenge: Challenge}) {
         mode: "onChange",
         defaultValues: {
             title: "",
-            hint: ""
-        }
+            hint: "",
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         await createHint({
             challenge: challenge,
             title: values.title,
-            hint: values.hint
+            hint: values.hint,
         })
         setOpen(false)
         router.refresh()
@@ -71,8 +71,8 @@ export default function CreateHintButton({challenge}: {challenge: Challenge}) {
                     title: "Hint message",
                     description: "The hint to give to players",
                     type: "textarea",
-                }
-                ]} onSubmit={onSubmit}/>
+                },
+            ]} onSubmit={onSubmit}/>
         </CreateSheetButton>
     )
 }

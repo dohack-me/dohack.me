@@ -15,9 +15,9 @@ export default async function RandomChallenge() {
     const challenges = await Promise.all((await prisma.challenge.findMany({
         where: {
             id: {
-                notIn: (userSolves.map((solve) => (solve.challengeId)))
-            }
-        }
+                notIn: (userSolves.map((solve) => (solve.challengeId))),
+            },
+        },
     })).map(async (result) => {
         return {
             id: result.id,

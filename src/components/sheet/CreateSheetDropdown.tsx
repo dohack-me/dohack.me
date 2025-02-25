@@ -9,9 +9,11 @@ import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
 
 export default function CreateSheetDropdown(
     {form, open, changeOpen, itemName, title, description, children}:
-    {form: UseFormReturn<z.infer<ZodSchema>>, open: boolean, changeOpen(open: boolean): void,
+    {
+        form: UseFormReturn<z.infer<ZodSchema>>, open: boolean, changeOpen(open: boolean): void,
         itemName: string,
-        title: string, description: string, children: React.ReactNode}) {
+        title: string, description: string, children: React.ReactNode
+    }) {
 
     return (
         <Sheet open={open} onOpenChange={changeOpen}>

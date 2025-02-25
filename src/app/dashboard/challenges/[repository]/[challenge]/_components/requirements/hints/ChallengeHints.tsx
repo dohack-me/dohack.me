@@ -2,11 +2,11 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/c
 import React from "react";
 import {readChallengeHints} from "@/src/lib/database/hints";
 import {Challenge} from "@/src/lib/database/challenges";
-import {Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription} from "@/src/components/ui/dialog";
+import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog";
 import {Button} from "@/src/components/ui/button";
 import MarkdownContent from "@/src/components/MarkdownContent";
 
-export default async function ChallengeHints({challenge}: {challenge: Challenge}) {
+export default async function ChallengeHints({challenge}: { challenge: Challenge }) {
     const hints = await readChallengeHints(challenge.id)
     if (hints.length <= 0) return null
 

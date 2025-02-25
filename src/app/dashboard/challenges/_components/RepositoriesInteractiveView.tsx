@@ -7,7 +7,7 @@ import Link from "next/link";
 import {Button} from "@/src/components/ui/button";
 import {useState} from "react";
 
-export default function RepositoriesInteractiveView({repositories}: {repositories: Repository[]}) {
+export default function RepositoriesInteractiveView({repositories}: { repositories: Repository[] }) {
     const [finalRepositories, setFinalRepositories] = useState(repositories);
 
     function onChange(input: string) {
@@ -16,7 +16,7 @@ export default function RepositoriesInteractiveView({repositories}: {repositorie
 
     return (
         <>
-            <Input placeholder={"Search repositories by name"} onChange={(e) => onChange(e.target.value)} />
+            <Input placeholder={"Search repositories by name"} onChange={(e) => onChange(e.target.value)}/>
             <div className={"grid-view"}>
                 {finalRepositories.map((repository) => (
                     <Card key={repository.id}>

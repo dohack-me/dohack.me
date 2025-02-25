@@ -8,7 +8,13 @@ import {useToast} from "@/src/hooks/use-toast";
 import {useForm} from "react-hook-form";
 import {Form} from "@/src/components/ui/form";
 
-export function DeleteDialogButton({description, confirmation, fail, callback, children}: {description: string, confirmation: string, fail: string, callback(): Promise<boolean>, children: React.ReactNode}) {
+export function DeleteDialogButton({description, confirmation, fail, callback, children}: {
+    description: string,
+    confirmation: string,
+    fail: string,
+    callback(): Promise<boolean>,
+    children: React.ReactNode
+}) {
     const [open, setOpen] = useState(false)
     const {toast} = useToast()
     const router = useRouter()
@@ -17,7 +23,7 @@ export function DeleteDialogButton({description, confirmation, fail, callback, c
     async function onSubmit() {
         toast({
             title: "Deleting...",
-            description: "Please be patient!"
+            description: "Please be patient!",
         })
         setOpen(false)
         const success = await callback()
@@ -47,7 +53,7 @@ export function DeleteDialogButton({description, confirmation, fail, callback, c
                         </Form>
                     </DialogClose>
                     <DialogClose asChild>
-                        <Button >Close</Button>
+                        <Button>Close</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

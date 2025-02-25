@@ -20,7 +20,7 @@ export default async function RepositoriesView() {
     return (
         <Card>
             <CardHeader className={"column"}>
-                <RepositoriesInteractiveView repositories={repositories} />
+                <RepositoriesInteractiveView repositories={repositories}/>
             </CardHeader>
         </Card>
     )

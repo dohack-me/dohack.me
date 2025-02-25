@@ -8,7 +8,7 @@ import React from "react";
 import {readRepositoryChallenges} from "@/src/lib/database/challenges";
 import {Category} from "@prisma/client";
 
-export default async function AdminSidebar({repositoryId}: {repositoryId: string}) {
+export default async function AdminSidebar({repositoryId}: { repositoryId: string }) {
     const challenges = await readRepositoryChallenges(repositoryId);
     const categories = Object.keys(Category)
 
@@ -32,7 +32,8 @@ export default async function AdminSidebar({repositoryId}: {repositoryId: string
                             <div className={"flex flex-col"}>
                                 {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
                                     <Button key={challenge.id} variant={"ghost"} asChild>
-                                        <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`} className={"flex flex-row justify-end"}>
+                                        <Link href={`/dashboard/admin/${repositoryId}/${challenge.id}`}
+                                              className={"flex flex-row justify-end"}>
                                             {challenge.name}
                                         </Link>
                                     </Button>

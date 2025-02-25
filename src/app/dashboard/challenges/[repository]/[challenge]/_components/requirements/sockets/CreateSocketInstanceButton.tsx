@@ -8,7 +8,7 @@ import {useToast} from "@/src/hooks/use-toast";
 import {useRouter} from "next/navigation";
 import {deploySocketInstance} from "@/src/lib/orchestrator/sockets";
 
-export default function CreateSocketInstanceButton({socketId}: {socketId: string}) {
+export default function CreateSocketInstanceButton({socketId}: { socketId: string }) {
     const {toast} = useToast();
     const router = useRouter()
 
@@ -23,13 +23,13 @@ export default function CreateSocketInstanceButton({socketId}: {socketId: string
                 case ServiceActionErrors.TOO_MANY_INSTANCES:
                     toast({
                         title: "You already have another socket instance.",
-                        description: "Please stop all instances before requesting another one."
+                        description: "Please stop all instances before requesting another one.",
                     })
                     return;
                 case ServiceActionErrors.ALREADY_HAVE_INSTANCE:
                     toast({
                         title: "You already have a socket instance.",
-                        description: "Please stop your instance to request another one."
+                        description: "Please stop your instance to request another one.",
                     })
                     return;
                 case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:

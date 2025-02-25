@@ -5,9 +5,11 @@ import {getUserRole} from "@/src/lib/auth/users";
 import {UserRole} from "@prisma/client";
 import {redirect} from "next/navigation";
 
-export default async function Layout({repositories}: {repositories: React.ReactNode}) {
+export default async function Layout({repositories}: { repositories: React.ReactNode }) {
     const role = await getUserRole()
-    if (!role || role != UserRole.ADMIN) {redirect("/dashboard")}
+    if (!role || role != UserRole.ADMIN) {
+        redirect("/dashboard")
+    }
 
     return (
         <div className={"grow padding small-column"}>

@@ -1,7 +1,7 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
-import {Repository, readRepository} from "@/src/lib/database/repositories";
+import {prisma} from "@/src/lib/globals"
+import {readRepository, Repository} from "@/src/lib/database/repositories";
 import {Category} from "@prisma/client";
 import {deleteFolder, readFolderFiles} from "@/src/lib/storage";
 
@@ -76,7 +76,7 @@ async function objectsToChallenges(results: RawChallenge[]) {
             updatedAt: result.updatedAt,
 
             repository: await readRepository(result.repositoryId),
-        }) as Challenge)
+        }) as Challenge),
     )
 }
 
@@ -91,7 +91,7 @@ export async function createChallenge(data: EditableChallenge) {
             visible: data.visible,
 
             repositoryId: data.repository.id,
-        }
+        },
     })
 
     return await objectToChallenge(result)
@@ -106,8 +106,8 @@ export async function readChallenges() {
 export async function readRepositoryChallenges(repositoryId: string) {
     const results = await prisma.challenge.findMany({
         where: {
-            repositoryId: repositoryId
-        }
+            repositoryId: repositoryId,
+        },
     })
 
     return await objectsToChallenges(results)
@@ -116,8 +116,8 @@ export async function readRepositoryChallenges(repositoryId: string) {
 export async function readChallenge(id: string) {
     const result = await prisma.challenge.findUnique({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })
 
     if (result == null) return null
@@ -128,7 +128,7 @@ export async function readChallenge(id: string) {
 export async function updateChallenge(id: string, data: EditableChallenge) {
     const result = await prisma.challenge.update({
         where: {
-            id: id
+            id: id,
         },
         data: {
             name: data.name,
@@ -139,7 +139,7 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
             visible: data.visible,
 
             repositoryId: data.repository.id,
-        }
+        },
     })
 
     return await objectToChallenge(result)
@@ -155,8 +155,8 @@ export async function deleteChallenge(id: string) {
 
     const result = await prisma.challenge.delete({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })
 
     return await objectToChallenge(result)

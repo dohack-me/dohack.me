@@ -7,15 +7,15 @@ import {SidebarMenuButton, SidebarMenuItem} from "@/src/components/ui/sidebar";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
 
 export function ModeToggle() {
-    const { setTheme } = useTheme()
+    const {setTheme} = useTheme()
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <SidebarMenuItem key={"theme"}>
                     <SidebarMenuButton>
-                        <Sun className="scale-100 dark:scale-0" />
-                        <Moon className="absolute scale-0 dark:scale-100" />
+                        <Sun className="scale-100 dark:scale-0"/>
+                        <Moon className="absolute scale-0 dark:scale-100"/>
                         <span>Toggle theme</span>
                     </SidebarMenuButton>
                 </SidebarMenuItem>

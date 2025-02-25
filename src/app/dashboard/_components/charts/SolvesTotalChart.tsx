@@ -12,10 +12,12 @@ const chartConfig = {
     },
     percentage: {
         label: "Percentage",
-    }
+    },
 } satisfies ChartConfig
 
-export default function SolvesCategoriesChart({chartData}: { chartData: {category: Category, percentage: number}[] }) {
+export default function SolvesCategoriesChart({chartData}: {
+    chartData: { category: Category, percentage: number }[]
+}) {
     const totalPercentage = useMemo(() => {
         return (chartData.reduce((acc, curr) => acc + curr.percentage, 0) / Object.values(Category).length).toFixed(1)
     }, [chartData])
@@ -25,10 +27,10 @@ export default function SolvesCategoriesChart({chartData}: { chartData: {categor
             <CardHeader className={"grow-col"}>
                 <ChartContainer config={chartConfig} className={"grow min-h-[1rem]"}>
                     <RadarChart data={chartData}>
-                        <ChartTooltip cursor={false} content={<ChartTooltipContent/>} />
-                        <PolarAngleAxis dataKey={"category"} />
+                        <ChartTooltip cursor={false} content={<ChartTooltipContent/>}/>
+                        <PolarAngleAxis dataKey={"category"}/>
                         <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false}/>
-                        <PolarGrid />
+                        <PolarGrid/>
                         <Radar
                             dataKey={"percentage"}
                             fill={"var(--color-challenge)"}

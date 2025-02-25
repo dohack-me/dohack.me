@@ -9,9 +9,11 @@ import {z, ZodSchema} from "zod";
 
 export default function CreateSheetButton(
     {form, open, changeOpen, icon, shortName, longName, title, description, children}:
-    {form: UseFormReturn<z.infer<ZodSchema>>, open: boolean, changeOpen(open: boolean): void,
+    {
+        form: UseFormReturn<z.infer<ZodSchema>>, open: boolean, changeOpen(open: boolean): void,
         icon: React.ReactNode, shortName: string, longName: string,
-        title: string, description: string, children: React.ReactNode}) {
+        title: string, description: string, children: React.ReactNode
+    }) {
 
     return (
         <Sheet open={open} onOpenChange={changeOpen}>

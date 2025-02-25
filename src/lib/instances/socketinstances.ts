@@ -35,7 +35,7 @@ async function objectToSocketInstances(results: RawSocketInstance[]) {
             userId: result.userId,
             id: result.id,
             port: result.port,
-        }) as SocketInstance)
+        }) as SocketInstance),
     )
 }
 
@@ -46,9 +46,9 @@ export async function readSocketInstance(socketId: string) {
         where: {
             userId_socketId: {
                 userId: userId,
-                socketId: socketId
-            }
-        }
+                socketId: socketId,
+            },
+        },
     })
 
     if (result == null) return null
@@ -60,8 +60,8 @@ export async function readSocketInstances() {
     if (!userId) return null;
     const results = await prisma.socketInstance.findMany({
         where: {
-            userId: userId
-        }
+            userId: userId,
+        },
     })
 
     return await objectToSocketInstances(results)
@@ -75,12 +75,12 @@ export async function createSocketInstance(socket: Socket) {
         method: "POST",
         body: JSON.stringify({
             "image": socket.image,
-            "tag": socket.tag
+            "tag": socket.tag,
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": process.env.BACKEND_SECRET_KEY!
-        }
+            "Authorization": process.env.BACKEND_SECRET_KEY!,
+        },
     })
 
     if (!response.ok) return null
@@ -89,15 +89,15 @@ export async function createSocketInstance(socket: Socket) {
         port: number
     } = await response.json()
 
-    posthog.capture("Socket instance created", { image: socket.image, tag: socket.tag })
+    posthog.capture("Socket instance created", {image: socket.image, tag: socket.tag})
 
     const result = await prisma.socketInstance.create({
         data: {
             socketId: socket.id,
             userId: userId,
             id: data.id,
-            port: data.port
-        }
+            port: data.port,
+        },
     })
     return await objectToSocketInstance(result)
 }
@@ -110,21 +110,21 @@ export async function deleteSocketInstance(instance: SocketInstance) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": process.env.BACKEND_SECRET_KEY!
-        }
+            "Authorization": process.env.BACKEND_SECRET_KEY!,
+        },
     })
 
     if (!response.ok && response.status != 404) return null
 
-    posthog.capture("Socket instance deleted", { image: instance.socket.image, tag: instance.socket.tag })
+    posthog.capture("Socket instance deleted", {image: instance.socket.image, tag: instance.socket.tag})
 
     const result = await prisma.socketInstance.delete({
         where: {
             userId_socketId: {
                 userId: userId,
-                socketId: instance.socket.id
-            }
-        }
+                socketId: instance.socket.id,
+            },
+        },
     })
     return await objectToSocketInstance(result)
 }

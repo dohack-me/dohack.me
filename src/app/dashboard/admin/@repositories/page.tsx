@@ -11,7 +11,8 @@ export default async function AdminRepositoriesPage() {
                 <CardHeader className={"flex flex-row justify-between"}>
                     <div className={"flex flex-col gap-y-1.5"}>
                         <CardTitle>Repositories</CardTitle>
-                        <CardDescription>Repositories group multiple challenges together, and are usually under one organization</CardDescription>
+                        <CardDescription>Repositories group multiple challenges together, and are usually under one
+                            organization</CardDescription>
                     </div>
                     <CreateRepositoryButton/>
                 </CardHeader>

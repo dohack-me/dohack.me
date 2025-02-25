@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {getUserId} from "@/src/lib/auth/users";
 
 export async function createBookmark(challengeId: string) {
@@ -11,7 +11,7 @@ export async function createBookmark(challengeId: string) {
         data: {
             userId: userId,
             challengeId: challengeId,
-        }
+        },
     })
 }
 
@@ -19,7 +19,7 @@ export async function readChallengeBookmarks(challengeId: string) {
     return prisma.bookmark.findMany({
         where: {
             challengeId: challengeId,
-        }
+        },
     })
 }
 
@@ -30,7 +30,7 @@ export async function readUserBookmarks() {
     return prisma.bookmark.findMany({
         where: {
             userId: userId,
-        }
+        },
     })
 }
 
@@ -43,8 +43,8 @@ export async function readUserChallengeBookmark(challengeId: string) {
             userId_challengeId: {
                 userId: userId,
                 challengeId: challengeId,
-            }
-        }
+            },
+        },
     })
 }
 
@@ -57,7 +57,7 @@ export async function deleteBookmark(challengeId: string) {
             userId_challengeId: {
                 userId: userId,
                 challengeId: challengeId,
-            }
-        }
+            },
+        },
     })
 }

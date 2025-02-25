@@ -26,7 +26,11 @@ function getFieldInput(type: "input" | "textarea", field: ControllerRenderProps<
     }
 }
 
-export default function CreateSheetForm({form, inputs, onSubmit}: {form: UseFormReturn<z.infer<ZodSchema>>, inputs: FormInput[], onSubmit(value: object): void}) {
+export default function CreateSheetForm({form, inputs, onSubmit}: {
+    form: UseFormReturn<z.infer<ZodSchema>>,
+    inputs: FormInput[],
+    onSubmit(value: object): void
+}) {
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
             {inputs.map((input) => (
@@ -34,16 +38,16 @@ export default function CreateSheetForm({form, inputs, onSubmit}: {form: UseForm
                     key={input.name}
                     control={form.control}
                     name={input.name}
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>{input.title}</FormLabel>
                             <FormControl>
-                                { getFieldInput(input.type, field) }
+                                {getFieldInput(input.type, field)}
                             </FormControl>
                             <FormDescription>
                                 {input.description}
                             </FormDescription>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -53,7 +57,10 @@ export default function CreateSheetForm({form, inputs, onSubmit}: {form: UseForm
     )
 }
 
-export function CreateSheetFormFields({form, inputs}: {form: UseFormReturn<z.infer<ZodSchema>>, inputs: FormInput[]}) {
+export function CreateSheetFormFields({form, inputs}: {
+    form: UseFormReturn<z.infer<ZodSchema>>,
+    inputs: FormInput[]
+}) {
     return (
         <>
             {inputs.map((input) => (
@@ -61,16 +68,16 @@ export function CreateSheetFormFields({form, inputs}: {form: UseFormReturn<z.inf
                     key={input.name}
                     control={form.control}
                     name={input.name}
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>{input.title}</FormLabel>
                             <FormControl>
-                                { getFieldInput(input.type, field) }
+                                {getFieldInput(input.type, field)}
                             </FormControl>
                             <FormDescription>
                                 {input.description}
                             </FormDescription>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />

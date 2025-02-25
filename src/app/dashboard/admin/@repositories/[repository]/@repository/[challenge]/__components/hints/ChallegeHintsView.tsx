@@ -1,4 +1,4 @@
-import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/src/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
 import React from "react";
@@ -9,10 +9,9 @@ import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSepara
 import {EllipsisVerticalIcon} from "lucide-react";
 import {deleteHint, readChallengeHints} from "@/src/lib/database/hints";
 import MarkdownContent from "@/src/components/MarkdownContent";
-import EditHintButton
-    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/hints/EditHintButton";
+import EditHintButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/hints/EditHintButton";
 
-export default async function ChallengeHintsView({challengeId}: {challengeId: string}) {
+export default async function ChallengeHintsView({challengeId}: { challengeId: string }) {
     const challenge = await readChallenge(challengeId);
     if (!challenge) notFound();
 

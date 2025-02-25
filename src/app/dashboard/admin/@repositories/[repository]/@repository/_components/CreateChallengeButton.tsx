@@ -10,9 +10,9 @@ import {Repository} from "@/src/lib/database/repositories";
 import {PlusIcon, XIcon} from "lucide-react";
 import React, {useState} from "react";
 import {createChallenge} from "@/src/lib/database/challenges";
-import { cn } from "@/src/lib/utils"
+import {cn} from "@/src/lib/utils"
 import {Category} from "@prisma/client";
-import {Select, SelectContent, SelectTrigger, SelectItem, SelectValue} from "@/src/components/ui/select";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
 import {useRouter} from "next/navigation";
 import {useToast} from "@/src/hooks/use-toast"
 import CreateSheetButton from "@/src/components/sheet/CreateSheetButton";
@@ -39,7 +39,7 @@ const formSchema = z.object({
         z.object({
             value: z.string().min(1, {
                 message: "Challenge author cannot be blank",
-            })
+            }),
         }),
     ).min(1, {
         message: "Challenge authors are required",
@@ -47,7 +47,7 @@ const formSchema = z.object({
     visible: z.boolean(),
 })
 
-export default function CreateChallengeButton({repository}: {repository: Repository}) {
+export default function CreateChallengeButton({repository}: { repository: Repository }) {
     const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
@@ -61,13 +61,13 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
             category: "",
             answer: "",
             authors: [{value: ""}],
-            visible: false
-        }
+            visible: false,
+        },
     })
 
-    const { fields, append, remove } = useFieldArray({
+    const {fields, append, remove} = useFieldArray({
         control: form.control,
-        name: "authors"
+        name: "authors",
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -111,12 +111,12 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                         title: "Challenge Description",
                         description: "The challenge's description.",
                         type: "textarea",
-                    }
+                    },
                 ]}/>
                 <FormField
                     control={form.control}
                     name="category"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Challenge Category</FormLabel>
                             <FormControl>
@@ -138,14 +138,14 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                             <FormDescription>
                                 The challenge&apos;s category.
                             </FormDescription>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name="answer"
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <FormLabel>Challenge Answer</FormLabel>
                             <FormControl>
@@ -154,14 +154,14 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                             <FormDescription>
                                 The answer to the challenge.
                             </FormDescription>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
                 <FormField
                     control={form.control}
                     name={"visible"}
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <div className={"header-with-button"}>
                                 <div className={"header-with-button-description"}>
@@ -171,10 +171,10 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                                     </FormDescription>
                                 </div>
                                 <FormControl>
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                    <Switch checked={field.value} onCheckedChange={field.onChange}/>
                                 </FormControl>
                             </div>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />
@@ -185,21 +185,23 @@ export default function CreateChallengeButton({repository}: {repository: Reposit
                                 control={form.control}
                                 key={field.id}
                                 name={`authors.${index}.value`}
-                                render={({ field }) => (
+                                render={({field}) => (
                                     <FormItem>
-                                        <FormLabel className={cn(index !== 0 && "sr-only")}>Challenge Authors</FormLabel>
+                                        <FormLabel className={cn(index !== 0 && "sr-only")}>Challenge
+                                            Authors</FormLabel>
                                         <FormDescription className={cn(index !== 0 && "sr-only")}>
                                             The authors of this challenge.
                                         </FormDescription>
                                         <FormControl>
                                             <div className={"flex flex-row gap-x-3"}>
                                                 <Input {...field}/>
-                                                <Button onClick={() => remove(index)} type={"button"} size={"icon"} disabled={fields.length <= 1}>
+                                                <Button onClick={() => remove(index)} type={"button"} size={"icon"}
+                                                        disabled={fields.length <= 1}>
                                                     <XIcon/>
                                                 </Button>
                                             </div>
                                         </FormControl>
-                                        <FormMessage />
+                                        <FormMessage/>
                                     </FormItem>
                                 )}
                             />

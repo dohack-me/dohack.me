@@ -4,10 +4,9 @@ import {Challenge} from "@/src/lib/database/challenges";
 import {readChallengeSocketServices} from "@/src/lib/database/sockets";
 import {Button} from "@/src/components/ui/button";
 import {Loader2Icon} from "lucide-react";
-import ChallengeSocketButtonView
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketButtonView";
+import ChallengeSocketButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketButtonView";
 
-export default async function ChallengeSockets({challenge}: {challenge: Challenge}) {
+export default async function ChallengeSockets({challenge}: { challenge: Challenge }) {
     const sockets = await readChallengeSocketServices(challenge.id)
     if (sockets.length <= 0) return null
 
@@ -24,10 +23,10 @@ export default async function ChallengeSockets({challenge}: {challenge: Challeng
                 {sockets.map((socket) => (
                     <Suspense key={socket.id} fallback={
                         <Button disabled>
-                            <Loader2Icon className={"animate-spin"} />
+                            <Loader2Icon className={"animate-spin"}/>
                             <p>Loading...</p>
                         </Button>}>
-                        <ChallengeSocketButtonView socket={socket} />
+                        <ChallengeSocketButtonView socket={socket}/>
                     </Suspense>
                 ))}
             </CardContent>

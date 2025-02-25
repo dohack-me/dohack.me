@@ -35,7 +35,7 @@ async function objectToWebsiteInstances(results: RawWebsiteInstance[]) {
             userId: result.userId,
             id: result.id,
             url: result.url,
-        }) as WebsiteInstance)
+        }) as WebsiteInstance),
     )
 }
 
@@ -46,9 +46,9 @@ export async function readWebsiteInstance(websiteId: string) {
         where: {
             userId_websiteId: {
                 userId: userId,
-                websiteId: websiteId
-            }
-        }
+                websiteId: websiteId,
+            },
+        },
     })
 
     if (result == null) return null
@@ -60,8 +60,8 @@ export async function readWebsiteInstances() {
     if (!userId) return null;
     const results = await prisma.websiteInstance.findMany({
         where: {
-            userId: userId
-        }
+            userId: userId,
+        },
     })
 
     return await objectToWebsiteInstances(results)
@@ -75,12 +75,12 @@ export async function createWebsiteInstance(website: Website) {
         method: "POST",
         body: JSON.stringify({
             "image": website.image,
-            "tag": website.tag
+            "tag": website.tag,
         }),
         headers: {
             "Content-Type": "application/json",
-            "Authorization": process.env.BACKEND_SECRET_KEY!
-        }
+            "Authorization": process.env.BACKEND_SECRET_KEY!,
+        },
     })
 
     if (!response.ok) return null
@@ -89,15 +89,15 @@ export async function createWebsiteInstance(website: Website) {
         url: string
     } = await response.json()
 
-    posthog.capture("Website instance created", { image: website.image, tag: website.tag })
+    posthog.capture("Website instance created", {image: website.image, tag: website.tag})
 
     const result = await prisma.websiteInstance.create({
         data: {
             websiteId: website.id,
             userId: userId,
             id: data.id,
-            url: data.url
-        }
+            url: data.url,
+        },
     })
     return await objectToWebsiteInstance(result)
 }
@@ -110,21 +110,21 @@ export async function deleteWebsiteInstance(instance: WebsiteInstance) {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": process.env.BACKEND_SECRET_KEY!
-        }
+            "Authorization": process.env.BACKEND_SECRET_KEY!,
+        },
     })
 
     if (!response.ok && response.status != 404) return null
 
-    posthog.capture("Website instance deleted", { image: instance.website.image, tag: instance.website.tag })
+    posthog.capture("Website instance deleted", {image: instance.website.image, tag: instance.website.tag})
 
     const result = await prisma.websiteInstance.delete({
         where: {
             userId_websiteId: {
                 userId: userId,
-                websiteId: instance.website.id
-            }
-        }
+                websiteId: instance.website.id,
+            },
+        },
     })
     return await objectToWebsiteInstance(result)
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import {S3} from "@/src/lib/globals";
-import {ListObjectsV2Command, DeleteObjectCommand, PutObjectCommand, GetObjectCommand} from "@aws-sdk/client-s3";
+import {DeleteObjectCommand, GetObjectCommand, ListObjectsV2Command, PutObjectCommand} from "@aws-sdk/client-s3";
 import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 
 export type BucketFile = {
@@ -15,7 +15,7 @@ export type BucketFile = {
 export async function readFolderFiles(folderPath: string): Promise<BucketFile[]> {
     const command = new ListObjectsV2Command({
         Bucket: process.env.S3_BUCKET!,
-        Prefix: folderPath
+        Prefix: folderPath,
     })
     const response = await S3.send(command)
     if (!response.Contents) return []
@@ -60,7 +60,7 @@ export async function deleteFolder(folderPath: string) {
 export async function deleteFile(filePath: string) {
     const command = new DeleteObjectCommand({
         Bucket: process.env.S3_BUCKET!,
-        Key: filePath
+        Key: filePath,
     })
     await S3.send(command)
 }

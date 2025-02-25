@@ -1,4 +1,4 @@
-import {Card, CardHeader, CardTitle, CardDescription, CardContent} from "@/src/components/ui/card";
+import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {deleteWebsiteService, readChallengeWebsiteServices} from "@/src/lib/database/websites";
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
 import {readChallenge} from "@/src/lib/database/challenges";
@@ -8,10 +8,9 @@ import DeleteServiceButton from "@/src/app/dashboard/admin/@repositories/[reposi
 import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu";
 import {EllipsisVerticalIcon} from "lucide-react";
 import React from "react";
-import CreateServiceButton
-    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateServiceButton";
+import CreateServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/CreateServiceButton";
 
-export default async function ChallegeServicesView({challengeId}: {challengeId: string}) {
+export default async function ChallegeServicesView({challengeId}: { challengeId: string }) {
     const challenge = await readChallenge(challengeId)
     if (!challenge) notFound()
 
@@ -23,11 +22,12 @@ export default async function ChallegeServicesView({challengeId}: {challengeId: 
             <CardHeader className={"header-with-button"}>
                 <div className={"header-with-button-description"}>
                     <CardTitle>Challenge Services</CardTitle>
-                    <CardDescription>Services are additional programs users need to run to solve a challenge</CardDescription>
+                    <CardDescription>Services are additional programs users need to run to solve a
+                        challenge</CardDescription>
                 </div>
                 <div className={"flex flex-row gap-x-2"}>
-                    <CreateServiceButton type={"website"} challenge={challenge} />
-                    <CreateServiceButton type={"socket"} challenge={challenge} />
+                    <CreateServiceButton type={"website"} challenge={challenge}/>
+                    <CreateServiceButton type={"socket"} challenge={challenge}/>
                 </div>
             </CardHeader>
             <CardContent className={"grow-col"}>

@@ -43,7 +43,7 @@ export default function CreateRepositoryButton() {
             organization: "",
             organizationLink: "",
             visible: false,
-        }
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -91,12 +91,12 @@ export default function CreateRepositoryButton() {
                         title: "Organization Link",
                         description: "The link to your organization's socials.",
                         type: "input",
-                    }
+                    },
                 ]}/>
                 <FormField
                     control={form.control}
                     name={"visible"}
-                    render={({ field }) => (
+                    render={({field}) => (
                         <FormItem>
                             <div className={"header-with-button"}>
                                 <div className={"header-with-button-description"}>
@@ -106,10 +106,10 @@ export default function CreateRepositoryButton() {
                                     </FormDescription>
                                 </div>
                                 <FormControl>
-                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                    <Switch checked={field.value} onCheckedChange={field.onChange}/>
                                 </FormControl>
                             </div>
-                            <FormMessage />
+                            <FormMessage/>
                         </FormItem>
                     )}
                 />

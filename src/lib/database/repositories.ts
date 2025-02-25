@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {deleteFile} from "@/src/lib/storage";
 
 export type Repository = {
@@ -30,7 +30,7 @@ export async function createRepository(data: EditableRepository) {
             organization: data.organization,
             organizationLink: data.organizationLink,
             visible: data.visible,
-        }
+        },
     })) as Repository
 }
 
@@ -41,15 +41,15 @@ export async function readRepositories() {
 export async function readRepository(id: string) {
     return (await prisma.repository.findUnique({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })) as Repository
 }
 
 export async function updateRepository(id: string, data: EditableRepository) {
     return (await prisma.repository.update({
         where: {
-            id: id
+            id: id,
         },
         data: {
             name: data.name,
@@ -57,7 +57,7 @@ export async function updateRepository(id: string, data: EditableRepository) {
             organization: data.organization,
             organizationLink: data.organizationLink,
             visible: data.visible,
-        }
+        },
     })) as Repository
 }
 
@@ -66,7 +66,7 @@ export async function deleteRepository(id: string) {
 
     return (await prisma.repository.delete({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })) as Repository
 }

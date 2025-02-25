@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {Challenge, readChallenge} from "@/src/lib/database/challenges";
 
 export type Socket = {
@@ -38,8 +38,8 @@ async function objectsToSockets(results: RawSocket[]) {
             id: result.id,
             image: result.image,
             tag: result.tag,
-            challenge: await readChallenge(result.challengeId)
-        }) as Socket)
+            challenge: await readChallenge(result.challengeId),
+        }) as Socket),
     )
 }
 
@@ -49,7 +49,7 @@ export async function createSocketService(data: EditableSocket) {
             image: data.image,
             tag: data.tag,
             challengeId: data.challenge.id,
-        }
+        },
     })
 
     return await objectToSocket(result)
@@ -65,7 +65,7 @@ export async function readChallengeSocketServices(challengeId: string) {
     const results = await prisma.socket.findMany({
         where: {
             challengeId: challengeId,
-        }
+        },
     })
 
     return await objectsToSockets(results)
@@ -75,7 +75,7 @@ export async function readSocketService(socketId: string) {
     const result = await prisma.socket.findUnique({
         where: {
             id: socketId,
-        }
+        },
     })
 
     if (result == null) return null
@@ -87,7 +87,7 @@ export async function deleteSocketService(socketId: string) {
     const result = await prisma.socket.delete({
         where: {
             id: socketId,
-        }
+        },
     })
 
     return await objectToSocket(result)

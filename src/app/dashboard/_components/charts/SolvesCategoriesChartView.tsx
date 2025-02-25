@@ -6,7 +6,7 @@ import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/Solves
 export default async function SolvesCategoriesChartView() {
     const solves = (await Promise.all(
         (await readUserSolves())!
-            .map(async(solve) => ((await readChallenge(solve.challengeId))!.category))
+            .map(async (solve) => ((await readChallenge(solve.challengeId))!.category)),
     ))
 
     if (solves.length === 0) return (
@@ -17,7 +17,9 @@ export default async function SolvesCategoriesChartView() {
     )
 
     const categoriesFrequency = new Map<Category, number>
-    solves.forEach((solve) => {categoriesFrequency.set(solve, (categoriesFrequency.get(solve) || 0) + 1)})
+    solves.forEach((solve) => {
+        categoriesFrequency.set(solve, (categoriesFrequency.get(solve) || 0) + 1)
+    })
     const chartData = Array.from(categoriesFrequency).map(([category, frequency]) => ({
         category: category,
         number: frequency,

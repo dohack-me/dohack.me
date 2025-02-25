@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {Challenge, readChallenge} from "@/src/lib/database/challenges";
 
 export type Website = {
@@ -38,8 +38,8 @@ async function objectsToWebsites(results: RawWebsite[]) {
             id: result.id,
             image: result.image,
             tag: result.tag,
-            challenge: await readChallenge(result.challengeId)
-        }) as Website)
+            challenge: await readChallenge(result.challengeId),
+        }) as Website),
     )
 }
 
@@ -49,7 +49,7 @@ export async function createWebsiteService(data: EditableWebsite) {
             image: data.image,
             tag: data.tag,
             challengeId: data.challenge.id,
-        }
+        },
     })
 
     return await objectToWebsite(result)
@@ -65,7 +65,7 @@ export async function readChallengeWebsiteServices(challengeId: string) {
     const results = await prisma.website.findMany({
         where: {
             challengeId: challengeId,
-        }
+        },
     })
 
     return await objectsToWebsites(results)
@@ -75,7 +75,7 @@ export async function readWebsiteService(websiteId: string) {
     const result = await prisma.website.findUnique({
         where: {
             id: websiteId,
-        }
+        },
     })
 
     if (result == null) return null
@@ -87,7 +87,7 @@ export async function deleteWebsiteService(websiteId: string) {
     const result = await prisma.website.delete({
         where: {
             id: websiteId,
-        }
+        },
     })
 
     return await objectToWebsite(result)

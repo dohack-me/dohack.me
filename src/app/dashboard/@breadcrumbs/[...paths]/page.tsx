@@ -5,7 +5,7 @@ import {readChallenge} from "@/src/lib/database/challenges";
 import {notFound} from "next/navigation";
 import {isUUID} from "@/src/lib/utils";
 
-export default async function BreadcrumbsSlot({ params }: { params: Promise<{ paths: string[] }>}) {
+export default async function BreadcrumbsSlot({params}: { params: Promise<{ paths: string[] }> }) {
     const paths = (await params).paths
 
     async function getBreadcrumbItem(path: string, index: number) {
@@ -41,7 +41,7 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
                 <BreadcrumbItem key={path}>
                     <BreadcrumbLink href={href}>{name}</BreadcrumbLink>
                 </BreadcrumbItem>
-                <BreadcrumbSeparator key={path + "-separator"} />
+                <BreadcrumbSeparator key={path + "-separator"}/>
             </>
         )
     }
@@ -49,7 +49,7 @@ export default async function BreadcrumbsSlot({ params }: { params: Promise<{ pa
     return (
         <Breadcrumb>
             <BreadcrumbList>
-                { paths.map((path, i) => getBreadcrumbItem(path, i))}
+                {paths.map((path, i) => getBreadcrumbItem(path, i))}
             </BreadcrumbList>
         </Breadcrumb>
     )

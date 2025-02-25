@@ -6,7 +6,7 @@ import {hasSolvedChallenge} from "@/src/lib/users";
 import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 
-export default async function RepositoryChallengeView({repositoryId}: {repositoryId: string}) {
+export default async function RepositoryChallengeView({repositoryId}: { repositoryId: string }) {
     const allChallenges = await readRepositoryChallenges(repositoryId);
     const challenges = allChallenges.filter((challenge) => challenge.visible)
 
@@ -24,17 +24,24 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
 
     const categories = Object.keys(Category)
     const categoryChallenges = (await Promise.all(
-        categories.map(async(category) =>
-            ({
-                category: category,
-                challenges: await Promise.all(
-                    challenges.filter((challenge) => challenge.category === category)
-                        .map(async(challenge) => ({
-                            solved: (await hasSolvedChallenge(challenge.id))!,
-                            challenge: challenge,
-                        }))
-                )
-            }))))
+        categories.map(async (category) => ({
+            category: category,
+            challenges: (await Promise.all(
+                challenges
+                    .filter((challenge) => challenge.category === category)
+                    .map(async (challenge) => ({
+                        solved: (await hasSolvedChallenge(challenge.id))!,
+                        challenge: challenge,
+                    })),
+            ))
+                .sort((a, b) => {
+                    if (a.solved === b.solved) {
+                        return a.challenge.name.localeCompare(b.challenge.name)
+                    }
+                    return a.solved ? 1 : -1
+                }),
+        })),
+    ))
         .filter(({challenges}) => challenges.length > 0)
 
     return (
@@ -46,21 +53,16 @@ export default async function RepositoryChallengeView({repositoryId}: {repositor
                         <CardDescription>{`${challenges.reduce(
                             (solves, solvedChallenge) => (
                                 solves + (solvedChallenge.solved ? 1 : 0)
-                            ), 0
+                            ), 0,
                         )}/${challenges.length} Solved`}</CardDescription>
                     </CardHeader>
                     <CardContent className={"grid-view"}>
                         {
                             challenges
-                                .sort((a, b) => {
-                                    if (a.solved === b.solved) {
-                                        return a.challenge.name.localeCompare(b.challenge.name)
-                                    }
-                                    return a.solved ? 1 : -1
-                                })
                                 .map(async ({solved, challenge}) => (
                                     <Button key={challenge.id} asChild variant={solved ? "outline" : "default"}>
-                                        <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`} className={solved ? "line-through" : undefined}>{challenge.name}</Link>
+                                        <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}
+                                              className={solved ? "line-through" : undefined}>{challenge.name}</Link>
                                     </Button>
                                 ))
                         }

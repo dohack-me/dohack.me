@@ -39,15 +39,15 @@ const formSchema = z.object({
         z.object({
             value: z.string().min(1, {
                 message: "Challenge author cannot be blank",
-            })
+            }),
         }),
     ).min(1, {
         message: "Challenge authors are required",
     }),
-    visible: z.boolean()
+    visible: z.boolean(),
 })
 
-export default function EditChallengeForm({repository, challenge}: {repository: Repository, challenge: Challenge}) {
+export default function EditChallengeForm({repository, challenge}: { repository: Repository, challenge: Challenge }) {
     const router = useRouter()
     const {toast} = useToast()
 
@@ -61,7 +61,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
             answer: challenge.answer,
             authors: challenge.authors.map((author) => ({value: author})),
             visible: challenge.visible,
-        }
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -84,9 +84,9 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
         router.refresh()
     }
 
-    const { fields, append, remove } = useFieldArray({
+    const {fields, append, remove} = useFieldArray({
         control: form.control,
-        name: "authors"
+        name: "authors",
     });
 
     return (
@@ -98,7 +98,7 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                         <CardDescription>Edit challenge details here</CardDescription>
                     </div>
                     <Button type={"submit"}>
-                        <SaveIcon />
+                        <SaveIcon/>
                         Save
                     </Button>
                 </CardHeader>
@@ -115,12 +115,12 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                             title: "Challenge Description",
                             description: "The challenge's description.",
                             type: "textarea",
-                        }
+                        },
                     ]}/>
                     <FormField
                         control={form.control}
                         name={"category"}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Challenge Category</FormLabel>
                                 <FormControl>
@@ -142,14 +142,14 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                                 <FormDescription>
                                     The challenge&apos;s category.
                                 </FormDescription>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
                     <FormField
                         control={form.control}
                         name={"answer"}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <FormLabel>Challenge Answer</FormLabel>
                                 <FormControl>
@@ -158,14 +158,14 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                                 <FormDescription>
                                     The answer to the challenge.
                                 </FormDescription>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
                     <FormField
                         control={form.control}
                         name={"visible"}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <div className={"header-with-button"}>
                                     <div className={"header-with-button-description"}>
@@ -175,10 +175,10 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                                         </FormDescription>
                                     </div>
                                     <FormControl>
-                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                        <Switch checked={field.value} onCheckedChange={field.onChange}/>
                                     </FormControl>
                                 </div>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />
@@ -189,9 +189,10 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                                     control={form.control}
                                     key={field.id}
                                     name={`authors.${index}.value`}
-                                    render={({ field }) => (
+                                    render={({field}) => (
                                         <FormItem>
-                                            <div className={`flex flex-row justify-between ${cn(index !== 0 && "sr-only")}`}>
+                                            <div
+                                                className={`flex flex-row justify-between ${cn(index !== 0 && "sr-only")}`}>
                                                 <div>
                                                     <FormLabel>Challenge Authors</FormLabel>
                                                     <FormDescription>
@@ -206,12 +207,13 @@ export default function EditChallengeForm({repository, challenge}: {repository: 
                                             <FormControl>
                                                 <div className={"flex flex-row gap-x-3"}>
                                                     <Input {...field}/>
-                                                    <Button onClick={() => remove(index)} type={"button"} size={"icon"} disabled={fields.length <= 1}>
+                                                    <Button onClick={() => remove(index)} type={"button"} size={"icon"}
+                                                            disabled={fields.length <= 1}>
                                                         <XIcon/>
                                                     </Button>
                                                 </div>
                                             </FormControl>
-                                            <FormMessage />
+                                            <FormMessage/>
                                         </FormItem>
                                     )}
                                 />

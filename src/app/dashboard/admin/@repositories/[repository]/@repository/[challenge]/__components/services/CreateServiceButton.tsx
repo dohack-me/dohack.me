@@ -22,7 +22,7 @@ const formSchema = z.object({
     }),
 })
 
-export default function CreateServiceButton({type, challenge}: {type: "website" | "socket", challenge: Challenge}) {
+export default function CreateServiceButton({type, challenge}: { type: "website" | "socket", challenge: Challenge }) {
     const capitalized = type.charAt(0).toUpperCase() + type.slice(1).toLowerCase()
 
     const {toast} = useToast()
@@ -34,8 +34,8 @@ export default function CreateServiceButton({type, challenge}: {type: "website" 
         mode: "onChange",
         defaultValues: {
             image: "",
-            tag: "latest"
-        }
+            tag: "latest",
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -43,13 +43,13 @@ export default function CreateServiceButton({type, challenge}: {type: "website" 
             await createWebsiteService({
                 image: values.image,
                 tag: values.tag,
-                challenge: challenge
+                challenge: challenge,
             })
         } else {
             await createSocketService({
                 image: values.image,
                 tag: values.tag,
-                challenge: challenge
+                challenge: challenge,
             })
         }
         setOpen(false)
@@ -82,7 +82,7 @@ export default function CreateServiceButton({type, challenge}: {type: "website" 
                     title: "Docker Image Tag",
                     description: `The tag of the Docker image used to deploy the ${type} service`,
                     type: "input",
-                }
+                },
             ]} onSubmit={onSubmit}/>
         </CreateSheetButton>
     )

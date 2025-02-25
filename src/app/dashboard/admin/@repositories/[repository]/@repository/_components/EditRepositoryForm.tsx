@@ -30,7 +30,7 @@ const formSchema = z.object({
     visible: z.boolean(),
 })
 
-export default function EditRepositoryForm({repository}: {repository: Repository}) {
+export default function EditRepositoryForm({repository}: { repository: Repository }) {
     const router = useRouter()
     const {toast} = useToast()
 
@@ -43,7 +43,7 @@ export default function EditRepositoryForm({repository}: {repository: Repository
             organization: repository.organization,
             organizationLink: repository.organizationLink,
             visible: repository.visible,
-        }
+        },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
@@ -96,13 +96,13 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                             title: "Organization Link",
                             description: "The link to your organization's socials.",
                             type: "input",
-                        }
+                        },
 
                     ]}/>
                     <FormField
                         control={form.control}
                         name={"visible"}
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem>
                                 <div className={"header-with-button"}>
                                     <div className={"header-with-button-description"}>
@@ -112,10 +112,10 @@ export default function EditRepositoryForm({repository}: {repository: Repository
                                         </FormDescription>
                                     </div>
                                     <FormControl>
-                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
+                                        <Switch checked={field.value} onCheckedChange={field.onChange}/>
                                     </FormControl>
                                 </div>
-                                <FormMessage />
+                                <FormMessage/>
                             </FormItem>
                         )}
                     />

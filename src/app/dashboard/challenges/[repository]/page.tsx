@@ -8,21 +8,25 @@ import {Button} from "@/src/components/ui/button";
 import Link from "next/link";
 import {Skeleton} from "@/src/components/ui/skeleton";
 import {prisma} from "@/src/lib/globals";
-import { notFound } from "next/navigation";
+import {notFound} from "next/navigation";
 import {isUUID} from "@/src/lib/utils";
 
-export default async function RepositoryPage({ params }: { params: Promise<{ repository: string }> }) {
+export default async function RepositoryPage({params}: { params: Promise<{ repository: string }> }) {
     const repositoryId = (await params).repository
-    if (!isUUID(repositoryId)) {notFound()}
+    if (!isUUID(repositoryId)) {
+        notFound()
+    }
     const visible = await prisma.repository.findUnique({
         where: {
-            id: repositoryId
+            id: repositoryId,
         },
         select: {
-            visible: true
-        }
+            visible: true,
+        },
     })
-    if (!visible) {notFound()}
+    if (!visible) {
+        notFound()
+    }
 
     return (
         <div className={"grow padding small-column"}>
@@ -41,7 +45,7 @@ export default async function RepositoryPage({ params }: { params: Promise<{ rep
                 </CardHeader>
             </Card>
             <Suspense fallback={<Skeleton className={"grow"}/>}>
-                <RepositoryChallengeView repositoryId={repositoryId} />
+                <RepositoryChallengeView repositoryId={repositoryId}/>
             </Suspense>
         </div>
     )

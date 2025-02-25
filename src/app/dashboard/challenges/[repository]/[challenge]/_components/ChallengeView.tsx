@@ -9,17 +9,16 @@ import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository
 import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/files/ChallengeFiles";
 import {Skeleton} from "@/src/components/ui/skeleton";
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable";
-import ChallengeWebsites
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites";
-import ChallengeSockets
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
+import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites";
+import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets";
 import MarkdownContent from "@/src/components/MarkdownContent";
-import ChallengeHints
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints";
-import ChallengeBookmarkView
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView";
+import ChallengeHints from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints";
+import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView";
 
-export default async function ChallengeView({repositoryId, challengeId}: {repositoryId: string, challengeId: string}) {
+export default async function ChallengeView({repositoryId, challengeId}: {
+    repositoryId: string,
+    challengeId: string
+}) {
     const challenge = await readChallenge(challengeId)
     if (!challenge || !challenge.visible) notFound()
 

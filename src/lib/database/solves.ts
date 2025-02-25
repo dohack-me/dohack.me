@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {getUserId} from "@/src/lib/auth/users";
 
 export async function createSolve(challengeId: string) {
@@ -11,7 +11,7 @@ export async function createSolve(challengeId: string) {
         data: {
             userId: userId,
             challengeId: challengeId,
-        }
+        },
     })
 }
 
@@ -19,7 +19,7 @@ export async function readChallengeSolves(challengeId: string) {
     return prisma.solve.findMany({
         where: {
             challengeId: challengeId,
-        }
+        },
     })
 }
 
@@ -30,7 +30,7 @@ export async function readUserSolves() {
     return prisma.solve.findMany({
         where: {
             userId: userId,
-        }
+        },
     })
 }
 
@@ -43,8 +43,8 @@ export async function readUserChallengeSolve(challengeId: string) {
             userId_challengeId: {
                 userId: userId,
                 challengeId: challengeId,
-            }
-        }
+            },
+        },
     })
 }
 
@@ -57,7 +57,7 @@ export async function deleteSolve(challengeId: string) {
             userId_challengeId: {
                 userId: userId,
                 challengeId: challengeId,
-            }
-        }
+            },
+        },
     })
 }

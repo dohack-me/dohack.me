@@ -12,7 +12,7 @@ export default async function LoadingTitleCard() {
                     <TitleCardTextSkeleton/>
                 </div>
                 <Button disabled>
-                    <Loader2Icon className={"animate-spin"} />
+                    <Loader2Icon className={"animate-spin"}/>
                     <p>Loading...</p>
                 </Button>
             </CardHeader>

@@ -22,10 +22,13 @@ const topItems = [
         title: "Challenges",
         url: "/dashboard/challenges",
         icon: Swords,
-    }
+    },
 ]
 
-export default async function DashboardLayout({children, breadcrumbs}: { children: React.ReactNode, breadcrumbs: React.ReactNode}) {
+export default async function DashboardLayout({children, breadcrumbs}: {
+    children: React.ReactNode,
+    breadcrumbs: React.ReactNode
+}) {
     const session = await auth()
     if (!session) {
         redirect("/login")
@@ -50,7 +53,7 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
                                             <a href={item.url}>
-                                                <item.icon />
+                                                <item.icon/>
                                                 <span>{item.title}</span>
                                             </a>
                                         </SidebarMenuButton>
@@ -64,24 +67,24 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                     <SidebarGroup>
                         <SidebarGroupContent>
                             <SidebarMenu>
-                                { admin &&
+                                {admin &&
                                     <SidebarMenuItem key={"Admin Panel"}>
                                         <SidebarMenuButton asChild>
                                             <a href={"/dashboard/admin"}>
-                                                <AppWindow />
+                                                <AppWindow/>
                                                 <span>Admin</span>
                                             </a>
                                         </SidebarMenuButton>
                                     </SidebarMenuItem>
                                 }
-                                <ModeToggle />
+                                <ModeToggle/>
                                 <SidebarMenuItem key={"Log Out"}>
                                     <form action={async () => {
                                         "use server"
                                         await signOut()
                                     }}>
                                         <SidebarMenuButton type={"submit"}>
-                                            <LogOut />
+                                            <LogOut/>
                                             <span>Log Out</span>
                                         </SidebarMenuButton>
                                     </form>
@@ -92,7 +95,8 @@ export default async function DashboardLayout({children, breadcrumbs}: { childre
                 </SidebarFooter>
             </Sidebar>
             <main className={"grow flex flex-col"}>
-                <div className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center z-10"}>
+                <div
+                    className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center z-10"}>
                     <SidebarTrigger/>
                     <Separator orientation={"vertical"}/>
                     <Suspense fallback={<BreadcrumbsLoading/>}>

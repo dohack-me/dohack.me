@@ -19,7 +19,7 @@ export default async function OrganizationCreditsView() {
         let challengeCount = await prisma.challenge.count({
             where: {
                 repositoryId: repository.id,
-            }
+            },
         })
         challengeCount += organizationsToChallengeCount.get(repository.organization) || 0
         organizationsToChallengeCount.set(repository.organization, challengeCount)
@@ -30,7 +30,8 @@ export default async function OrganizationCreditsView() {
             {Array.from(organizationsToRepositories.keys()).map(organization => (
                 <Card key={organization}>
                     <CardHeader>
-                        <CardTitle><Link href={organizationsToLink.get(organization)!} className={"underline"}>{organization}</Link></CardTitle>
+                        <CardTitle><Link href={organizationsToLink.get(organization)!}
+                                         className={"underline"}>{organization}</Link></CardTitle>
                         <div>
                             <CardDescription>{`Organization behind ${organizationsToRepositories.get(organization)!.length} repositories`}</CardDescription>
                             <CardDescription>{`Source of ${organizationsToChallengeCount.get(organization)!} challenges`}</CardDescription>

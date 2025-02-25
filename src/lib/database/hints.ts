@@ -1,6 +1,6 @@
 "use server"
 
-import {prisma} from '@/src/lib/globals'
+import {prisma} from "@/src/lib/globals"
 import {Challenge, readChallenge} from "@/src/lib/database/challenges"
 
 export type Hint = {
@@ -39,7 +39,7 @@ async function objectToHints(results: RawHint[]) {
             challenge: (await readChallenge(result.challengeId))!,
             title: result.title,
             hint: result.hint,
-        }) as Hint)
+        }) as Hint),
     )
 }
 
@@ -48,8 +48,8 @@ export async function createHint(data: EditableHint) {
         data: {
             challengeId: data.challenge.id,
             title: data.title,
-            hint: data.hint
-        }
+            hint: data.hint,
+        },
     })
 
     return objectToHint(result)
@@ -64,8 +64,8 @@ export async function readHints() {
 export async function readChallengeHints(challengeId: string) {
     const result = await prisma.hint.findMany({
         where: {
-            challengeId: challengeId
-        }
+            challengeId: challengeId,
+        },
     })
 
     return objectToHints(result)
@@ -74,8 +74,8 @@ export async function readChallengeHints(challengeId: string) {
 export async function readHint(id: string) {
     const result = await prisma.hint.findUnique({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })
 
     if (!result) return null
@@ -86,13 +86,13 @@ export async function readHint(id: string) {
 export async function updateHint(id: string, data: EditableHint) {
     const result = await prisma.hint.update({
         where: {
-            id: id
+            id: id,
         },
         data: {
             challengeId: data.challenge.id,
             title: data.title,
-            hint: data.hint
-        }
+            hint: data.hint,
+        },
     })
 
     return objectToHint(result)
@@ -101,8 +101,8 @@ export async function updateHint(id: string, data: EditableHint) {
 export async function deleteHint(id: string) {
     const result = await prisma.hint.delete({
         where: {
-            id: id
-        }
+            id: id,
+        },
     })
 
     return objectToHint(result)

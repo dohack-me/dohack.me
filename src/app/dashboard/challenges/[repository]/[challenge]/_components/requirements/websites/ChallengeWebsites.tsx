@@ -4,10 +4,9 @@ import {Challenge} from "@/src/lib/database/challenges";
 import {readChallengeWebsiteServices} from "@/src/lib/database/websites";
 import {Button} from "@/src/components/ui/button";
 import {Loader2Icon} from "lucide-react";
-import ChallengeWebsiteButtonView
-    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsiteButtonView";
+import ChallengeWebsiteButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsiteButtonView";
 
-export default async function ChallengeWebsites({challenge}: {challenge: Challenge}) {
+export default async function ChallengeWebsites({challenge}: { challenge: Challenge }) {
     const websites = await readChallengeWebsiteServices(challenge.id)
     if (websites.length <= 0) return null
 
@@ -24,10 +23,10 @@ export default async function ChallengeWebsites({challenge}: {challenge: Challen
                 {websites.map((website) => (
                     <Suspense key={website.id} fallback={
                         <Button disabled>
-                        <Loader2Icon className={"animate-spin"} />
-                        <p>Loading...</p>
-                    </Button>}>
-                        <ChallengeWebsiteButtonView website={website} />
+                            <Loader2Icon className={"animate-spin"}/>
+                            <p>Loading...</p>
+                        </Button>}>
+                        <ChallengeWebsiteButtonView website={website}/>
                     </Suspense>
                 ))}
             </CardContent>

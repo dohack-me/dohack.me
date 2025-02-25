@@ -24,30 +24,30 @@ export default async function LoginPage() {
                 </CardHeader>
                 <CardContent className={"w-full flex flex-col gap-y-6"}>
                     <div className={"flex flex-col gap-y-4"}>
-                        <form action={async() => {
+                        <form action={async () => {
                             "use server"
-                            await signIn("github", { redirectTo: "/dashboard" })
+                            await signIn("github", {redirectTo: "/dashboard"})
                         }}>
                             <Button type={"submit"} className={"w-full"}>
-                                <SiGithub />
+                                <SiGithub/>
                                 Login using Github
                             </Button>
                         </form>
                         <form action={async () => {
                             "use server"
-                            await signIn("discord", { redirectTo: "/dashboard" })
+                            await signIn("discord", {redirectTo: "/dashboard"})
                         }}>
                             <Button type={"submit"} className={"w-full"}>
-                                <SiDiscord />
+                                <SiDiscord/>
                                 Login using Discord
                             </Button>
                         </form>
                         <form action={async () => {
                             "use server"
-                            await signIn("google", { redirectTo: "/dashboard" })
+                            await signIn("google", {redirectTo: "/dashboard"})
                         }}>
                             <Button type={"submit"} className={"w-full"}>
-                                <SiGoogle />
+                                <SiGoogle/>
                                 Login using Google
                             </Button>
                         </form>
