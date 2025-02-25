@@ -14,7 +14,6 @@ export default async function SolvesTotalChartView() {
                 <p className={"text-muted-foreground"}>Try a challenge!</p>
             </CardHeader>
         </Card>
-
     )
 
     const totalChallenges = new Map<Category, number>
