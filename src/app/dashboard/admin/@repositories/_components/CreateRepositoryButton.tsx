@@ -12,6 +12,7 @@ import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Switch} from "@/src/components/ui/switch"
+import {Button} from "@/src/components/ui/button"
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -113,6 +114,7 @@ export default function CreateRepositoryButton() {
                         </FormItem>
                     )}
                 />
+                <Button type="submit">Submit</Button>
             </form>
         </CreateSheetButton>
     )

@@ -1,14 +1,33 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
-import {readRepositoryChallenges} from "@/src/lib/database/challenges"
-import {Category} from "@prisma/client"
+import {Challenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
+import {Category, UserRole} from "@prisma/client"
 import {BookDashedIcon} from "lucide-react"
 import {hasSolvedChallenge} from "@/src/lib/users"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
+import {getUserRole} from "@/src/lib/auth/users"
 
 export default async function RepositoryChallengeView({repositoryId}: { repositoryId: string }) {
     const allChallenges = await readRepositoryChallenges(repositoryId)
-    const challenges = allChallenges.filter((challenge) => challenge.visible)
+    let challenges: Challenge[]
+    if ((await getUserRole())! !== UserRole.ADMIN) {
+        challenges = allChallenges.filter((challenge) => challenge.visible)
+    } else {
+        challenges = allChallenges.map((challenge) => ((challenge.visible ? challenge : {
+            id: challenge.id,
+            name: `${challenge.name} | HIDDEN`,
+            description: challenge.description,
+            category: challenge.category,
+            answer: challenge.answer,
+            authors: challenge.authors,
+            visible: challenge.visible,
+
+            createdAt: challenge.createdAt,
+            updatedAt: challenge.updatedAt,
+
+            repository: challenge.repository,
+        } as Challenge)))
+    }
 
     if (challenges.length <= 0) return (
         <div className={"grow small-column"}>

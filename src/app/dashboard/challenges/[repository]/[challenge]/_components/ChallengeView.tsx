@@ -14,13 +14,16 @@ import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[chall
 import MarkdownContent from "@/src/components/MarkdownContent"
 import ChallengeHints from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints"
 import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
+import {getUserRole} from "@/src/lib/auth/users"
+import {UserRole} from "@prisma/client"
 
 export default async function ChallengeView({repositoryId, challengeId}: {
     repositoryId: string,
     challengeId: string
 }) {
     const challenge = await readChallenge(challengeId)
-    if (!challenge || !challenge.visible) notFound()
+    console.log(await getUserRole())
+    if (!challenge || (!challenge.visible && (await getUserRole())! !== UserRole.ADMIN)) notFound()
 
     return (
         <Card className={"grow flex flex-col"}>

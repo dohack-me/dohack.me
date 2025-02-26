@@ -1,11 +1,27 @@
 import {Card, CardDescription, CardHeader} from "@/src/components/ui/card"
-import {readRepositories} from "@/src/lib/database/repositories"
+import {readRepositories, Repository} from "@/src/lib/database/repositories"
 import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
 import {BookDashedIcon} from "lucide-react"
+import {getUserRole} from "@/src/lib/auth/users"
+import {UserRole} from "@prisma/client"
 
 export default async function RepositoriesView() {
     const allRepositories = await readRepositories()
-    const repositories = allRepositories.filter((repository) => repository.visible)
+    let repositories: Repository[]
+    if ((await getUserRole()) !== UserRole.ADMIN) {
+        repositories = allRepositories.filter((repository) => repository.visible)
+    } else {
+        repositories = allRepositories.map((repository) => ((repository.visible ? repository : {
+            id: repository.id,
+            name: `${repository.name} | HIDDEN`,
+            sourceLink: repository.sourceLink,
+            organization: repository.organization,
+            organizationLink: repository.organizationLink,
+            visible: repository.visible,
+            createdAt: repository.createdAt,
+            updatedAt: repository.updatedAt,
+        } as Repository)))
+    }
 
     if (repositories.length <= 0) return (
         <Card className={"grow-col"}>
