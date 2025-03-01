@@ -67,7 +67,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {
                         </ResizablePanel>
                     </ResizablePanelGroup>
                 </div>
-                <div className={"flex xl:hidden flex-col grow"}>
+                <div className={"column xl:hidden grow"}>
                     <div className={"flex grow"}>
                         <MarkdownContent text={challenge.description}/>
                     </div>
