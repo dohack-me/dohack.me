@@ -19,7 +19,7 @@ export default function RepositoriesInteractiveView({repositories}: { repositori
             <Input placeholder={"Search repositories by name"} onChange={(e) => onChange(e.target.value)}/>
             <div className={"grid-view"}>
                 {finalRepositories.map((repository) => (
-                    <Card key={repository.id}>
+                    <Card key={repository.id} className={"flex flex-col justify-between"}>
                         <CardHeader>
                             <CardTitle>
                                 <Link href={repository.sourceLink} target={"_blank"}

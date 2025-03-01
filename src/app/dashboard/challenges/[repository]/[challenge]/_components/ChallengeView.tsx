@@ -22,7 +22,6 @@ export default async function ChallengeView({repositoryId, challengeId}: {
     challengeId: string
 }) {
     const challenge = await readChallenge(challengeId)
-    console.log(await getUserRole())
     if (!challenge || (!challenge.visible && (await getUserRole())! !== UserRole.ADMIN)) notFound()
 
     return (
@@ -45,13 +44,34 @@ export default async function ChallengeView({repositoryId, challengeId}: {
                     </Button>
                 </div>
             </CardHeader>
-            <CardContent className={"grow"}>
-                <ResizablePanelGroup direction={"horizontal"}>
-                    <ResizablePanel defaultSize={70}>
+            <CardContent className={"grow-col"}>
+                <div className={"hidden xl:block"}>
+                    <ResizablePanelGroup direction={"horizontal"}>
+                        <ResizablePanel defaultSize={65}>
+                            <MarkdownContent text={challenge.description}/>
+                        </ResizablePanel>
+                        <ResizableHandle className={"mx-4"}/>
+                        <ResizablePanel defaultSize={35} className={"small-column"}>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <ChallengeFiles challenge={challenge}/>
+                            </Suspense>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <ChallengeWebsites challenge={challenge}/>
+                            </Suspense>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <ChallengeSockets challenge={challenge}/>
+                            </Suspense>
+                            <Suspense fallback={<Skeleton className={"grow"}/>}>
+                                <ChallengeHints challenge={challenge}/>
+                            </Suspense>
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                </div>
+                <div className={"flex xl:hidden flex-col grow"}>
+                    <div className={"flex grow"}>
                         <MarkdownContent text={challenge.description}/>
-                    </ResizablePanel>
-                    <ResizableHandle className={"mx-4"}/>
-                    <ResizablePanel defaultSize={30} className={"small-column"}>
+                    </div>
+                    <div className={"small-column"}>
                         <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeFiles challenge={challenge}/>
                         </Suspense>
@@ -64,8 +84,8 @@ export default async function ChallengeView({repositoryId, challengeId}: {
                         <Suspense fallback={<Skeleton className={"grow"}/>}>
                             <ChallengeHints challenge={challenge}/>
                         </Suspense>
-                    </ResizablePanel>
-                </ResizablePanelGroup>
+                    </div>
+                </div>
             </CardContent>
             <CardFooter>
                 <ChallengeAnswerInputForm challengeId={challengeId}/>

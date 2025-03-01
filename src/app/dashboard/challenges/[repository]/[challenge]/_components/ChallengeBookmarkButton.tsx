@@ -25,7 +25,8 @@ export default function ChallengeBookmarkButton({hasBookmark, challengeId}: {
                 router.refresh()
             }}>
                 <BookmarkPlusIcon/>
-                <p>Create Bookmark</p>
+                <p className={"hidden lg:block"}>Create Bookmark</p>
+                <p className={"hidden sm:block lg:hidden"}>Bookmark</p>
             </Button>
         )
     } else {
