@@ -19,7 +19,7 @@ export default async function SolvesTotalChartView() {
     const totalChallenges = new Map<Category, number>
     const solvedChallenges = new Map<Category, number>
 
-    for (const challenge of (await readChallenges())) {
+    for (const challenge of (await readChallenges()).filter((challenge) => challenge.visible)) {
         totalChallenges.set(challenge.category, (totalChallenges.get(challenge.category) || 0) + 1)
         if (solvedChallengeIds.includes(challenge.id)) {
             solvedChallenges.set(challenge.category, (solvedChallenges.get(challenge.category) || 0) + 1)
