@@ -18,8 +18,13 @@ export default async function RandomChallenge() {
                 notIn: (userSolves.map((solve) => (solve.challengeId))),
             },
             visible: {
-                equals: true
-            }
+                equals: true,
+            },
+            repository: {
+                visible: {
+                    equals: true,
+                },
+            },
         },
     })).map(async (result) => {
         return {

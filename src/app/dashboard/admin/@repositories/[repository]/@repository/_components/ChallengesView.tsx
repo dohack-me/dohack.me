@@ -41,29 +41,29 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                                     .filter((challenge) => challenge.category === category)
                                     .sort((a, b) => a.name.localeCompare(b.name))
                                     .map((challenge) => (
-                                    <Card key={challenge.id} className={"flex flex-col justify-between"}>
-                                        <CardHeader>
-                                            <CardTitle>{(challenge.visible ? challenge.name : `${challenge.name} | HIDDEN`)}</CardTitle>
-                                            <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
-                                        </CardHeader>
-                                        <CardFooter className={"grid grid-cols-2 gap-x-3"}>
-                                            <Button asChild>
-                                                <Link
-                                                    href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
-                                            </Button>
-                                            <DeleteDialogButton
-                                                description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
-                                                confirmation={"Successfully deleted challenge."}
-                                                fail={"Could not delete challenge. Please try again later."}
-                                                callback={async () => {
-                                                    "use server"
-                                                    return (await deleteChallenge(challenge.id)) != null
-                                                }}>
-                                                <Button variant={"destructive"}>Delete</Button>
-                                            </DeleteDialogButton>
-                                        </CardFooter>
-                                    </Card>
-                                ))}
+                                        <Card key={challenge.id} className={"flex flex-col justify-between"}>
+                                            <CardHeader>
+                                                <CardTitle>{(challenge.visible ? challenge.name : `${challenge.name} | HIDDEN`)}</CardTitle>
+                                                <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
+                                            </CardHeader>
+                                            <CardFooter className={"grid grid-cols-2 gap-x-3"}>
+                                                <Button asChild>
+                                                    <Link
+                                                        href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
+                                                </Button>
+                                                <DeleteDialogButton
+                                                    description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
+                                                    confirmation={"Successfully deleted challenge."}
+                                                    fail={"Could not delete challenge. Please try again later."}
+                                                    callback={async () => {
+                                                        "use server"
+                                                        return (await deleteChallenge(challenge.id)) != null
+                                                    }}>
+                                                    <Button variant={"destructive"}>Delete</Button>
+                                                </DeleteDialogButton>
+                                            </CardFooter>
+                                        </Card>
+                                    ))}
                             </div>
                         </TabsContent>
                     ))}
