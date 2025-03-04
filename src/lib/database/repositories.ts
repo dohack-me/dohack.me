@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {deleteFile} from "@/src/lib/storage"
+import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
 
 export type Repository = {
     id: string
@@ -62,7 +62,14 @@ export async function updateRepository(id: string, data: EditableRepository) {
 }
 
 export async function deleteRepository(id: string) {
-    await deleteFile(id)
+    const repository = await readRepository(id)
+
+    if (!repository) return null
+
+    const challengeFolders = await readFolderFiles(`${repository.id}`)
+    for (const challengeFolder of challengeFolders) {
+        await deleteFolder(`${repository.id}/${challengeFolder}`)
+    }
 
     return (await prisma.repository.delete({
         where: {
