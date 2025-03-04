@@ -17,6 +17,9 @@ export default async function RandomChallenge() {
             id: {
                 notIn: (userSolves.map((solve) => (solve.challengeId))),
             },
+            visible: {
+                equals: true
+            }
         },
     })).map(async (result) => {
         return {
@@ -26,6 +29,7 @@ export default async function RandomChallenge() {
             category: result.category,
             answer: result.answer,
             authors: result.authors,
+            visible: result.visible,
 
             createdAt: result.createdAt,
             updatedAt: result.updatedAt,

@@ -37,10 +37,13 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                     {categories.map((category) => (
                         <TabsContent key={category} value={category}>
                             <div className={"grid-view"}>
-                                {challenges.filter((challenge) => challenge.category === category).map((challenge) => (
+                                {challenges
+                                    .filter((challenge) => challenge.category === category)
+                                    .sort((a, b) => a.name.localeCompare(b.name))
+                                    .map((challenge) => (
                                     <Card key={challenge.id} className={"flex flex-col justify-between"}>
                                         <CardHeader>
-                                            <CardTitle>{challenge.name}</CardTitle>
+                                            <CardTitle>{(challenge.visible ? challenge.name : `${challenge.name} | HIDDEN`)}</CardTitle>
                                             <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
                                         </CardHeader>
                                         <CardFooter className={"grid grid-cols-2 gap-x-3"}>

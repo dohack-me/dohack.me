@@ -15,7 +15,7 @@ export default async function RepositoriesView() {
                     <Card key={repository.id}>
                         <CardHeader>
                             <CardTitle><a href={repository.sourceLink}
-                                          className={"underline"}>{repository.name}</a></CardTitle>
+                                          className={"underline"}>{(repository.visible ? repository.name : `${repository.name} | HIDDEN`)}</a></CardTitle>
                             <CardDescription><a href={repository.organizationLink}
                                                 className={"underline"}>{`Created by: ${repository.organization}`}</a></CardDescription>
                         </CardHeader>
