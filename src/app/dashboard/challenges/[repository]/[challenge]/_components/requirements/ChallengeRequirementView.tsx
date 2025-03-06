@@ -18,7 +18,7 @@ export default async function ChallengeRequirementView({challenge}: { challenge:
         return null
     }
     return (
-        <div className={"small-column xl:w-[40%]"}>
+        <div className={"small-column xl:min-w-[35%]"}>
             {(files.length > 0 && <ChallengeFiles files={files}/>)}
             {(websites.length > 0 && <ChallengeWebsites websites={websites}/>)}
             {(sockets.length > 0 && <ChallengeSockets sockets={sockets}/>)}
