@@ -1,15 +1,11 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import React, {Suspense} from "react"
-import {Challenge} from "@/src/lib/database/challenges"
-import {readChallengeSocketServices} from "@/src/lib/database/sockets"
 import {Button} from "@/src/components/ui/button"
 import {Loader2Icon} from "lucide-react"
 import ChallengeSocketButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSocketButtonView"
+import {Socket} from "@/src/lib/database/sockets"
 
-export default async function ChallengeSockets({challenge}: { challenge: Challenge }) {
-    const sockets = await readChallengeSocketServices(challenge.id)
-    if (sockets.length <= 0) return null
-
+export default async function ChallengeSockets({sockets}: { sockets: Socket[] }) {
     return (
         <Card className={"h-fit flex flex-col"}>
             <CardHeader>

@@ -6,16 +6,12 @@ import React, {Suspense} from "react"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {notFound} from "next/navigation"
 import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm"
-import ChallengeFiles from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/files/ChallengeFiles"
 import {Skeleton} from "@/src/components/ui/skeleton"
-import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/src/components/ui/resizable"
-import ChallengeWebsites from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/websites/ChallengeWebsites"
-import ChallengeSockets from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/sockets/ChallengeSockets"
 import MarkdownContent from "@/src/components/MarkdownContent"
-import ChallengeHints from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/hints/ChallengeHints"
 import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
 import {getUserRole} from "@/src/lib/auth/users"
 import {UserRole} from "@prisma/client"
+import ChallengeRequirementView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/ChallengeRequirementView"
 
 export default async function ChallengeView({repositoryId, challengeId}: {
     repositoryId: string,
@@ -45,46 +41,21 @@ export default async function ChallengeView({repositoryId, challengeId}: {
                 </div>
             </CardHeader>
             <CardContent className={"grow-col"}>
-                <div className={"hidden xl:block"}>
-                    <ResizablePanelGroup direction={"horizontal"}>
-                        <ResizablePanel defaultSize={65}>
-                            <MarkdownContent text={challenge.description}/>
-                        </ResizablePanel>
-                        <ResizableHandle className={"mx-4"}/>
-                        <ResizablePanel defaultSize={35} className={"small-column"}>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <ChallengeFiles challenge={challenge}/>
-                            </Suspense>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <ChallengeWebsites challenge={challenge}/>
-                            </Suspense>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <ChallengeSockets challenge={challenge}/>
-                            </Suspense>
-                            <Suspense fallback={<Skeleton className={"grow"}/>}>
-                                <ChallengeHints challenge={challenge}/>
-                            </Suspense>
-                        </ResizablePanel>
-                    </ResizablePanelGroup>
-                </div>
-                <div className={"column xl:hidden grow"}>
-                    <div className={"flex grow"}>
+                <div className={"grow hidden xl:small-row"}>
+                    <div className={"grow"}>
                         <MarkdownContent text={challenge.description}/>
                     </div>
-                    <div className={"small-column"}>
-                        <Suspense fallback={<Skeleton className={"grow"}/>}>
-                            <ChallengeFiles challenge={challenge}/>
-                        </Suspense>
-                        <Suspense fallback={<Skeleton className={"grow"}/>}>
-                            <ChallengeWebsites challenge={challenge}/>
-                        </Suspense>
-                        <Suspense fallback={<Skeleton className={"grow"}/>}>
-                            <ChallengeSockets challenge={challenge}/>
-                        </Suspense>
-                        <Suspense fallback={<Skeleton className={"grow"}/>}>
-                            <ChallengeHints challenge={challenge}/>
-                        </Suspense>
+                    <Suspense fallback={<Skeleton className={"w-[40%]"}/>}>
+                        <ChallengeRequirementView challenge={challenge}/>
+                    </Suspense>
+                </div>
+                <div className={"grow column xl:hidden"}>
+                    <div className={"grow"}>
+                        <MarkdownContent text={challenge.description}/>
                     </div>
+                    <Suspense fallback={<Skeleton className={"grow"}/>}>
+                        <ChallengeRequirementView challenge={challenge}/>
+                    </Suspense>
                 </div>
             </CardContent>
             <CardFooter>
