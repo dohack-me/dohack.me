@@ -34,6 +34,7 @@ export async function getFileDownloadUrl(filePath: string) {
     const command = new GetObjectCommand({
         Bucket: process.env.S3_BUCKET!,
         Key: filePath,
+        ResponseContentDisposition: `attachment; filename="${filePath.split("/").pop()}"`,
     })
     return await getSignedUrl(S3, command)
 }

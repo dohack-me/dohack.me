@@ -42,7 +42,7 @@ export default async function ChallengeView({repositoryId, challengeId}: {
             </CardHeader>
             <CardContent className={"grow-col"}>
                 <div className={"grow hidden xl:small-row"}>
-                    <div className={"grow max-w-[65%] text-clip"}>
+                    <div className={"grow max-w-[65%]"}>
                         <MarkdownContent text={challenge.description}/>
                     </div>
                     <Suspense fallback={<Skeleton className={"min-w-[35%]"}/>}>
