@@ -41,7 +41,7 @@ export default function SolvesCategoriesChart({chartData}: {
     }, [chartData])
 
     return (
-        <Card className={"aspect-square flex flex-col"}>
+        <Card className={"flex flex-col"}>
             <ChartContainer config={chartConfig} className={"grow min-h-[1rem]"}>
                 <PieChart accessibilityLayer>
                     <ChartTooltip

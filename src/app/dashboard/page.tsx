@@ -29,13 +29,13 @@ export default async function DashboardPage() {
                     </Suspense>
                 </CardContent>
             </Card>
-            <div className={"grid grid-cols-2 gap-x-8"}>
+            <div className={"grid grid-cols-1 xl:grid-cols-2 gap-8"}>
                 <Card>
                     <CardHeader>
                         <CardTitle>Statistics</CardTitle>
                         <CardDescription>View your overall progress.</CardDescription>
                     </CardHeader>
-                    <CardContent className={"grid grid-flow-col auto-cols-fr gap-x-8"}>
+                    <CardContent className={"grid grid-cols-1 sm:grid-cols-2 gap-8"}>
                         <Suspense fallback={<Skeleton className={"aspect-square"}/>}>
                             <SolvesCategoriesChartView/>
                         </Suspense>
@@ -62,6 +62,7 @@ export default async function DashboardPage() {
                     <CardTitle>dohack.me is in Alpha!</CardTitle>
                     <div>
                         <CardDescription>Features, UI and challenges are subject to change.</CardDescription>
+                        <CardDescription>Instances may be shutdown as updates are pushed out. Sorry!</CardDescription>
                         <CardDescription>Any problems or suggestions? Contact me on <Link
                             href={"https://discord.com/users/301279262994857987"} className={"underline"}
                             target={"_blank"}>Discord</Link>.</CardDescription>

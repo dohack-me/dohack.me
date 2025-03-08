@@ -23,7 +23,7 @@ export default function SolvesCategoriesChart({chartData}: {
     }, [chartData])
 
     return (
-        <Card className={"aspect-square flex flex-col"}>
+        <Card className={"flex flex-col"}>
             <CardHeader className={"grow-col"}>
                 <ChartContainer config={chartConfig} className={"grow min-h-[1rem]"}>
                     <RadarChart data={chartData}>
