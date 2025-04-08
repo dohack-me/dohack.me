@@ -1,22 +1,19 @@
-import {readWebsiteInstances} from "@/src/lib/instances/websiteinstances"
-import {readSocketInstances} from "@/src/lib/instances/socketinstances"
 import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import Link from "next/link"
 import React from "react"
 import {Button} from "@/src/components/ui/button"
 import {BookDashedIcon, SwordIcon, XIcon} from "lucide-react"
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
-import {shutdownSocketInstance} from "@/src/lib/orchestrator/sockets"
+import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {readUserBookmarks} from "@/src/lib/database/bookmarks"
 import {Challenge, readChallenge} from "@/src/lib/database/challenges"
-import {shutdownWebsiteInstance} from "@/src/lib/orchestrator/websites"
+import {readUserServiceInstances} from "@/src/lib/orchestrator/serviceinstances"
+import {shutdownServiceInstance} from "@/src/lib/orchestrator/services"
 
 export default async function ImportantChallengesView() {
-    const websiteInstances = (await readWebsiteInstances())!
-    const socketInstances = (await readSocketInstances())!
+    const serviceInstances = (await readUserServiceInstances())!
     const bookmarkedChallenges = (await readUserBookmarks())!
 
-    if (websiteInstances.length === 0 && socketInstances.length === 0 && bookmarkedChallenges.length === 0) {
+    if (serviceInstances.length === 0 && bookmarkedChallenges.length === 0) {
         return (
             <div className={"grow small-column"}>
                 <Card className={"grow-col"}>
@@ -32,19 +29,11 @@ export default async function ImportantChallengesView() {
 
     return (
         <div className={"small-column"}>
-            {websiteInstances.map((instance) => (
-                <ServiceChallengeView key={instance.id} challenge={instance.website.challenge}
+            {serviceInstances.map((instance) => (
+                <ServiceChallengeView key={instance.id} challenge={instance.service.challenge}
                                       deleteCallback={async () => {
                                           "use server"
-                                          const {error} = await shutdownWebsiteInstance(instance.website.id)
-                                          return error === null
-                                      }}/>
-            ))}
-            {socketInstances.map((instance) => (
-                <ServiceChallengeView key={instance.id} challenge={instance.socket.challenge}
-                                      deleteCallback={async () => {
-                                          "use server"
-                                          const {error} = await shutdownSocketInstance(instance.socket.id)
+                                          const {error} = await shutdownServiceInstance(instance.service.id)
                                           return error === null
                                       }}/>
             ))}

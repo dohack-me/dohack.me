@@ -3,7 +3,7 @@ import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repo
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {deleteChallenge, readChallenges} from "@/src/lib/database/challenges"
 import React from "react"
 import {readRepository} from "@/src/lib/database/repositories"

@@ -1,7 +1,7 @@
 import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {deleteRepository, readRepositories} from "@/src/lib/database/repositories"
 import React from "react"
 

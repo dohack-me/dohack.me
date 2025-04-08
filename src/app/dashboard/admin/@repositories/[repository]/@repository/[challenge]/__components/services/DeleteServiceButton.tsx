@@ -1,11 +1,12 @@
 "use client"
 
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu"
 import React from "react"
+import {ServiceType} from "@prisma/client"
 
 export default function DeleteServiceButton({type, callback}: {
-    type: "website" | "socket",
+    type: ServiceType,
     callback(): Promise<boolean>
 }) {
     return (

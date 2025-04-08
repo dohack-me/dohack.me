@@ -8,9 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "migrate": "dotenv -e .env.local -- npx prisma migrate dev --name init",
-    "generate": "dotenv -e .env.local -- npx prisma generate",
-    "migrate-deploy": "dotenv -e .env.prod-migration -- npx prisma migrate deploy"
+    "migrate": "dotenv -e .env.local.bak -- npx prisma migrate dev",
+    "deploy": "dotenv -e .env.prod-migration -- npx prisma migrate deploy",
+    "db-push": "dotenv -e .env.local.bak -- npx prisma db push",
+    "generate": "dotenv -e .env.local.bak -- npx prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
@@ -35,7 +36,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",
-    "next": "15.1.7",
+    "next": "^15.2.4",
     "next-auth": "^5.0.0-beta.25",
     "next-themes": "^0.4.4",
     "posthog-js": "^1.219.1",

@@ -28,6 +28,11 @@ enum Category {
   MISC
 }
 
+enum ServiceType {
+  WEBSITE
+  SOCKET
+}
+
 model Repository {
   id               String  @id @unique @default(uuid()) @db.Uuid
   name             String
@@ -54,8 +59,7 @@ model Challenge {
   visible     Boolean  @default(false)
 
   solves    Solve[]
-  websites  Website[]
-  sockets   Socket[]
+  services  Service[]
   hints     Hint[]
   bookmarks Bookmark[]
 
@@ -69,56 +73,32 @@ model Challenge {
   @@map("challenge")
 }
 
-model Website {
-  id          String @id @unique @default(uuid()) @db.Uuid
-  challengeId String @db.Uuid
+model Service {
+  id          String      @id @unique @default(uuid()) @db.Uuid
+  challengeId String      @db.Uuid
+  type        ServiceType
   image       String
   tag         String
 
-  websiteInstances WebsiteInstance[]
+  serviceInstances ServiceInstance[]
 
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
-  @@map("website")
+  @@map("service")
 }
 
-model Socket {
-  id          String @id @unique @default(uuid()) @db.Uuid
-  challengeId String @db.Uuid
-  image       String
-  tag         String
-
-  socketInstances SocketInstance[]
-
-  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
-
-  @@map("socket")
-}
-
-model WebsiteInstance {
-  userId    String @db.Uuid
-  websiteId String @db.Uuid
-  id        String @db.Uuid
-  url       String
+model ServiceInstance {
+  id        String   @id @unique @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid
+  serviceId String   @db.Uuid
+  endpoint  String
+  expiry    DateTime
 
   user    CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  website Website    @relation(fields: [websiteId], references: [id], onDelete: Cascade)
+  service Service    @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 
-  @@id([userId, websiteId])
-  @@map("website_instance")
-}
-
-model SocketInstance {
-  userId   String @db.Uuid
-  socketId String @db.Uuid
-  id       String @db.Uuid
-  port     Int
-
-  user   CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  socket Socket     @relation(fields: [socketId], references: [id], onDelete: Cascade)
-
-  @@id([userId, socketId])
-  @@map("socket_instance")
+  @@unique([userId, serviceId])
+  @@map("service_instance")
 }
 
 model Solve {
@@ -161,8 +141,7 @@ model CustomUser {
 
   solves           Solve[]
   bookmarks        Bookmark[]
-  websiteInstances WebsiteInstance[]
-  socketInstances  SocketInstance[]
+  serviceInstances ServiceInstance[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

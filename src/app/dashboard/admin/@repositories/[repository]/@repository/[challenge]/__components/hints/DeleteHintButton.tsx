@@ -1,6 +1,6 @@
 "use client"
 
-import {DeleteDialogButton} from "@/src/components/dialog/DeleteDialogButton"
+import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu"
 import React from "react"
 

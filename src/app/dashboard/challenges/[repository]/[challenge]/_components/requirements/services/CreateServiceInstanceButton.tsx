@@ -1,36 +1,37 @@
 "use client"
 
 import {Button} from "@/src/components/ui/button"
-import {ServerIcon} from "lucide-react"
+import {PanelsTopLeftIcon, ServerIcon} from "lucide-react"
 import React from "react"
 import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors"
 import {useToast} from "@/src/hooks/use-toast"
 import {useRouter} from "next/navigation"
-import {deployWebsiteInstance} from "@/src/lib/orchestrator/websites"
+import {deployServiceInstance} from "@/src/lib/orchestrator/services"
+import {Service} from "@/src/lib/database/services"
+import {ServiceType} from "@prisma/client"
 
-export default function CreateWebsiteInstanceButton({websiteId}: { websiteId: string }) {
+export default function CreateServiceInstanceButton({service}: { service: Service }) {
     const {toast} = useToast()
     const router = useRouter()
 
     async function onSubmit() {
         toast({
-            title: "Starting website instance...",
+            title: "Starting service instance...",
             description: "Please be patient!",
         })
-        const {data, error} = await deployWebsiteInstance(websiteId)
+        const {data, error} = await deployServiceInstance(service.id)
         if (error) {
             switch (error) {
                 case ServiceActionErrors.TOO_MANY_INSTANCES:
                     toast({
-                        title: "You already have another website instance.",
+                        title: "You already have another service instance.",
                         description: "Please stop all instances before requesting another one.",
                     })
                     return
                 case ServiceActionErrors.ALREADY_HAVE_INSTANCE:
                     toast({
-                        title: "You already have a website instance.",
+                        title: "You already have a service instance.",
                         description: "Please stop your instance to request another one.",
-
                     })
                     return
                 case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:
@@ -43,7 +44,7 @@ export default function CreateWebsiteInstanceButton({websiteId}: { websiteId: st
         }
         if (data) {
             toast({
-                title: "Your website instance is ready!",
+                title: "Your service instance is ready!",
                 description: `Stop this instance to request another one.`,
             })
         }
@@ -52,7 +53,7 @@ export default function CreateWebsiteInstanceButton({websiteId}: { websiteId: st
 
     return (
         <Button onClick={onSubmit}>
-            <ServerIcon/>
+            {service.type == ServiceType.WEBSITE ? <PanelsTopLeftIcon/> : <ServerIcon/>}
             Launch Instance
         </Button>
     )
