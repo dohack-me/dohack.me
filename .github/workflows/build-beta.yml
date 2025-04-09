@@ -31,7 +31,6 @@ jobs:
           push: true
           tags: dohackme.azurecr.io/dohack.me/dohack.me:beta
           secrets: |
-            "NEXT_PUBLIC_BACKEND_HOST=${{ secrets.BETA_NEXT_PUBLIC_BACKEND_HOST }}"
             "NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.BETA_NEXT_PUBLIC_POSTHOG_KEY }}"
             "NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.BETA_NEXT_PUBLIC_POSTHOG_HOST }}"
             "BACKEND_URL=${{ secrets.BETA_BACKEND_URL }}"
