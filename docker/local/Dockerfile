@@ -27,8 +27,6 @@ COPY --from=deps /app/node_modules ./node_modules
 
 COPY . .
 
-RUN --mount=type=secret,id=NEXT_PUBLIC_BACKEND_HOST,required=true \
-    echo "NEXT_PUBLIC_BACKEND_HOST=$(cat /run/secrets/NEXT_PUBLIC_BACKEND_HOST)" >> .env.production
 RUN --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_KEY,required=true \
     echo "NEXT_PUBLIC_POSTHOG_KEY=$(cat /run/secrets/NEXT_PUBLIC_POSTHOG_KEY)" >> .env.production
 RUN --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_HOST,required=true \
