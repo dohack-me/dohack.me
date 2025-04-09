@@ -8,8 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "prisma generate",
-    "migrate": "dotenv -e .env.local -- npx prisma migrate dev",
-    "deploy": "dotenv -e .env.production -- npx prisma migrate deploy",
+    "migrate-dev-local": "dotenv -e .env.local -- npx prisma migrate dev",
+    "migrate-deploy-staging": "dotenv -e .env.staging -- npx prisma migrate deploy",
+    "migrate-deploy-production": "dotenv -e .env.production -- npx prisma migrate deploy",
     "db-push": "dotenv -e .env.local -- npx prisma db push",
     "generate": "dotenv -e .env.local -- npx prisma generate"
   },
