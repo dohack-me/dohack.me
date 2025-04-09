@@ -3,7 +3,7 @@ name: Build and Push Beta Image
 on:
   push:
     branches:
-      - beta
+      - staging
   workflow_dispatch:
 
 jobs:
