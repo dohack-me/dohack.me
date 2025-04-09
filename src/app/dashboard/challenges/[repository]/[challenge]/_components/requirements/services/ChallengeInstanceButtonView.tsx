@@ -18,11 +18,6 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
     )
     return (
         <div className={"w-full small-row justify-between"}>
-            <ChallengeInstanceExpiryButton expiry={instance.expiry} renewInstance={async () => {
-                "use server"
-                const {error} = await requestRenewServiceInstance(instance.service.id)
-                return error == null
-            }}/>
             {
                 (service.type == ServiceType.SOCKET ?
                         <ChallengeSocketInstanceButton endpoint={instance.endpoint}/>
@@ -30,6 +25,11 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
                         <ChallengeWebsiteInstanceButton endpoint={instance.endpoint}/>
                 )
             }
+            <ChallengeInstanceExpiryButton expiry={instance.expiry} renewInstance={async () => {
+                "use server"
+                const {error} = await requestRenewServiceInstance(instance.service.id)
+                return error == null
+            }}/>
             <DeleteDialogButton
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
                 confirmation={"Successfully deleted instance."}
