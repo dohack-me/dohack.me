@@ -1,4 +1,4 @@
-name: Build and Push Beta Image
+name: Build and Push Staging Image
 
 on:
   push:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   docker:
+    environment: Staging
     runs-on: ubuntu-latest
     steps:
       -
