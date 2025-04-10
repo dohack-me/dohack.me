@@ -11,7 +11,7 @@ WORKDIR /app
 COPY prisma/schema.prisma ./prisma/schema.prisma
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
 
-RUN npm ci
+RUN pnpm ci
 
 # 2. Rebuild the source code only when needed
 FROM base AS builder
@@ -67,7 +67,7 @@ RUN --mount=type=secret,id=S3_SECRET_KEY,required=true \
 RUN --mount=type=secret,id=S3_BUCKET,required=true \
     echo "S3_BUCKET=$(cat /run/secrets/S3_BUCKET)" >> .env.production
 
-RUN npm run build
+RUN pnpm run build
 
 # 3. Production image, copy all the files and run next
 FROM base AS runner
