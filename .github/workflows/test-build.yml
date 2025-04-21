@@ -2,7 +2,6 @@ name: Test if image successfully builds
 on:
   push:
     branches:
-      - staging/*
       - dependabot/*
 
 jobs:
@@ -18,7 +17,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           file: ./docker/production/Dockerfile
-          tags: dohackme.azurecr.io/dohack.me/dohack.me:staging
+          tags: dohackme.azurecr.io/dohack.me/dohack.me:dependabot
           secrets: |
             "NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}"
             "NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}"
