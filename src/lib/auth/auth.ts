@@ -4,7 +4,6 @@ import {prisma} from "@/src/lib/globals"
 import GitHub from "next-auth/providers/github"
 import Discord from "next-auth/providers/discord"
 import Google from "next-auth/providers/google"
-import posthog from "posthog-js"
 
 export const {handlers, signIn, signOut, auth} = NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -22,12 +21,6 @@ export const {handlers, signIn, signOut, auth} = NextAuth({
                     userId: user.id!,
                 },
             })
-        },
-        signIn: async ({user}) => {
-            posthog.identify(user.id)
-        },
-        signOut: async () => {
-            posthog.reset()
-        },
+        }
     },
 })

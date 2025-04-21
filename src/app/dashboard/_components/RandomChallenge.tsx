@@ -7,6 +7,7 @@ import {Button} from "@/src/components/ui/button"
 import {SwordIcon} from "lucide-react"
 import React from "react"
 import {prisma} from "@/src/lib/globals"
+import PostHogButton from "@/src/components/PostHogButton"
 
 export default async function RandomChallenge() {
     const userSolves = await readUserSolves()
@@ -77,13 +78,15 @@ export default async function RandomChallenge() {
                               className={"underline"}>{challenge.repository.organization}</Link>
                     </CardDescription>
                 </div>
-                <Button asChild>
+                <PostHogButton eventName={"Random challenge attempted"} properties={{
+                    challenge: challenge,
+                }}>
                     <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}>
                         <SwordIcon/>
                         <p className={"hidden lg:block"}>Attempt Challenge</p>
                         <p className={"hidden sm:block lg:hidden"}>Go</p>
                     </Link>
-                </Button>
+                </PostHogButton>
             </CardHeader>
         </Card>
     )

@@ -3,7 +3,7 @@
 import {getUserId} from "@/src/lib/auth/users"
 import {prisma} from "@/src/lib/globals"
 import {readService, Service} from "@/src/lib/database/services"
-import posthog from "posthog-js"
+import getServerPostHogClient from "@/src/lib/PostHog/PostHog"
 
 export type ServiceInstance = {
     id: string
@@ -69,8 +69,6 @@ export async function createServiceInstance(service: Service) {
         expiry: string
     } = await response.json()
 
-    posthog.capture("Service instance created", {image: service.image, tag: service.tag})
-
     const result = await prisma.serviceInstance.create({
         data: {
             serviceId: service.id,
@@ -81,7 +79,17 @@ export async function createServiceInstance(service: Service) {
         },
     })
 
-    return await objectToServiceInstance(result)
+    const instance = await objectToServiceInstance(result)
+
+    getServerPostHogClient().capture({
+        event: "Service instance created",
+        distinctId: userId,
+        properties: {
+            instance: instance
+        }
+    })
+
+    return instance
 }
 
 export async function readUserServiceInstance(serviceId: string) {
@@ -154,7 +162,13 @@ export async function renewServiceInstance(instance: ServiceInstance) {
 
     if (!response.ok && response.status != 404) return null
 
-    posthog.capture("Service instance renewed", {image: instance.service.image, tag: instance.service.tag})
+    getServerPostHogClient().capture({
+        event: "Service instance renewed",
+        distinctId: userId,
+        properties: {
+            instance: instance
+        }
+    })
 
     const data: {
         id: string
@@ -189,7 +203,13 @@ export async function deleteServiceInstance(instance: ServiceInstance) {
 
     if (!response.ok && response.status != 404) return null
 
-    posthog.capture("Service instance deleted", {image: instance.service.image, tag: instance.service.tag})
+    getServerPostHogClient().capture({
+        event: "Service instance deleted",
+        distinctId: userId,
+        properties: {
+            instance: instance
+        }
+    })
 
     const result = await prisma.serviceInstance.delete({
         where: {
