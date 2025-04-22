@@ -33,13 +33,14 @@ export default function CookieConsentBanner() {
     return (
         <div>
             {consentGiven === "undecided" && (
-                <Card className={"fixed bottom-4 right-4 left-4"}>
+                <Card className={"fixed bottom-0 sm:bottom-4 sm:right-4 w-full sm:max-w-128"}>
                     <CardHeader>
                         <CardTitle>Cookie Consent</CardTitle>
                         <div>
-                            <CardDescription>dohack.me uses essential cookies to provide functionality to the website</CardDescription>
-                            <CardDescription>and optional tracking cookies to understand how you use the website.</CardDescription>
-                            <CardDescription>Read more in our <Link className={"underline"} href={"/privacy"}>privacy policy</Link>. Please accept all cookies to help us improve.</CardDescription>
+                            <CardDescription>dohack.me uses essential cookies to provide functionality to the website
+                                and optional tracking cookies to understand how you use the website.</CardDescription>
+                            <CardDescription>Read more in our <Link className={"underline"} href={"/privacy"}>privacy policy</Link>.
+                                Please accept all cookies to help improve dohack.me. Thank you!</CardDescription>
                         </div>
                     </CardHeader>
                     <CardContent>
