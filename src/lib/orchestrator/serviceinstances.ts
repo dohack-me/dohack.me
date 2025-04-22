@@ -3,7 +3,7 @@
 import {getUserId} from "@/src/lib/auth/users"
 import {prisma} from "@/src/lib/globals"
 import {readService, Service} from "@/src/lib/database/services"
-import getServerPostHogClient from "@/src/lib/PostHog/PostHog"
+import getServerPostHogClient from "@/src/lib/posthog/PostHog"
 
 export type ServiceInstance = {
     id: string
