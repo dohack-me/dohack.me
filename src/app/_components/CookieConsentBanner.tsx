@@ -33,7 +33,7 @@ export default function CookieConsentBanner() {
     return (
         <div>
             {consentGiven === "undecided" && (
-                <Card className={"absolute bottom-4 right-4"}>
+                <Card className={"fixed bottom-4 right-4 left-4"}>
                     <CardHeader>
                         <CardTitle>Cookie Consent</CardTitle>
                         <div>
