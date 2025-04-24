@@ -5,6 +5,7 @@ import {Toaster} from "@/src/components/ui/toaster"
 import PostHogProvider from "@/src/app/posthog/PostHogProvider"
 import {Metadata} from "next"
 import CookieConsentBanner from "@/src/app/_components/CookieConsentBanner";
+import Script from "next/script"
 
 export const metadata: Metadata = {
     title: "dohack.me",
@@ -16,6 +17,13 @@ export default async function RootLayout({children}: Readonly<{ children: React.
         <html lang="en" className={"h-fit w-full min-h-screen max-w-screen flex flex-col"} suppressHydrationWarning>
         <head>
             <title>dohack.me</title>
+            <Script
+                async={true}
+                id="next-google-adsense"
+                src={"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1971189389097192"}
+                strategy="afterInteractive"
+                crossOrigin="anonymous"
+            />
             <meta name="google-adsense-account" content="ca-pub-1971189389097192"/>
         </head>
         <body className={"antialiased grow flex flex-col"}>
