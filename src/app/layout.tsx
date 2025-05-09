@@ -24,7 +24,7 @@ export default async function RootLayout({children}: Readonly<{ children: React.
                 strategy="afterInteractive"
                 crossOrigin="anonymous"
             />
-            <meta name="google-adsense-account" content="ca-pub-1971189389097192"/>
+            <meta name={"google-adsense-account"} content={"ca-pub-1971189389097192"}/>
         </head>
         <body className={"antialiased grow flex flex-col"}>
         <PostHogProvider>

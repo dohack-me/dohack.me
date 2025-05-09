@@ -23,14 +23,14 @@ export default async function ChallengesPage({params}: { params: Promise<{ repos
             <Suspense fallback={<Skeleton className={"grow"}/>}>
                 <ChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
             </Suspense>
-            <Card className={"lg:w-1/4"}>
-                <CardHeader>
+            <Card className={"w-1/4 flex flex-col"}>
+                <CardHeader className={"grow flex flex-col"}>
                     <AdUnit client={"ca-pub-1971189389097192"}
                             slot={"5679687143"}
                             format={"autorelaxed"}
-                            data-matched-content-rows-num="3,1"
-                            data-matched-content-columns-num="1,2"
-                            data-matched-content-ui-type="image_stacked,image_stacked"
+                            data-matched-content-rows-num={"3,1"}
+                            data-matched-content-columns-num={"1,2"}
+                            data-matched-content-ui-type={"image_stacked,image_stacked"}
                     />
                 </CardHeader>
             </Card>
