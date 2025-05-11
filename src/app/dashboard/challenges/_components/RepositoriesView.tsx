@@ -1,9 +1,9 @@
 import {Card, CardDescription, CardHeader} from "@/src/components/ui/card"
-import {readRepositories, Repository} from "@/src/lib/database/repositories"
+import {readRepositories} from "@/src/lib/database/repositories"
 import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
 import {BookDashedIcon} from "lucide-react"
 import {getUserRole} from "@/src/lib/auth/users"
-import {UserRole} from "@prisma/client"
+import {Repository, UserRole} from "@prisma/client"
 
 export default async function RepositoriesView() {
     const allRepositories = await readRepositories()

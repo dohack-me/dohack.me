@@ -2,17 +2,7 @@
 
 import {prisma} from "@/src/lib/globals"
 import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
-
-export type Repository = {
-    id: string
-    name: string
-    sourceLink: string
-    organization: string
-    organizationLink: string
-    visible: boolean
-    createdAt: Date
-    updatedAt: Date
-}
+import {Repository} from "@prisma/client"
 
 export type EditableRepository = {
     name: string
@@ -22,7 +12,7 @@ export type EditableRepository = {
     visible: boolean
 }
 
-export async function createRepository(data: EditableRepository) {
+export async function createRepository(data: EditableRepository): Promise<Repository> {
     return (await prisma.repository.create({
         data: {
             name: data.name,
@@ -34,11 +24,11 @@ export async function createRepository(data: EditableRepository) {
     })) as Repository
 }
 
-export async function readRepositories() {
+export async function readRepositories(): Promise<Repository[]> {
     return (await prisma.repository.findMany()) as Repository[]
 }
 
-export async function readRepository(id: string) {
+export async function readRepository(id: string): Promise<Repository> {
     return (await prisma.repository.findUnique({
         where: {
             id: id,
@@ -46,7 +36,7 @@ export async function readRepository(id: string) {
     })) as Repository
 }
 
-export async function updateRepository(id: string, data: EditableRepository) {
+export async function updateRepository(id: string, data: EditableRepository): Promise<Repository> {
     return (await prisma.repository.update({
         where: {
             id: id,
@@ -61,7 +51,7 @@ export async function updateRepository(id: string, data: EditableRepository) {
     })) as Repository
 }
 
-export async function deleteRepository(id: string) {
+export async function deleteRepository(id: string): Promise<Repository | null> {
     const repository = await readRepository(id)
 
     if (!repository) return null

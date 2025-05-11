@@ -4,15 +4,12 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
-import {deleteChallenge, readChallenges} from "@/src/lib/database/challenges"
+import {deleteChallenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
 import React from "react"
-import {readRepository} from "@/src/lib/database/repositories"
 import {Category} from "@prisma/client"
 
 export default async function ChallengesView({repositoryId}: { repositoryId: string }) {
-    const repository = await readRepository(repositoryId)
-    const allChallenges = await readChallenges()
-    const challenges = allChallenges.filter((challenge) => challenge.repository.id === repositoryId)
+    const challenges = await readRepositoryChallenges(repositoryId)
     const categories = Object.keys(Category)
 
     return (
@@ -25,7 +22,7 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                         answer to submit
                     </CardDescription>
                 </div>
-                <CreateChallengeButton repository={repository}/>
+                <CreateChallengeButton repositoryId={repositoryId}/>
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue={categories[0]} className={"small-column"}>
@@ -49,7 +46,7 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                                             <CardFooter className={"grid grid-cols-2 gap-x-3"}>
                                                 <Button asChild>
                                                     <Link
-                                                        href={`/dashboard/admin/${repository.id}/${challenge.id}`}>Open</Link>
+                                                        href={`/dashboard/admin/${repositoryId}/${challenge.id}`}>Open</Link>
                                                 </Button>
                                                 <DeleteDialogButton
                                                     description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}

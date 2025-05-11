@@ -6,7 +6,6 @@ import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Input} from "@/src/components/ui/input"
-import {Repository} from "@/src/lib/database/repositories"
 import {PlusIcon, XIcon} from "lucide-react"
 import React, {useState} from "react"
 import {createChallenge} from "@/src/lib/database/challenges"
@@ -47,7 +46,7 @@ const formSchema = z.object({
     visible: z.boolean(),
 })
 
-export default function CreateChallengeButton({repository}: { repository: Repository }) {
+export default function CreateChallengeButton({repositoryId}: { repositoryId: string }) {
     const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
@@ -77,7 +76,7 @@ export default function CreateChallengeButton({repository}: { repository: Reposi
             category: values.category as Category,
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
-            repository: repository,
+            repositoryId: repositoryId,
             visible: values.visible,
         })
         setOpen(false)

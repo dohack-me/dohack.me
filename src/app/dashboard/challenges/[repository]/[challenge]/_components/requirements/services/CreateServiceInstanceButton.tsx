@@ -7,8 +7,7 @@ import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors"
 import {useToast} from "@/src/hooks/use-toast"
 import {useRouter} from "next/navigation"
 import {deployServiceInstance} from "@/src/lib/orchestrator/services"
-import {Service} from "@/src/lib/database/services"
-import {ServiceType} from "@prisma/client"
+import {Service, ServiceType} from "@prisma/client"
 
 export default function CreateServiceInstanceButton({service}: { service: Service }) {
     const {toast} = useToast()

@@ -19,7 +19,7 @@ export default function SolvesCategoriesChart({chartData}: {
     chartData: { category: Category, percentage: number }[]
 }) {
     const totalPercentage = useMemo(() => {
-        return (chartData.reduce((acc, curr) => acc + curr.percentage, 0) / Object.values(Category).length).toFixed(1)
+        return (chartData.reduce((acc, curr) => acc + curr.percentage, 0) / new Set(chartData.map((row) => row.category)).size).toFixed(1)
     }, [chartData])
 
     return (

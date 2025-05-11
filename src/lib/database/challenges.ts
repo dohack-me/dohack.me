@@ -1,24 +1,8 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {readRepository, Repository} from "@/src/lib/database/repositories"
-import {Category} from "@prisma/client"
+import {Category, Challenge} from "@prisma/client"
 import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
-
-export type Challenge = {
-    id: string
-    name: string
-    description: string
-    category: Category
-    answer: string
-    authors: string[]
-    visible: boolean
-
-    createdAt: Date
-    updatedAt: Date
-
-    repository: Repository
-}
 
 export type EditableChallenge = {
     name: string
@@ -28,60 +12,11 @@ export type EditableChallenge = {
     authors: string[]
     visible: boolean
 
-    repository: Repository
-}
-
-type RawChallenge = {
-    id: string
-    name: string
-    description: string
-    category: Category
-    answer: string
-    authors: string[]
-    visible: boolean
-    createdAt: Date
-    updatedAt: Date
     repositoryId: string
 }
 
-async function objectToChallenge(result: RawChallenge) {
-    return {
-        id: result.id,
-        name: result.name,
-        description: result.description,
-        category: result.category,
-        answer: result.answer,
-        authors: result.authors,
-        visible: result.visible,
-
-        createdAt: result.createdAt,
-        updatedAt: result.updatedAt,
-
-        repository: await readRepository(result.repositoryId),
-    } as Challenge
-}
-
-async function objectsToChallenges(results: RawChallenge[]) {
-    return await Promise.all(
-        results.map(async (result) => ({
-            id: result.id,
-            name: result.name,
-            description: result.description,
-            category: result.category,
-            answer: result.answer,
-            authors: result.authors,
-            visible: result.visible,
-
-            createdAt: result.createdAt,
-            updatedAt: result.updatedAt,
-
-            repository: await readRepository(result.repositoryId),
-        }) as Challenge),
-    )
-}
-
-export async function createChallenge(data: EditableChallenge) {
-    const result = await prisma.challenge.create({
+export async function createChallenge(data: EditableChallenge): Promise<Challenge> {
+    return prisma.challenge.create({
         data: {
             name: data.name,
             description: data.description,
@@ -90,43 +25,33 @@ export async function createChallenge(data: EditableChallenge) {
             authors: data.authors,
             visible: data.visible,
 
-            repositoryId: data.repository.id,
+            repositoryId: data.repositoryId,
         },
     })
-
-    return await objectToChallenge(result)
 }
 
-export async function readChallenges() {
-    const results = await prisma.challenge.findMany()
-
-    return await objectsToChallenges(results)
+export async function readChallenges(): Promise<Challenge[]> {
+    return prisma.challenge.findMany()
 }
 
-export async function readRepositoryChallenges(repositoryId: string) {
-    const results = await prisma.challenge.findMany({
+export async function readRepositoryChallenges(repositoryId: string): Promise<Challenge[]> {
+    return prisma.challenge.findMany({
         where: {
             repositoryId: repositoryId,
         },
     })
-
-    return await objectsToChallenges(results)
 }
 
-export async function readChallenge(id: string) {
-    const result = await prisma.challenge.findUnique({
+export async function readChallenge(id: string): Promise<Challenge | null> {
+    return prisma.challenge.findUnique({
         where: {
             id: id,
         },
     })
-
-    if (result == null) return null
-
-    return await objectToChallenge(result)
 }
 
-export async function updateChallenge(id: string, data: EditableChallenge) {
-    const result = await prisma.challenge.update({
+export async function updateChallenge(id: string, data: EditableChallenge): Promise<Challenge> {
+    return prisma.challenge.update({
         where: {
             id: id,
         },
@@ -138,26 +63,22 @@ export async function updateChallenge(id: string, data: EditableChallenge) {
             authors: data.authors,
             visible: data.visible,
 
-            repositoryId: data.repository.id,
+            repositoryId: data.repositoryId,
         },
     })
-
-    return await objectToChallenge(result)
 }
 
-export async function deleteChallenge(id: string) {
+export async function deleteChallenge(id: string): Promise<Challenge | null> {
     const challenge = await readChallenge(id)
 
     if (!challenge) return null
 
-    const files = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`)
-    if (files.length > 0) await deleteFolder(`${challenge.repository.id}/${id}`)
+    const files = await readFolderFiles(`${challenge.repositoryId}/${challenge.id}`)
+    if (files.length > 0) await deleteFolder(`${challenge.repositoryId}/${id}`)
 
-    const result = await prisma.challenge.delete({
+    return prisma.challenge.delete({
         where: {
             id: id,
         },
     })
-
-    return await objectToChallenge(result)
 }

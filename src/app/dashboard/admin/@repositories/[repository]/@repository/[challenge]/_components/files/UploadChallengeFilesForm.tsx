@@ -1,6 +1,5 @@
 "use client"
 
-import {Challenge} from "@/src/lib/database/challenges"
 import {Input} from "@/src/components/ui/input"
 import {Button} from "@/src/components/ui/button"
 import React from "react"
@@ -8,6 +7,7 @@ import {CloudUploadIcon} from "lucide-react"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
 import {getFileUploadUrl} from "@/src/lib/storage"
+import {Challenge} from "@prisma/client"
 
 export default function UploadChallengeFilesForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
@@ -43,7 +43,7 @@ export default function UploadChallengeFilesForm({challenge}: { challenge: Chall
 
         // forEach not used so that await can be used
         for (const file of Array.from(files)) {
-            const filePath = `${challenge.repository.id}/${challenge.id}/${file.name}`
+            const filePath = `${challenge.repositoryId}/${challenge.id}/${file.name}`
             const uploadUrl = await getFileUploadUrl(filePath)
             await fetch(uploadUrl, {
                 method: "PUT",

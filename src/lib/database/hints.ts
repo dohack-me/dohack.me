@@ -1,7 +1,8 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {Challenge, readChallenge} from "@/src/lib/database/challenges"
+import {readChallenge} from "@/src/lib/database/challenges"
+import {Challenge} from "@prisma/client"
 
 export type Hint = {
     id: string
