@@ -5,9 +5,11 @@ import {Button} from "@/src/components/ui/button"
 import {BookDashedIcon, SwordIcon, XIcon} from "lucide-react"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {readUserBookmarks} from "@/src/lib/database/bookmarks"
-import {Challenge, readChallenge} from "@/src/lib/database/challenges"
+import {readChallenge} from "@/src/lib/database/challenges"
 import {readUserServiceInstances} from "@/src/lib/orchestrator/serviceinstances"
 import {shutdownServiceInstance} from "@/src/lib/orchestrator/services"
+import {Challenge} from "@prisma/client"
+import {readRepository} from "@/src/lib/database/repositories"
 
 export default async function ImportantChallengesView() {
     const serviceInstances = (await readUserServiceInstances())!
@@ -30,7 +32,7 @@ export default async function ImportantChallengesView() {
     return (
         <div className={"small-column"}>
             {serviceInstances.map((instance) => (
-                <ServiceChallengeView key={instance.id} challenge={instance.service.challenge}
+                <ServiceChallengeView key={instance.id} challengeId={instance.service.challengeId}
                                       deleteCallback={async () => {
                                           "use server"
                                           const {error} = await shutdownServiceInstance(instance.service.id)
@@ -42,7 +44,7 @@ export default async function ImportantChallengesView() {
                 return (
                     <ServiceChallengeWrapper key={challengeId} challenge={challenge}>
                         <Button asChild>
-                            <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}>
+                            <Link href={`/dashboard/challenges/${challenge.repositoryId}/${challenge.id}`}>
                                 <SwordIcon/>
                                 <p>Return</p>
                             </Link>
@@ -54,15 +56,17 @@ export default async function ImportantChallengesView() {
     )
 }
 
-function ServiceChallengeView({challenge, deleteCallback}: {
-    challenge: Challenge,
+async function ServiceChallengeView({challengeId, deleteCallback}: {
+    challengeId: string,
     deleteCallback(): Promise<boolean>
 }) {
+    const challenge = (await readChallenge(challengeId))!
+
     return (
         <ServiceChallengeWrapper challenge={challenge}>
             <div className={"small-row"}>
                 <Button asChild>
-                    <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}>
+                    <Link href={`/dashboard/challenges/${challenge.repositoryId}/${challengeId}`}>
                         <SwordIcon/>
                         <p>Return</p>
                     </Link>
@@ -83,7 +87,9 @@ function ServiceChallengeView({challenge, deleteCallback}: {
     )
 }
 
-function ServiceChallengeWrapper({challenge, children}: { challenge: Challenge, children: React.ReactNode }) {
+async function ServiceChallengeWrapper({challenge, children}: { challenge: Challenge, children: React.ReactNode }) {
+    const repository = await readRepository(challenge.repositoryId)
+
     return (
         <Card>
             <CardHeader className={"header-with-button"}>
@@ -91,11 +97,11 @@ function ServiceChallengeWrapper({challenge, children}: { challenge: Challenge, 
                     <CardTitle>{challenge.name}</CardTitle>
                     <CardDescription>
                         {`${challenge.category} challenge in `}
-                        <Link href={`/dashboard/challenges/${challenge.repository.id}`}
-                              className={"underline"}>{challenge.repository.name}</Link>
+                        <Link href={`/dashboard/challenges/${challenge.repositoryId}`}
+                              className={"underline"}>{repository.name}</Link>
                         {" by "}
-                        <Link href={challenge.repository.organizationLink}
-                              className={"underline"}>{challenge.repository.organization}</Link>
+                        <Link href={repository.organizationLink}
+                              className={"underline"}>{repository.organization}</Link>
                     </CardDescription>
                 </div>
                 {children}

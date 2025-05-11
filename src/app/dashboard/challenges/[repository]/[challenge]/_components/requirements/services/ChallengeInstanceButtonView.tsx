@@ -1,4 +1,3 @@
-import {Service} from "@/src/lib/database/services"
 import {Button} from "@/src/components/ui/button"
 import {XIcon} from "lucide-react"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
@@ -7,7 +6,7 @@ import CreateServiceInstanceButton from "@/src/app/dashboard/challenges/[reposit
 import {readUserServiceInstance} from "@/src/lib/orchestrator/serviceinstances"
 import {requestRenewServiceInstance, shutdownServiceInstance} from "@/src/lib/orchestrator/services"
 import ChallengeSocketInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeSocketInstanceButton"
-import {ServiceType} from "@prisma/client"
+import {Service, ServiceType} from "@prisma/client"
 import ChallengeWebsiteInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeWebsiteInstanceButton"
 import ChallengeInstanceExpiryButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeInstanceExpiryButton"
 

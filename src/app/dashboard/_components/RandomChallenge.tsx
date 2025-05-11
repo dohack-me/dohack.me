@@ -1,19 +1,19 @@
 import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {readUserSolves} from "@/src/lib/database/solves"
 import {readRepository} from "@/src/lib/database/repositories"
-import {Challenge} from "@/src/lib/database/challenges"
 import Link from "next/link"
 import {Button} from "@/src/components/ui/button"
 import {SwordIcon} from "lucide-react"
 import React from "react"
 import {prisma} from "@/src/lib/globals"
 import PostHogButton from "@/src/components/PostHogButton"
+import {Challenge} from "@prisma/client"
 
 export default async function RandomChallenge() {
     const userSolves = await readUserSolves()
     if (!userSolves) return null
 
-    const challenges = await Promise.all((await prisma.challenge.findMany({
+    const challenges = (await prisma.challenge.findMany({
         where: {
             id: {
                 notIn: (userSolves.map((solve) => (solve.challengeId))),
@@ -27,21 +27,6 @@ export default async function RandomChallenge() {
                 },
             },
         },
-    })).map(async (result) => {
-        return {
-            id: result.id,
-            name: result.name,
-            description: result.description,
-            category: result.category,
-            answer: result.answer,
-            authors: result.authors,
-            visible: result.visible,
-
-            createdAt: result.createdAt,
-            updatedAt: result.updatedAt,
-
-            repository: await readRepository(result.repositoryId),
-        } as Challenge
     })) as Challenge[]
 
     if (challenges.length <= 0) return (
@@ -63,6 +48,7 @@ export default async function RandomChallenge() {
     )
 
     const challenge = challenges[Math.floor(Math.random() * challenges.length)]
+    const repository = await readRepository(challenge.repositoryId)
 
     return (
         <Card>
@@ -71,17 +57,17 @@ export default async function RandomChallenge() {
                     <CardTitle>{challenge.name}</CardTitle>
                     <CardDescription>
                         {`${challenge.category} challenge in `}
-                        <Link href={`/dashboard/challenges/${challenge.repository.id}`}
-                              className={"underline"}>{challenge.repository.name}</Link>
+                        <Link href={`/dashboard/challenges/${repository.id}`}
+                              className={"underline"}>{repository.name}</Link>
                         {" by "}
-                        <Link href={challenge.repository.organizationLink}
-                              className={"underline"}>{challenge.repository.organization}</Link>
+                        <Link href={repository.organizationLink}
+                              className={"underline"}>{repository.organization}</Link>
                     </CardDescription>
                 </div>
                 <PostHogButton eventName={"Random challenge attempted"} properties={{
                     challenge: challenge,
                 }}>
-                    <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}>
+                    <Link href={`/dashboard/challenges/${repository.id}/${challenge.id}`}>
                         <SwordIcon/>
                         <p className={"hidden lg:block"}>Attempt Challenge</p>
                         <p className={"hidden sm:block lg:hidden"}>Go</p>

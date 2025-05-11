@@ -1,7 +1,7 @@
 import React from "react"
 import {EllipsisVerticalIcon, FileIcon} from "lucide-react"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
-import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesOptionButtons"
+import {CopyChallengeFileUrlButton, DeleteChallengeFileButton} from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/ChallengeFilesOptionButtons"
 import Link from "next/link"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {deleteFile, getFileDownloadUrl, readFolderFiles} from "@/src/lib/storage"
@@ -11,7 +11,7 @@ export default async function ReadChallengeFilesView({challengeId}: { challengeI
     const challenge = await readChallenge(challengeId)
     if (!challenge) notFound()
 
-    const data = await readFolderFiles(`${challenge.repository.id}/${challenge.id}`)
+    const data = await readFolderFiles(`${challenge.repositoryId}/${challenge.id}`)
 
     return (
         <div className={"h-full w-full flex flex-col"}>

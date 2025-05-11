@@ -10,11 +10,10 @@ import {useRouter} from "next/navigation"
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {PlusIcon, SaveIcon, XIcon} from "lucide-react"
 import React from "react"
-import {Category} from "@prisma/client"
-import {Challenge, updateChallenge} from "@/src/lib/database/challenges"
+import {Category, Challenge} from "@prisma/client"
+import {updateChallenge} from "@/src/lib/database/challenges"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
 import {cn} from "@/src/lib/utils"
-import {Repository} from "@/src/lib/database/repositories"
 import {useToast} from "@/src/hooks/use-toast"
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {Switch} from "@/src/components/ui/switch"
@@ -47,7 +46,7 @@ const formSchema = z.object({
     visible: z.boolean(),
 })
 
-export default function EditChallengeForm({repository, challenge}: { repository: Repository, challenge: Challenge }) {
+export default function EditChallengeForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
     const {toast} = useToast()
 
@@ -75,7 +74,7 @@ export default function EditChallengeForm({repository, challenge}: { repository:
             category: values.category as Category,
             answer: values.answer,
             authors: values.authors.map((field) => field.value),
-            repository: repository,
+            repositoryId: challenge.repositoryId,
             visible: values.visible,
         })
         toast({

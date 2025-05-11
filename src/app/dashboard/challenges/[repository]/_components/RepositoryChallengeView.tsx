@@ -1,6 +1,6 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
-import {Challenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
-import {Category, UserRole} from "@prisma/client"
+import {readRepositoryChallenges} from "@/src/lib/database/challenges"
+import {Category, Challenge, UserRole} from "@prisma/client"
 import {BookDashedIcon} from "lucide-react"
 import {hasSolvedChallenge} from "@/src/lib/users"
 import {Button} from "@/src/components/ui/button"
@@ -25,7 +25,7 @@ export default async function RepositoryChallengeView({repositoryId}: { reposito
             createdAt: challenge.createdAt,
             updatedAt: challenge.updatedAt,
 
-            repository: challenge.repository,
+            repositoryId: repositoryId,
         } as Challenge)))
     }
 
@@ -80,7 +80,7 @@ export default async function RepositoryChallengeView({repositoryId}: { reposito
                             challenges
                                 .map(async ({solved, challenge}) => (
                                     <Button key={challenge.id} asChild variant={solved ? "outline" : "default"}>
-                                        <Link href={`/dashboard/challenges/${challenge.repository.id}/${challenge.id}`}
+                                        <Link href={`/dashboard/challenges/${repositoryId}/${challenge.id}`}
                                               className={solved ? "line-through" : undefined}>{challenge.name}</Link>
                                     </Button>
                                 ))

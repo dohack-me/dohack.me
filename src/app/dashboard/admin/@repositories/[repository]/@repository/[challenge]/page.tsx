@@ -1,7 +1,7 @@
 import React, {Suspense} from "react"
-import ChallengeTitleView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/ChallengeTitleView"
-import EditChallengeView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/details/EditChallengeView"
-import ChallengeFilesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/files/ChallengeFilesView"
+import ChallengeTitleView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/ChallengeTitleView"
+import EditChallengeView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/details/EditChallengeView"
+import ChallengeFilesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/ChallengeFilesView"
 import AdminChallengeOverviewLoading from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/loading"
 import {Card, CardContent, CardHeader} from "@/src/components/ui/card"
 import TitleCardTextSkeleton from "@/src/components/skeletons/TitleCardTextSkeleton"
@@ -9,8 +9,8 @@ import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import {ChevronLeftIcon} from "lucide-react"
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
-import ChallegeServicesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/services/ChallegeServicesView"
-import ChallengeHintsView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/__components/hints/ChallegeHintsView"
+import ChallegeServicesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallegeServicesView"
+import ChallengeHintsView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/ChallegeHintsView"
 
 export default async function AdminChallengeOverviewPage({params}: {
     params: Promise<{ repository: string, challenge: string }>
@@ -46,7 +46,7 @@ export default async function AdminChallengeOverviewPage({params}: {
             <TabsContent value={"details"} className={"grow mt-0"}>
                 <div className={"h-full w-full flex flex-col"}>
                     <Suspense fallback={<AdminChallengeOverviewLoading/>}>
-                        <EditChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
+                        <EditChallengeView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>

@@ -7,7 +7,6 @@ import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
-import {Challenge} from "@/src/lib/database/challenges"
 import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {createService} from "@/src/lib/database/services"
@@ -30,7 +29,7 @@ const formSchema = z.object({
     }),
 })
 
-export default function CreateServiceButton({challenge}: { challenge: Challenge }) {
+export default function CreateServiceButton({challengeId}: { challengeId: string }) {
     const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
@@ -50,7 +49,7 @@ export default function CreateServiceButton({challenge}: { challenge: Challenge 
             image: values.image,
             tag: values.tag,
             type: values.type as ServiceType,
-            challenge: challenge,
+            challengeId: challengeId,
         })
         setOpen(false)
         router.refresh()
