@@ -1,19 +1,19 @@
 "use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {z} from "zod"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
-import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {createService} from "@/src/lib/database/services"
-import {ServiceType} from "@/src/lib/prisma"
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
+import {ServiceType} from "@prisma/client"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
 import {Button} from "@/src/components/ui/button"
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
+import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {Input} from "@/src/components/ui/input";
 
 const serviceTypes = Object.keys(ServiceType)
 
@@ -59,45 +59,76 @@ export default function CreateServiceButton({challengeId}: { challengeId: string
     }
 
     return (
-        <CreateSheetButton
-            form={form}
-            open={open}
-            changeOpen={setOpen}
-            icon={<PlusIcon/>}
-            longName={`Add Service`}
-            shortName={`Add Service`}
-            title={`Creating Service`}
-            description={`Fill in the service details as required`}
-        >
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
-                <CreateSheetFormFields form={form} inputs={[
-                    {
-                        name: "image",
-                        title: "Docker Image Name",
-                        description: `The name of the Docker image used to deploy the service`,
-                        type: "input",
-                    },
-                    {
-                        name: "tag",
-                        title: "Docker Image Tag",
-                        description: `The tag of the Docker image used to deploy the service`,
-                        type: "input",
-                    },
-                ]}/>
-                <FormField
-                    control={form.control}
-                    name="type"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Challenge Category</FormLabel>
-                            <FormControl>
-                                <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue/>
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+                <Button>
+                    <PlusIcon/>
+                    <p className={"hidden lg:block"}>Add Service</p>
+                    <p className={"hidden sm:block lg:hidden"}>Add Service</p>
+                </Button>
+            </SheetTrigger>
+            <SheetContent className={"small-column"}>
+                <SheetHeader>
+                    <SheetTitle>Creating Service</SheetTitle>
+                    <SheetDescription>
+                        Fill in the service details as required
+                    </SheetDescription>
+                </SheetHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                    <Controller
+                        name={"image"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Docker Image Name</FieldLabel>
+                                    <FieldDescription>The name of the Docker image used to deploy the
+                                        service</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"tag"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Docker Image Tag</FieldLabel>
+                                    <FieldDescription>The tag of the Docker image used to deploy the
+                                        service</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"type"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field orientation={"responsive"} data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Category</FieldLabel>
+                                    <FieldDescription>The service&apos;s type.</FieldDescription>
+                                </FieldContent>
+                                <Select name={field.name} value={field.value} onValueChange={field.onChange}>
+                                    <SelectTrigger aria-invalid={fieldState.invalid}>
+                                        <SelectValue placeholder="Select"/>
+                                    </SelectTrigger>
+                                    <SelectContent position="item-aligned">
                                         {serviceTypes.map((serviceType) => (
                                             <SelectItem key={serviceType} value={serviceType}>
                                                 {serviceType}
@@ -105,16 +136,13 @@ export default function CreateServiceButton({challengeId}: { challengeId: string
                                         ))}
                                     </SelectContent>
                                 </Select>
-                            </FormControl>
-                            <FormDescription>
-                                The service&apos;s type.
-                            </FormDescription>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <Button type="submit">Submit</Button>
-            </form>
-        </CreateSheetButton>
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Button type="submit">Submit</Button>
+                </form>
+            </SheetContent>
+        </Sheet>
     )
 }

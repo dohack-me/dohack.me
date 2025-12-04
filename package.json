@@ -11,8 +11,8 @@
     "migrate-dev-local": "dotenv -e .env.local -- npx prisma migrate dev",
     "migrate-deploy-staging": "dotenv -e .env.staging -- npx prisma migrate deploy",
     "migrate-deploy-production": "dotenv -e .env.production -- npx prisma migrate deploy",
-    "db-push": "dotenv -e .env.local -- npx prisma db push",
-    "generate": "dotenv -e .env.local -- npx prisma generate"
+    "db-push": "dotenv -e .env.local -- pnpm dlx prisma db push",
+    "generate": "dotenv -e .env.local -- pnpm dlx prisma generate"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.11.1",

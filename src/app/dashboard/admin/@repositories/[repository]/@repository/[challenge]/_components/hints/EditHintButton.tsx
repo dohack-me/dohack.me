@@ -1,14 +1,16 @@
 "use client"
 
-import CreateSheetForm from "@/src/components/sheet/CreateSheetForm"
 import {z} from "zod"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {Hint, updateHint} from "@/src/lib/database/hints"
 import {useToast} from "@/src/hooks/use-toast"
 import {useRouter} from "next/navigation"
-import {useState} from "react"
-import CreateSheetDropdown from "@/src/components/sheet/CreateSheetDropdown"
+import React, {useState} from "react"
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
+import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
+import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {Input} from "@/src/components/ui/input";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -47,27 +49,56 @@ export default function EditHintButton({hint}: { hint: Hint }) {
     }
 
     return (
-        <CreateSheetDropdown
-            form={form}
-            open={open}
-            changeOpen={setOpen}
-            itemName={"Edit"}
-            title={"Editing challenge hint"}
-            description={"Edit the hint details"}>
-            <CreateSheetForm form={form} inputs={[
-                {
-                    name: "title",
-                    title: "Hint Title",
-                    description: "The title of the hint",
-                    type: "input",
-                },
-                {
-                    name: "hint",
-                    title: "Hint message",
-                    description: "The hint to give to players",
-                    type: "textarea",
-                },
-            ]} onSubmit={onSubmit}/>
-        </CreateSheetDropdown>
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Edit</DropdownMenuItem>
+            </SheetTrigger>
+            <SheetContent className={"small-column"}>
+                <SheetHeader>
+                    <SheetTitle>Editing challenge hint</SheetTitle>
+                    <SheetDescription>Edit the hint details</SheetDescription>
+                </SheetHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                    <Controller
+                        name={"title"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
+                                    <FieldDescription>The title of the hint</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"title"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
+                                    <FieldDescription>The hint to give to players</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                </form>
+            </SheetContent>
+        </Sheet>
     )
 }

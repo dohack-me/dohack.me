@@ -1,7 +1,7 @@
 "use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
@@ -11,9 +11,10 @@ import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/compone
 import {SaveIcon} from "lucide-react"
 import React from "react"
 import {useToast} from "@/src/hooks/use-toast"
-import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {Switch} from "@/src/components/ui/switch"
 import {Repository} from "@/src/lib/prisma"
+import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {Input} from "@/src/components/ui/input";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -73,33 +74,83 @@ export default function EditRepositoryForm({repository}: { repository: Repositor
                     </Button>
                 </CardHeader>
                 <CardContent className={"small-column"}>
-                    <CreateSheetFormFields form={form} inputs={[
-                        {
-                            name: "name",
-                            title: "Repository Name",
-                            description: "The display name of this repository.",
-                            type: "input",
-                        },
-                        {
-                            name: "sourceLink",
-                            title: "Repository Source",
-                            description: "The link to your repository's source code.",
-                            type: "input",
-                        },
-                        {
-                            name: "organization",
-                            title: "Organization Name",
-                            description: "The name of the organization this repository comes from.",
-                            type: "input",
-                        },
-                        {
-                            name: "organizationLink",
-                            title: "Organization Link",
-                            description: "The link to your organization's socials.",
-                            type: "input",
-                        },
-
-                    ]}/>
+                    <Controller
+                        name={"name"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Repository Name</FieldLabel>
+                                    <FieldDescription>The display name of this repository.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"sourceLink"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Repository Source</FieldLabel>
+                                    <FieldDescription>The link to your repository&apos;s source code.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"organization"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Organization Name</FieldLabel>
+                                    <FieldDescription>The name of the organization this repository comes
+                                        from.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"organizationLink"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Organization Link</FieldLabel>
+                                    <FieldDescription>The link to your organization&apos;s socials.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name={"visible"}

@@ -1,22 +1,31 @@
 "use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useFieldArray, useForm} from "react-hook-form"
+import {Controller, useFieldArray, useForm} from "react-hook-form"
 import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
-import {FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/src/components/ui/form"
 import {Input} from "@/src/components/ui/input"
 import {PlusIcon, XIcon} from "lucide-react"
 import React, {useState} from "react"
 import {createChallenge} from "@/src/lib/database/challenges"
-import {cn} from "@/src/lib/utils"
-import {Category} from "@/src/lib/prisma"
+import {Category} from "@prisma/client"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
-import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {Switch} from "@/src/components/ui/switch"
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldLegend,
+    FieldSet
+} from "@/src/components/ui/field";
+import {Textarea} from "@/src/components/ui/textarea";
+import {InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput} from "@/src/components/ui/input-group";
 
 const categories = Object.keys(Category)
 
@@ -86,45 +95,73 @@ export default function CreateChallengeButton({repositoryId}: { repositoryId: st
     }
 
     return (
-        <CreateSheetButton
-            form={form}
-            open={open}
-            changeOpen={setOpen}
-            icon={<PlusIcon/>}
-            longName={"Create Challenge"}
-            shortName={"Create"}
-            title={"Creating Challenge"}
-            description={"Fill in the challenge details as required"}
-        >
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
-                <CreateSheetFormFields form={form} inputs={[
-                    {
-                        name: "name",
-                        title: "Challenge Name",
-                        description: "The display name of this challenge.",
-                        type: "input",
-                    },
-                    {
-                        name: "description",
-                        title: "Challenge Description",
-                        description: "The challenge's description.",
-                        type: "textarea",
-                    },
-                ]}/>
-                <FormField
-                    control={form.control}
-                    name="category"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Challenge Category</FormLabel>
-                            <FormControl>
-                                <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue/>
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+                <Button>
+                    <PlusIcon/>
+                    <p className={"hidden lg:block"}>Create Challenge</p>
+                    <p className={"hidden sm:block lg:hidden"}>Create</p>
+                </Button>
+            </SheetTrigger>
+            <SheetContent className={"small-column"}>
+                <SheetHeader>
+                    <SheetTitle>Creating Challenge</SheetTitle>
+                    <SheetDescription>
+                        Fill in the challenge details as required
+                    </SheetDescription>
+                </SheetHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                    <Controller
+                        name={"name"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Name</FieldLabel>
+                                    <FieldDescription>The display name of this challenge.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"description"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Description</FieldLabel>
+                                    <FieldDescription>The challenge&apos;s description.</FieldDescription>
+                                </FieldContent>
+                                <Textarea
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"category"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field orientation={"responsive"} data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Category</FieldLabel>
+                                    <FieldDescription>The challenge&apos;s category.</FieldDescription>
+                                </FieldContent>
+                                <Select name={field.name} value={field.value} onValueChange={field.onChange}>
+                                    <SelectTrigger aria-invalid={fieldState.invalid}>
+                                        <SelectValue placeholder="Select"/>
+                                    </SelectTrigger>
+                                    <SelectContent position="item-aligned">
                                         {categories.map((category) => (
                                             <SelectItem key={category} value={category}>
                                                 {category}
@@ -132,86 +169,110 @@ export default function CreateChallengeButton({repositoryId}: { repositoryId: st
                                         ))}
                                     </SelectContent>
                                 </Select>
-                            </FormControl>
-                            <FormDescription>
-                                The challenge&apos;s category.
-                            </FormDescription>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="answer"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Challenge Answer</FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                The answer to the challenge.
-                            </FormDescription>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name={"visible"}
-                    render={({field}) => (
-                        <FormItem>
-                            <div className={"header-with-button"}>
-                                <div className={"header-with-button-description"}>
-                                    <FormLabel>Challenge Visibility</FormLabel>
-                                    <FormDescription>
-                                        Whether to show this challenge to normal users.
-                                    </FormDescription>
-                                </div>
-                                <FormControl>
-                                    <Switch checked={field.value} onCheckedChange={field.onChange}/>
-                                </FormControl>
-                            </div>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <div className={"flex flex-col gap-y-4"}>
-                    <div className={"flex flex-col gap-y-0.5"}>
-                        {fields.map((field, index) => (
-                            <FormField
-                                control={form.control}
-                                key={field.id}
-                                name={`authors.${index}.value`}
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel className={cn(index !== 0 && "sr-only")}>Challenge
-                                            Authors</FormLabel>
-                                        <FormDescription className={cn(index !== 0 && "sr-only")}>
-                                            The authors of this challenge.
-                                        </FormDescription>
-                                        <FormControl>
-                                            <div className={"flex flex-row gap-x-3"}>
-                                                <Input {...field}/>
-                                                <Button onClick={() => remove(index)} type={"button"} size={"icon"}
-                                                        disabled={fields.length <= 1}>
-                                                    <XIcon/>
-                                                </Button>
-                                            </div>
-                                        </FormControl>
-                                        <FormMessage/>
-                                    </FormItem>
-                                )}
-                            />
-                        ))}
-                    </div>
-                    <Button onClick={() => append({value: ""})} type={"button"}>
-                        <PlusIcon/>
-                        Add Author
-                    </Button>
-                </div>
-                <Button type="submit">Submit</Button>
-            </form>
-        </CreateSheetButton>
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"answer"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Answer</FieldLabel>
+                                    <FieldDescription>The answer to the challenge.</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"visible"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Challenge Visibility</FieldLabel>
+                                    <FieldDescription>Whether to show this challenge to normal users.</FieldDescription>
+                                </FieldContent>
+                                <Switch
+                                    checked={field.value}
+                                    onCheckedChange={field.onChange}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <FieldSet className={"gap-4"}>
+                        <FieldLegend variant={"label"}>Challenge Authors</FieldLegend>
+                        <FieldDescription>
+                            The authors of this challenge.
+                        </FieldDescription>
+                        <FieldGroup className={"gap-4"}>
+                            {fields.map((field, index) => (
+                                <Controller
+                                    key={field.id}
+                                    name={`authors.${index}.value`}
+                                    control={form.control}
+                                    render={({field: controllerField, fieldState}) => (
+                                        <Field
+                                            orientation={"horizontal"}
+                                            data-invalid={fieldState.invalid}
+                                        >
+                                            <FieldContent>
+                                                <InputGroup>
+                                                    <InputGroupInput
+                                                        {...controllerField}
+                                                        aria-invalid={fieldState.invalid}
+                                                        placeholder={"John Doe"}
+                                                        type={"text"}
+                                                    />
+                                                    {fields.length > 1 && (
+                                                        <InputGroupAddon align={"inline-end"}>
+                                                            <InputGroupButton
+                                                                type={"button"}
+                                                                variant={"ghost"}
+                                                                size={"icon-xs"}
+                                                                onClick={() => remove(index)}
+                                                                aria-label={`Remove author ${index + 1}`}
+                                                            >
+                                                                <XIcon/>
+                                                            </InputGroupButton>
+                                                        </InputGroupAddon>
+                                                    )}
+                                                </InputGroup>
+                                                {fieldState.invalid && (
+                                                    <FieldError errors={[fieldState.error]}/>
+                                                )}
+                                            </FieldContent>
+                                        </Field>
+                                    )}
+                                />
+                            ))}
+                            <Button
+                                type={"button"}
+                                variant={"outline"}
+                                size={"sm"}
+                                onClick={() => append({value: ""})}
+                                disabled={fields.length >= 5}
+                            >
+                                <PlusIcon/>
+                                Add Author
+                            </Button>
+                        </FieldGroup>
+                        {form.formState.errors.authors?.root && (
+                            <FieldError errors={[form.formState.errors.authors.root]}/>
+                        )}
+                    </FieldSet>
+                    <Button type={"submit"}>Submit</Button>
+                </form>
+            </SheetContent>
+        </Sheet>
     )
 }

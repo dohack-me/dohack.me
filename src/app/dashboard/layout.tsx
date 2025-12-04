@@ -1,4 +1,16 @@
-import {Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider, SidebarTrigger} from "@/src/components/ui/sidebar"
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProvider,
+    SidebarTrigger
+} from "@/src/components/ui/sidebar"
 import {cookies} from "next/headers"
 import {Separator} from "@/src/components/ui/separator"
 import React, {Suspense} from "react"
@@ -45,7 +57,7 @@ export default async function DashboardLayout({children, breadcrumbs}: {
                 <SidebarContent>
                     <SidebarGroup>
                         <SidebarGroupLabel>
-                            <Link href="/">dohack.me ALPHA</Link>
+                            <Link href={"/"}>dohack.me ALPHA</Link>
                         </SidebarGroupLabel>
                         <SidebarGroupContent>
                             <SidebarMenu>
@@ -96,7 +108,7 @@ export default async function DashboardLayout({children, breadcrumbs}: {
             </Sidebar>
             <main className={"grow flex flex-col"}>
                 <div
-                    className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center z-10"}>
+                    className={"sticky top-0 bg-background w-full h-12 border-b-2 p-2 flex flex-row gap-x-4 items-center"}>
                     <SidebarTrigger/>
                     <Separator orientation={"vertical"}/>
                     <Suspense fallback={<BreadcrumbsLoading/>}>

@@ -1,16 +1,19 @@
 "use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {z} from "zod"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
-import CreateSheetForm from "@/src/components/sheet/CreateSheetForm"
 import {createHint} from "@/src/lib/database/hints"
 import {Challenge} from "@/src/lib/prisma"
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
+import {Button} from "@/src/components/ui/button";
+import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {Input} from "@/src/components/ui/input";
+import {Textarea} from "@/src/components/ui/textarea";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -49,30 +52,62 @@ export default function CreateHintButton({challenge}: { challenge: Challenge }) 
     }
 
     return (
-        <CreateSheetButton
-            form={form}
-            open={open}
-            changeOpen={setOpen}
-            icon={<PlusIcon/>}
-            longName={"Add Hint"}
-            shortName={"Add"}
-            title={"Creating challenge hint"}
-            description={"Fill in the hint details as required"}
-        >
-            <CreateSheetForm form={form} inputs={[
-                {
-                    name: "title",
-                    title: "Hint Title",
-                    description: "The title of the hint",
-                    type: "input",
-                },
-                {
-                    name: "hint",
-                    title: "Hint message",
-                    description: "The hint to give to players",
-                    type: "textarea",
-                },
-            ]} onSubmit={onSubmit}/>
-        </CreateSheetButton>
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+                <Button>
+                    <PlusIcon/>
+                    <p className={"hidden lg:block"}>Add Hint</p>
+                    <p className={"hidden sm:block lg:hidden"}>Add</p>
+                </Button>
+            </SheetTrigger>
+            <SheetContent className={"small-column"}>
+                <SheetHeader>
+                    <SheetTitle>Creating challenge hint</SheetTitle>
+                    <SheetDescription>
+                        Fill in the hint details as required
+                    </SheetDescription>
+                </SheetHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
+                    <Controller
+                        name={"title"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
+                                    <FieldDescription>The title of the hint</FieldDescription>
+                                </FieldContent>
+                                <Input
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                    autoComplete={"off"}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Controller
+                        name={"title"}
+                        control={form.control}
+                        render={({field, fieldState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
+                                    <FieldDescription>The hint to give to players</FieldDescription>
+                                </FieldContent>
+                                <Textarea
+                                    {...field}
+                                    id={field.name}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}
+                    />
+                    <Button type="submit">Submit</Button>
+                </form>
+            </SheetContent>
+        </Sheet>
     )
 }
