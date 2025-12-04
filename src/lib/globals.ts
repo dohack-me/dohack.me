@@ -1,4 +1,4 @@
-import {PrismaClient} from "@prisma/client"
+import {PrismaClient} from "@/src/lib/prisma/client"
 import {S3Client} from "@aws-sdk/client-s3"
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }

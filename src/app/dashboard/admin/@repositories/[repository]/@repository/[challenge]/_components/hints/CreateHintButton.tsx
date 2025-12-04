@@ -10,7 +10,7 @@ import {useToast} from "@/src/hooks/use-toast"
 import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
 import CreateSheetForm from "@/src/components/sheet/CreateSheetForm"
 import {createHint} from "@/src/lib/database/hints"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 
 const formSchema = z.object({
     title: z.string().min(1, {

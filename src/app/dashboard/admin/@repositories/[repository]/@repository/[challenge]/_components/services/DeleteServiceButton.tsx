@@ -3,7 +3,7 @@
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu"
 import React from "react"
-import {ServiceType} from "@prisma/client"
+import {ServiceType} from "@/src/lib/prisma"
 
 export default function DeleteServiceButton({type, callback}: {
     type: ServiceType,

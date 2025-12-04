@@ -6,7 +6,7 @@ import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "@/src/compone
 import {CollapsibleButton} from "@/src/components/CollapsibleButton"
 import React from "react"
 import {readRepositoryChallenges} from "@/src/lib/database/challenges"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 
 export default async function AdminSidebar({repositoryId}: { repositoryId: string }) {
     const challenges = await readRepositoryChallenges(repositoryId)

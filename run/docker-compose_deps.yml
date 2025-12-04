@@ -6,19 +6,22 @@ services:
     environment:
       POSTGRES_PASSWORD: password
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - dohackme_database:/var/lib/postgresql
     ports:
       - "5432:5432"
   storage:
-    image: minio/minio
+    image: rustfs/rustfs
     container_name: dohackme_storage
     restart: no
     environment:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: password
+      RUSTFS_CONSOLE_ENABLE: true
     volumes:
-      - ./data/storage:/data
+      - dohackme_storage:/data
     ports:
       - "9000:9000"
       - "9001:9001"
-    command: server data --console-address ":9001"
+volumes:
+  dohackme_database:
+    name: dohackme_database
+  dohackme_storage:
+    name: dohackme_storage

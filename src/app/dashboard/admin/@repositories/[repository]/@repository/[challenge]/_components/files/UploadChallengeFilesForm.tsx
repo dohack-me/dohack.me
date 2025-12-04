@@ -7,7 +7,7 @@ import {CloudUploadIcon} from "lucide-react"
 import {useRouter} from "next/navigation"
 import {useToast} from "@/src/hooks/use-toast"
 import {getFileUploadUrl} from "@/src/lib/storage"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 
 export default function UploadChallengeFilesForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()

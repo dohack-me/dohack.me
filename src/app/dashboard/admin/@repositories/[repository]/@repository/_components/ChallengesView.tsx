@@ -6,7 +6,7 @@ import Link from "next/link"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {deleteChallenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
 import React from "react"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 
 export default async function ChallengesView({repositoryId}: { repositoryId: string }) {
     const challenges = await readRepositoryChallenges(repositoryId)

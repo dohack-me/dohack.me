@@ -35,4 +35,7 @@ next-env.d.ts
 # jetbrains
 /.idea/
 
+.env
 .env.*
+/src/lib/prisma
+/prisma/migrations

@@ -13,7 +13,7 @@ import React from "react"
 import {useToast} from "@/src/hooks/use-toast"
 import {CreateSheetFormFields} from "@/src/components/sheet/CreateSheetForm"
 import {Switch} from "@/src/components/ui/switch"
-import {Repository} from "@prisma/client"
+import {Repository} from "@/src/lib/prisma"
 
 const formSchema = z.object({
     name: z.string().min(1, {

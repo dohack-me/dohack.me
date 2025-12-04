@@ -10,7 +10,7 @@ import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading"
 import {auth, signOut} from "@/src/lib/auth/auth"
 import {redirect} from "next/navigation"
 import {getUserRole} from "@/src/lib/auth/users"
-import {UserRole} from "@prisma/client"
+import {UserRole} from "@/src/lib/prisma"
 
 const topItems = [
     {
