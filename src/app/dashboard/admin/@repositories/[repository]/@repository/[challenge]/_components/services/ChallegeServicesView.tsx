@@ -1,10 +1,18 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
-import DeleteServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/DeleteServiceButton"
-import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
+import DeleteServiceButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/DeleteServiceButton"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/src/components/ui/dropdown-menu"
 import {EllipsisVerticalIcon} from "lucide-react"
 import React from "react"
-import CreateServiceButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/CreateServiceButton"
+import CreateServiceButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/CreateServiceButton"
 import {deleteService, readChallengeServices} from "@/src/lib/database/services"
 
 export default async function ChallegeServicesView({challengeId}: { challengeId: string }) {

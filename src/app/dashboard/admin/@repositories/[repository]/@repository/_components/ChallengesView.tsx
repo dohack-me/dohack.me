@@ -1,5 +1,6 @@
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
-import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton"
+import CreateChallengeButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton"
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"

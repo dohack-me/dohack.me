@@ -2,13 +2,17 @@ import {Button} from "@/src/components/ui/button"
 import {XIcon} from "lucide-react"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import React from "react"
-import CreateServiceInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/CreateServiceInstanceButton"
+import CreateServiceInstanceButton
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/CreateServiceInstanceButton"
 import {readUserServiceInstance} from "@/src/lib/orchestrator/serviceinstances"
 import {requestRenewServiceInstance, shutdownServiceInstance} from "@/src/lib/orchestrator/services"
-import ChallengeSocketInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeSocketInstanceButton"
+import ChallengeSocketInstanceButton
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeSocketInstanceButton"
 import {Service, ServiceType} from "@prisma/client"
-import ChallengeWebsiteInstanceButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeWebsiteInstanceButton"
-import ChallengeInstanceExpiryButton from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeInstanceExpiryButton"
+import ChallengeWebsiteInstanceButton
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeWebsiteInstanceButton"
+import ChallengeInstanceExpiryButton
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeInstanceExpiryButton"
 
 export default async function ChallengeInstanceButtonView({service}: { service: Service }) {
     const instance = await readUserServiceInstance(service.id)

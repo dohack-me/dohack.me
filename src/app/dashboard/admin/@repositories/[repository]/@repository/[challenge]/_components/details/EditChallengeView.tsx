@@ -1,5 +1,6 @@
 import {Card} from "@/src/components/ui/card"
-import EditChallengeForm from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/details/EditChallengeForm"
+import EditChallengeForm
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/details/EditChallengeForm"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {notFound} from "next/navigation"
 

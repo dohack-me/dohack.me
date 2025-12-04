@@ -5,13 +5,16 @@ import {ChevronLeftIcon} from "lucide-react"
 import React, {Suspense} from "react"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {notFound} from "next/navigation"
-import ChallengeAnswerInputForm from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm"
+import ChallengeAnswerInputForm
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeAnswerInputForm"
 import {Skeleton} from "@/src/components/ui/skeleton"
 import MarkdownContent from "@/src/components/MarkdownContent"
-import ChallengeBookmarkView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
+import ChallengeBookmarkView
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
 import {getUserRole} from "@/src/lib/auth/users"
 import {UserRole} from "@prisma/client"
-import ChallengeRequirementView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/ChallengeRequirementView"
+import ChallengeRequirementView
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/ChallengeRequirementView"
 
 export default async function ChallengeView({repositoryId, challengeId}: {
     repositoryId: string,

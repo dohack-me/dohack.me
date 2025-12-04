@@ -1,6 +1,8 @@
 import React, {Suspense} from "react"
-import RepositoryTitleView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/RepositoryTitleView"
-import EditRepositoriesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/EditRepositoriesView"
+import RepositoryTitleView
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/RepositoryTitleView"
+import EditRepositoriesView
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/EditRepositoriesView"
 import ChallengesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/ChallengesView"
 import AdminRepositoryOverviewLoading from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/loading"
 import {Card, CardHeader} from "@/src/components/ui/card"
