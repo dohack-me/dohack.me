@@ -1,10 +1,10 @@
 import "./globals.css"
 
 import {ThemeProvider} from "@/src/components/ThemeProvider"
-import {Toaster} from "@/src/components/ui/toaster"
 import PostHogProvider from "@/src/app/posthog/PostHogProvider"
 import {Metadata} from "next"
 import CookieConsentBanner from "@/src/app/_components/CookieConsentBanner";
+import {Toaster} from "@/src/components/ui/sonner";
 
 export const metadata: Metadata = {
     title: "dohack.me",

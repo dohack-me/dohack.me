@@ -2,16 +2,16 @@
 
 import {z} from "zod"
 import {useRouter} from "next/navigation"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {Form, FormControl, FormField, FormItem, FormMessage} from "@/src/components/ui/form"
 import {Input} from "@/src/components/ui/input"
 import {Button} from "@/src/components/ui/button"
 import {hasSolvedChallenge, submitChallengeAnswer} from "@/src/lib/users"
 import {useToast} from "@/src/hooks/use-toast"
-import {useState} from "react"
+import React, {useState} from "react"
 import {TConductorInstance} from "react-canvas-confetti/src/types"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
+import {Field, FieldError} from "@/src/components/ui/field";
 
 const formSchema = z.object({
     answer: z.string().min(1, {
@@ -71,23 +71,25 @@ export default function ChallengeAnswerInputForm({challengeId}: { challengeId: s
     }
 
     return (
-        <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={"w-full small-row"}>
             <Fireworks onInit={({conductor}) => setConductor(conductor)}/>
-            <form onSubmit={form.handleSubmit(onSubmit)} className={"w-full small-row"}>
-                <FormField
-                    control={form.control}
-                    name={"answer"}
-                    render={({field}) => (
-                        <FormItem className={"grow"}>
-                            <FormControl>
-                                <Input placeholder={"Flag"} {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <Button type={"submit"}>Submit</Button>
-            </form>
-        </Form>
+            <Controller
+                name={"answer"}
+                control={form.control}
+                render={({field, fieldState}) => (
+                    <Field data-invalid={fieldState.invalid}>
+                        <Input
+                            {...field}
+                            id={field.name}
+                            aria-invalid={fieldState.invalid}
+                            autoComplete={"off"}
+                            placeholder={"Flag"}
+                        />
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                    </Field>
+                )}
+            />
+            <Button type={"submit"}>Submit</Button>
+        </form>
     )
 }
