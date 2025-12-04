@@ -20,6 +20,7 @@
     "@aws-sdk/s3-request-presigner": "^3.928.0",
     "@hookform/resolvers": "^5.2.2",
     "@icons-pack/react-simple-icons": "^13.8.0",
+    "@prisma/client": "^7.1.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.8",
@@ -90,8 +91,5 @@
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"
   },
-  "overrides": {
-    "uri-js": "npm:uri-js-replace"
-  },
-  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
+  "packageManager": "pnpm@10.24.0"
 }
