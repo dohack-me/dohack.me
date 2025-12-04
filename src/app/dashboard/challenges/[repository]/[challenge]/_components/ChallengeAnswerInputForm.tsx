@@ -15,7 +15,7 @@ import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
 
 const formSchema = z.object({
     answer: z.string().min(1, {
-        message: "An answer is required",
+        error: "An answer is required",
     }),
 })
 

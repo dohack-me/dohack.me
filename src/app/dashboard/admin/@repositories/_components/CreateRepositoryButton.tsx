@@ -16,17 +16,17 @@ import {Button} from "@/src/components/ui/button"
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "Repository name is required",
+        error: "Repository name is required",
     }),
-    sourceLink: z.string().min(1, {
-        message: "Repository source is required",
-    }).url(),
+    sourceLink: z.url({
+        error: "Repository source is required",
+    }),
     organization: z.string().min(1, {
-        message: "Repository organization is required",
+        error: "Repository organization is required",
     }),
-    organizationLink: z.string().min(1, {
-        message: "Repository organization link is required",
-    }).url(),
+    organizationLink: z.url({
+        error: "Repository organization link is required",
+    }),
     visible: z.boolean(),
 })
 

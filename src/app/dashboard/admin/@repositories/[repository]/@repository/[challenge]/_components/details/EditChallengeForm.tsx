@@ -22,26 +22,25 @@ const categories = Object.keys(Category)
 
 const formSchema = z.object({
     name: z.string().min(1, {
-        message: "Challenge name is required",
+        error: "Challenge name is required",
     }),
     description: z.string().min(1, {
-        message: "Challenge description is required",
+        error: "Challenge description is required",
     }),
-    category: z.enum([categories[0], ...categories.slice(1)], {
-        required_error: "Challenge category is required",
+    category: z.enum(categories, {
+        error: "Challenge category is required",
     }),
     answer: z.string().min(1, {
-        message: "Challenge answer is required",
+        error: "Challenge answer is required",
     }),
-    // object is required here for workaround against weird typescript error, even shadcn demo does this
     authors: z.array(
         z.object({
             value: z.string().min(1, {
-                message: "Challenge author cannot be blank",
+                error: "Challenge author cannot be blank",
             }),
         }),
     ).min(1, {
-        message: "Challenge authors are required",
+        error: "Challenge authors are required",
     }),
     visible: z.boolean(),
 })

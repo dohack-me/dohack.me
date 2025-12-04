@@ -19,13 +19,13 @@ const serviceTypes = Object.keys(ServiceType)
 
 const formSchema = z.object({
     image: z.string().min(1, {
-        message: "Image name is required",
+        error: "Image name is required",
     }),
     tag: z.string().min(1, {
-        message: "Image tag is required",
+        error: "Image tag is required",
     }),
-    type: z.enum([serviceTypes[0], ...serviceTypes.slice(1)], {
-        required_error: "Service type is required",
+    type: z.enum(serviceTypes, {
+        error: "Service type is required",
     }),
 })
 

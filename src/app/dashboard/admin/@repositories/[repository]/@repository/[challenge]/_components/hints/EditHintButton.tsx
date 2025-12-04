@@ -12,10 +12,10 @@ import CreateSheetDropdown from "@/src/components/sheet/CreateSheetDropdown"
 
 const formSchema = z.object({
     title: z.string().min(1, {
-        message: "Hint title is required",
+        error: "Hint title is required",
     }),
     hint: z.string().min(1, {
-        message: "Hint message is required",
+        error: "Hint message is required",
     }),
 })
 
