@@ -6,14 +6,14 @@ import {z} from "zod"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
 import {createService} from "@/src/lib/database/services"
-import {ServiceType} from "@prisma/client"
+import {Service, ServiceType} from "@/src/lib/prisma"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
 import {Button} from "@/src/components/ui/button"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
+import {toast} from "sonner";
 
 const serviceTypes = Object.keys(ServiceType)
 
@@ -30,7 +30,6 @@ const formSchema = z.object({
 })
 
 export default function CreateServiceButton({challengeId}: { challengeId: string }) {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -45,17 +44,18 @@ export default function CreateServiceButton({challengeId}: { challengeId: string
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createService({
+        setOpen(false)
+        toast.promise<Service>(createService({
             image: values.image,
             tag: values.tag,
             type: values.type as ServiceType,
             challengeId: challengeId,
+        }), {
+            loading: `Creating new ${values.type} service...`,
+            success: `Successfully created ${values.type} service.`,
+            error: "Something went wrong while creating a new service.",
         })
-        setOpen(false)
         router.refresh()
-        toast({
-            title: `Successfully created ${values.type} service.`,
-        })
     }
 
     return (

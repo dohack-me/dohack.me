@@ -12,7 +12,6 @@ import React from "react"
 import {Category, Challenge} from "@/src/lib/prisma"
 import {updateChallenge} from "@/src/lib/database/challenges"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
-import {useToast} from "@/src/hooks/use-toast"
 import {Switch} from "@/src/components/ui/switch"
 import {
     Field,
@@ -26,6 +25,7 @@ import {
 } from "@/src/components/ui/field";
 import {Textarea} from "@/src/components/ui/textarea";
 import {InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput} from "@/src/components/ui/input-group";
+import {toast} from "sonner";
 
 const categories = Object.keys(Category)
 
@@ -56,7 +56,6 @@ const formSchema = z.object({
 
 export default function EditChallengeForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
-    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -72,11 +71,7 @@ export default function EditChallengeForm({challenge}: { challenge: Challenge })
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        toast({
-            title: "Updating challenge details...",
-            description: "Please be patient!",
-        })
-        await updateChallenge(challenge.id, {
+        toast.promise<Challenge>(updateChallenge(challenge.id, {
             name: values.name,
             description: values.description,
             category: values.category as Category,
@@ -84,9 +79,10 @@ export default function EditChallengeForm({challenge}: { challenge: Challenge })
             authors: values.authors.map((field) => field.value),
             repositoryId: challenge.repositoryId,
             visible: values.visible,
-        })
-        toast({
-            title: "Updated challenge details.",
+        }), {
+            loading: "Updating challenge details...",
+            success: "Updated challenge details.",
+            error: "Something went wrong while updating challenge."
         })
         router.refresh()
     }

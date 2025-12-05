@@ -1,6 +1,6 @@
 "use client"
 
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 import {type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/src/components/ui/chart"
 import {Label, Pie, PieChart} from "recharts"
 import {useMemo} from "react"

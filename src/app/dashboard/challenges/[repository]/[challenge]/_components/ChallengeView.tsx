@@ -12,7 +12,7 @@ import MarkdownContent from "@/src/components/MarkdownContent"
 import ChallengeBookmarkView
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/ChallengeBookmarkView"
 import {getUserRole} from "@/src/lib/auth/users"
-import {UserRole} from "@prisma/client"
+import {UserRole} from "@/src/lib/prisma"
 import ChallengeRequirementView
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/ChallengeRequirementView"
 

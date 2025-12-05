@@ -8,7 +8,7 @@ import {readUserBookmarks} from "@/src/lib/database/bookmarks"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {readUserServiceInstances} from "@/src/lib/orchestrator/serviceinstances"
 import {shutdownServiceInstance} from "@/src/lib/orchestrator/services"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 import {readRepository} from "@/src/lib/database/repositories"
 
 export default async function ImportantChallengesView() {

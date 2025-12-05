@@ -5,13 +5,12 @@ import {Button} from "@/src/components/ui/button"
 import React from "react"
 import {CloudUploadIcon} from "lucide-react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
 import {getFileUploadUrl} from "@/src/lib/storage"
 import {Challenge} from "@/src/lib/prisma"
+import {toast} from "sonner";
 
 export default function UploadChallengeFilesForm({challenge}: { challenge: Challenge }) {
     const router = useRouter()
-    const {toast} = useToast()
 
     function onClick(event: React.MouseEvent<HTMLButtonElement>) {
         const inputElement = event.currentTarget.querySelector("input[type=\"file\"]")! as HTMLInputElement
@@ -36,25 +35,22 @@ export default function UploadChallengeFilesForm({challenge}: { challenge: Chall
             return
         }
 
-        toast({
-            title: "Uploading files...",
-            description: "Please be patient!",
-        })
-
         // forEach not used so that await can be used
+        const uploadPromises: Promise<Response>[] = []
         for (const file of Array.from(files)) {
             const filePath = `${challenge.repositoryId}/${challenge.id}/${file.name}`
             const uploadUrl = await getFileUploadUrl(filePath)
-            await fetch(uploadUrl, {
+            uploadPromises.push(fetch(uploadUrl, {
                 method: "PUT",
                 body: file,
-            })
+            }))
         }
-
-        router.refresh()
-        toast({
-            title: "Successfully uploaded files.",
+        toast.promise<Response[]>(Promise.all(uploadPromises), {
+            loading: "Uploading files...",
+            success: "Successfully uploaded files.",
+            error: "Something went wrong while uploading files.",
         })
+        router.refresh()
     }
 
     return (

@@ -1,6 +1,6 @@
 import {readUserSolves} from "@/src/lib/database/solves"
 import {readChallenge} from "@/src/lib/database/challenges"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/SolvesCategoriesChart"
 import {Card, CardHeader} from "@/src/components/ui/card"
 

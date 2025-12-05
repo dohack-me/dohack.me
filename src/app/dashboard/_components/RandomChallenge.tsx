@@ -7,7 +7,7 @@ import {SwordIcon} from "lucide-react"
 import React from "react"
 import {prisma} from "@/src/lib/globals"
 import PostHogButton from "@/src/components/PostHogButton"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 
 export default async function RandomChallenge() {
     const userSolves = await readUserSolves()

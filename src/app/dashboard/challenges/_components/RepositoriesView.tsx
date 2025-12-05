@@ -3,7 +3,7 @@ import {readRepositories} from "@/src/lib/database/repositories"
 import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
 import {BookDashedIcon} from "lucide-react"
 import {getUserRole} from "@/src/lib/auth/users"
-import {Repository, UserRole} from "@prisma/client"
+import {Repository, UserRole} from "@/src/lib/prisma"
 
 export default async function RepositoriesView() {
     const allRepositories = await readRepositories()

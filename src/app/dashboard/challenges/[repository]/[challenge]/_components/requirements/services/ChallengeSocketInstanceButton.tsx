@@ -3,16 +3,13 @@
 import {Button} from "@/src/components/ui/button"
 import {ClipboardIcon} from "lucide-react"
 import React from "react"
-import {useToast} from "@/src/hooks/use-toast"
+import {toast} from "sonner";
 
 export default function ChallengeSocketInstanceButton({endpoint}: { endpoint: string }) {
-    const {toast} = useToast()
     return (
         <Button className={"grow"} onClick={async () => {
             await navigator.clipboard.writeText(endpoint)
-            toast({
-                title: "Copied command into your clipboard.",
-            })
+            toast.success("Copied command into your clipboard.")
         }}>
             <ClipboardIcon/>
             {endpoint}

@@ -7,12 +7,13 @@ import {createRepository} from "@/src/lib/database/repositories"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
 import {Switch} from "@/src/components/ui/switch"
 import {Button} from "@/src/components/ui/button"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
+import {toast} from "sonner";
+import {Repository} from "@/src/lib/prisma";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -31,7 +32,6 @@ const formSchema = z.object({
 })
 
 export default function CreateRepositoryButton() {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -48,12 +48,13 @@ export default function CreateRepositoryButton() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createRepository(values)
         setOpen(false)
-        router.refresh()
-        toast({
-            title: "Successfully created repository.",
+        toast.promise<Repository>(createRepository(values), {
+            loading: "Creating new repository...",
+            success: "Successfully created repository.",
+            error: "Something went wrong while trying to create a new repository.",
         })
+        router.refresh()
     }
 
     return (

@@ -6,14 +6,14 @@ import {z} from "zod"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
-import {createHint} from "@/src/lib/database/hints"
+import {createHint, Hint} from "@/src/lib/database/hints"
 import {Challenge} from "@/src/lib/prisma"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {Button} from "@/src/components/ui/button";
 import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
 import {Textarea} from "@/src/components/ui/textarea";
+import {toast} from "sonner";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -25,7 +25,6 @@ const formSchema = z.object({
 })
 
 export default function CreateHintButton({challenge}: { challenge: Challenge }) {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -39,16 +38,17 @@ export default function CreateHintButton({challenge}: { challenge: Challenge }) 
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createHint({
+        setOpen(false)
+        toast.promise<Hint>(createHint({
             challenge: challenge,
             title: values.title,
             hint: values.hint,
+        }), {
+            loading: "Creating new hint...",
+            success: "Successfully created hint.",
+            error: "Something went wrong while creating a new hint.",
         })
-        setOpen(false)
         router.refresh()
-        toast({
-            title: "Successfully created hint.",
-        })
     }
 
     return (

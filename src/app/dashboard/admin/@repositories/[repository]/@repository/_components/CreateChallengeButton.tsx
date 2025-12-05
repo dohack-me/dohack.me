@@ -8,10 +8,9 @@ import {Input} from "@/src/components/ui/input"
 import {PlusIcon, XIcon} from "lucide-react"
 import React, {useState} from "react"
 import {createChallenge} from "@/src/lib/database/challenges"
-import {Category} from "@prisma/client"
+import {Category, Challenge} from "@/src/lib/prisma"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
 import {Switch} from "@/src/components/ui/switch"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {
@@ -26,6 +25,7 @@ import {
 } from "@/src/components/ui/field";
 import {Textarea} from "@/src/components/ui/textarea";
 import {InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput} from "@/src/components/ui/input-group";
+import {toast} from "sonner";
 
 const categories = Object.keys(Category)
 
@@ -55,7 +55,6 @@ const formSchema = z.object({
 })
 
 export default function CreateChallengeButton({repositoryId}: { repositoryId: string }) {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -78,7 +77,8 @@ export default function CreateChallengeButton({repositoryId}: { repositoryId: st
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createChallenge({
+        setOpen(false)
+        toast.promise<Challenge>(createChallenge({
             name: values.name,
             description: values.description,
             category: values.category as Category,
@@ -86,12 +86,12 @@ export default function CreateChallengeButton({repositoryId}: { repositoryId: st
             authors: values.authors.map((field) => field.value),
             repositoryId: repositoryId,
             visible: values.visible,
+        }), {
+            loading: "Creating new challenge...",
+            success: "Successfully created challenge.",
+            error: "Something went wrong while creating a new challenge.",
         })
-        setOpen(false)
         router.refresh()
-        toast({
-            title: "Successfully created challenge.",
-        })
     }
 
     return (

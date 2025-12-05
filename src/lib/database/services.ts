@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {Service, ServiceType} from "@prisma/client"
+import {Service, ServiceType} from "@/src/lib/prisma"
 
 export type EditableService = {
     image: string

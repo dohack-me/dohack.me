@@ -6,46 +6,30 @@ import React from "react"
 import {ServiceActionErrors} from "@/src/lib/orchestrator/ServiceActionErrors"
 import {useRouter} from "next/navigation"
 import {deployServiceInstance} from "@/src/lib/orchestrator/services"
-import {Service, ServiceType} from "@prisma/client"
+import {Service, ServiceType} from "@/src/lib/prisma"
+import {toast} from "sonner";
+import {ServiceInstance} from "@/src/lib/orchestrator/serviceinstances";
 
 export default function CreateServiceInstanceButton({service}: { service: Service }) {
-    const {toast} = useToast()
     const router = useRouter()
 
     async function onSubmit() {
-        toast({
-            title: "Starting service instance...",
-            description: "Please be patient!",
-        })
-        const {data, error} = await deployServiceInstance(service.id)
-        if (error) {
-            switch (error) {
-                case ServiceActionErrors.TOO_MANY_INSTANCES:
-                    toast({
-                        title: "You already have another service instance.",
-                        description: "Please stop all instances before requesting another one.",
-                    })
-                    return
-                case ServiceActionErrors.ALREADY_HAVE_INSTANCE:
-                    toast({
-                        title: "You already have a service instance.",
-                        description: "Please stop your instance to request another one.",
-                    })
-                    return
-                case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:
-                    toast({
-                        title: "Something went wrong.",
-                        description: "Please try again later.",
-                    })
-                    return
-            }
-        }
-        if (data) {
-            toast({
-                title: "Your service instance is ready!",
-                description: `Stop this instance to request another one.`,
+        toast.promise<{ data: ServiceInstance | null, error: ServiceActionErrors | null }>(
+            deployServiceInstance(service.id), {
+                loading: "Starting service instance...",
+                success: "Your service instance is ready!",
+                error: (error: ServiceActionErrors) => {
+                    switch (error) {
+                        case ServiceActionErrors.TOO_MANY_INSTANCES:
+                            return "You already have another service instance."
+                        case ServiceActionErrors.ALREADY_HAVE_INSTANCE:
+                            return "You already have a service instance."
+                        default:
+                        case ServiceActionErrors.SERVER_ERROR | ServiceActionErrors.INVALID_ID:
+                            return "Something went wrong."
+                    }
+                },
             })
-        }
         router.refresh()
     }
 

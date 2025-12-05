@@ -5,7 +5,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/c
 import Link from "next/link"
 import {Button} from "@/src/components/ui/button"
 import {useState} from "react"
-import {Repository} from "@prisma/client"
+import {Repository} from "@/src/lib/prisma"
 
 export default function RepositoriesInteractiveView({repositories}: { repositories: Repository[] }) {
     const [finalRepositories, setFinalRepositories] = useState(repositories)

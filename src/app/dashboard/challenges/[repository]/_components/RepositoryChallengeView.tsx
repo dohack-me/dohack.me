@@ -1,6 +1,6 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {readRepositoryChallenges} from "@/src/lib/database/challenges"
-import {Category, Challenge, UserRole} from "@prisma/client"
+import {Category, Challenge, UserRole} from "@/src/lib/prisma"
 import {BookDashedIcon} from "lucide-react"
 import {hasSolvedChallenge} from "@/src/lib/users"
 import {Button} from "@/src/components/ui/button"

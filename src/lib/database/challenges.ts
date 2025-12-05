@@ -1,7 +1,7 @@
 "use server"
 
 import {prisma} from "@/src/lib/globals"
-import {Category, Challenge} from "@prisma/client"
+import {Category, Challenge} from "@/src/lib/prisma"
 import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
 
 export type EditableChallenge = {

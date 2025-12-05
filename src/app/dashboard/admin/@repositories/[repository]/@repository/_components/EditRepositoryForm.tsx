@@ -9,11 +9,11 @@ import {useRouter} from "next/navigation"
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {SaveIcon} from "lucide-react"
 import React from "react"
-import {useToast} from "@/src/hooks/use-toast"
 import {Switch} from "@/src/components/ui/switch"
 import {Repository} from "@/src/lib/prisma"
 import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
+import {toast} from "sonner";
 
 const formSchema = z.object({
     name: z.string().min(1, {
@@ -33,7 +33,6 @@ const formSchema = z.object({
 
 export default function EditRepositoryForm({repository}: { repository: Repository }) {
     const router = useRouter()
-    const {toast} = useToast()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -48,13 +47,10 @@ export default function EditRepositoryForm({repository}: { repository: Repositor
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        toast({
-            title: "Updating repository details...",
-            description: "Please be patient!",
-        })
-        await updateRepository(repository.id, values)
-        toast({
-            title: "Updated repository details.",
+        toast.promise<Repository>(updateRepository(repository.id, values), {
+            loading: "Updating repository details...",
+            success: "Updated repository details.",
+            error: "Something went wrong while updating repository."
         })
         router.refresh()
     }

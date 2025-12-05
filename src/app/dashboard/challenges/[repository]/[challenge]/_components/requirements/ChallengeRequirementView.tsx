@@ -8,7 +8,7 @@ import ChallengeHints
 import {readChallengeServices} from "@/src/lib/database/services"
 import ChallengeServices
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeServices"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 
 export default async function ChallengeRequirementView({challenge}: { challenge: Challenge }) {
     const files = await readFolderFiles(`${challenge.repositoryId}/${challenge.id}`)

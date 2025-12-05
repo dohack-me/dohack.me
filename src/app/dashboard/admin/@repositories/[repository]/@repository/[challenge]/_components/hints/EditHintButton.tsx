@@ -4,13 +4,13 @@ import {z} from "zod"
 import {Controller, useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {Hint, updateHint} from "@/src/lib/database/hints"
-import {useToast} from "@/src/hooks/use-toast"
 import {useRouter} from "next/navigation"
 import React, {useState} from "react"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
 import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
+import {toast} from "sonner";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -22,7 +22,6 @@ const formSchema = z.object({
 })
 
 export default function EditHintButton({hint}: { hint: Hint }) {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -36,16 +35,17 @@ export default function EditHintButton({hint}: { hint: Hint }) {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await updateHint(hint.id, {
+        setOpen(false)
+        toast.promise<Hint>(updateHint(hint.id, {
             challenge: hint.challenge,
             title: values.title,
             hint: values.hint,
+        }), {
+            loading: "Updating hint details...",
+            success: "Updated hint details.",
+            error: "Something went wrong while updating hint details.",
         })
-        setOpen(false)
         router.refresh()
-        toast({
-            title: "Successfully updated hint.",
-        })
     }
 
     return (
