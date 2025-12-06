@@ -19,6 +19,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/src/lib/prisma ./src/lib/prisma
 
 COPY . .
 
