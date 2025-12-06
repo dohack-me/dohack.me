@@ -3,12 +3,12 @@ import {readRepositories} from "@/src/lib/database/repositories"
 import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
 import {BookDashedIcon} from "lucide-react"
 import {getUserRole} from "@/src/lib/auth/users"
-import {Repository, UserRole} from "@/src/lib/prisma"
+import {Repository} from "@/src/lib/prisma"
 
 export default async function RepositoriesView() {
     const allRepositories = await readRepositories()
     let repositories: Repository[]
-    if ((await getUserRole()) !== UserRole.ADMIN) {
+    if ((await getUserRole()) !== "admin") {
         repositories = allRepositories.filter((repository) => repository.visible)
     } else {
         repositories = allRepositories.map((repository) => ((repository.visible ? repository : {

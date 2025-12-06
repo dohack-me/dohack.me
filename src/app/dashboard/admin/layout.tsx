@@ -2,12 +2,11 @@ import {Card, CardHeader, CardTitle} from "@/src/components/ui/card"
 import React, {Suspense} from "react"
 import AdminRepositoriesLoading from "@/src/app/dashboard/admin/@repositories/loading"
 import {getUserRole} from "@/src/lib/auth/users"
-import {UserRole} from "@/src/lib/prisma"
 import {redirect} from "next/navigation"
 
 export default async function Layout({repositories}: { repositories: React.ReactNode }) {
     const role = await getUserRole()
-    if (!role || role != UserRole.ADMIN) {
+    if (!role || role !== "admin") {
         redirect("/dashboard")
     }
 

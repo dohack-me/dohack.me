@@ -7,4 +7,5 @@ README.md
 run
 .gitea
 docker
+.env
 .env.*

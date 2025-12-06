@@ -1,10 +1,10 @@
 import {Button} from "@/src/components/ui/button"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {SiDiscord, SiGithub, SiGoogle} from "@icons-pack/react-simple-icons"
-import {signIn} from "@/src/lib/auth/auth"
 import Link from "next/link"
 import {ChevronLeftIcon} from "lucide-react"
 import React from "react"
+import {authClient} from "@/src/lib/auth/client"
 
 export default async function LoginPage() {
     return (
@@ -26,7 +26,10 @@ export default async function LoginPage() {
                     <div className={"flex flex-col gap-y-4"}>
                         <form action={async () => {
                             "use server"
-                            await signIn("github", {redirectTo: "/dashboard"})
+                            await authClient.signIn.social({
+                                provider: "github",
+                                callbackURL: "/dashboard"
+                            })
                         }}>
                             <Button type={"submit"} className={"w-full"}>
                                 <SiGithub/>
@@ -35,7 +38,10 @@ export default async function LoginPage() {
                         </form>
                         <form action={async () => {
                             "use server"
-                            await signIn("discord", {redirectTo: "/dashboard"})
+                            await authClient.signIn.social({
+                                provider: "discord",
+                                callbackURL: "/dashboard"
+                            })
                         }}>
                             <Button type={"submit"} className={"w-full"}>
                                 <SiDiscord/>
@@ -44,7 +50,10 @@ export default async function LoginPage() {
                         </form>
                         <form action={async () => {
                             "use server"
-                            await signIn("google", {redirectTo: "/dashboard"})
+                            await authClient.signIn.social({
+                                provider: "google",
+                                callbackURL: "/dashboard"
+                            })
                         }}>
                             <Button type={"submit"} className={"w-full"}>
                                 <SiGoogle/>

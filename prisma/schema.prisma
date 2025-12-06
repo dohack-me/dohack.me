@@ -13,11 +13,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum UserRole {
-  ADMIN
-  USER
-}
-
 enum Category {
   CRYPTO
   FORENSICS
@@ -93,8 +88,8 @@ model ServiceInstance {
   endpoint  String
   expiry    DateTime
 
-  user    CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  service Service    @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service Service @relation(fields: [serviceId], references: [id], onDelete: Cascade)
 
   @@unique([userId, serviceId])
   @@map("service_instance")
@@ -104,8 +99,8 @@ model Solve {
   userId      String @db.Uuid
   challengeId String @db.Uuid
 
-  user      CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  challenge Challenge  @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   @@id([userId, challengeId])
   @@map("solve")
@@ -126,83 +121,76 @@ model Bookmark {
   userId      String @db.Uuid
   challengeId String @db.Uuid
 
-  user      CustomUser @relation(fields: [userId], references: [id], onDelete: Cascade)
-  challenge Challenge  @relation(fields: [challengeId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   @@id([userId, challengeId])
   @@map("bookmark")
 }
 
-model CustomUser {
-  id     String   @id @unique @default(uuid()) @db.Uuid
-  userId String   @unique
-  role   UserRole @default(USER)
-
+model User {
+  id               String            @id @default(uuid()) @db.Uuid
+  name             String
+  email            String
+  emailVerified    Boolean           @default(false)
+  image            String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  role             String
+  sessions         Session[]
+  accounts         Account[]
+  serviceInstances ServiceInstance[]
   solves           Solve[]
   bookmarks        Bookmark[]
-  serviceInstances ServiceInstance[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("custom_user")
-}
-
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  customUser CustomUser?
-
+  @@unique([email])
   @@map("user")
 }
 
-model Account {
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([provider, providerAccountId])
-  @@map("account")
-}
-
 model Session {
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(uuid()) @db.Uuid
+  expiresAt DateTime
+  token     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([token])
+  @@index([userId])
   @@map("session")
 }
 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+model Account {
+  id                    String    @id @default(uuid()) @db.Uuid
+  accountId             String
+  providerId            String
+  userId                String    @db.Uuid
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
-  @@id([identifier, token])
-  @@map("verification_token")
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id @default(uuid()) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }

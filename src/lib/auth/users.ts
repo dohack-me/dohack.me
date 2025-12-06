@@ -1,38 +1,33 @@
 "use server"
 
 import {auth} from "@/src/lib/auth/auth"
-import {prisma} from "@/src/lib/globals"
+import {headers} from "next/headers";
 
-export async function getUserId() {
-    const session = await auth()
-    if (!session || !(session.user) || !(session.user.id)) {
-        return null
-    }
-
-    const result = await prisma.customUser.findUnique({
-        where: {
-            userId: session.user.id,
-        },
+export async function getUserSession() {
+    const session = await auth.api.getSession({
+        headers: await headers()
     })
-    if (!result) {
-        return null
-    }
-    return result.id
+    console.log(session)
+    return session;
 }
 
-export async function getUserRole() {
-    const session = await auth()
-    if (!session || !(session.user) || !(session.user.id)) {
+export async function getUserRole(): Promise<null | "user" | "admin"> {
+    const session = await getUserSession()
+    if (!session) {
         return null
     }
 
-    const result = await prisma.customUser.findUnique({
-        where: {
-            userId: session.user.id,
-        },
-    })
-    if (!result) {
+    if (session.user.role === "user" || session.user.role === "admin") {
+        return session.user.role;
+    }
+    return null;
+}
+
+export async function getUserId(): Promise<string | null> {
+    const session = await getUserSession()
+    if (!session) {
         return null
     }
-    return result.role
+
+    return session.user.id;
 }

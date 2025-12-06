@@ -1,4 +1,15 @@
 services:
+  dohackme:
+    image: dohackme.azurecr.io/dohack.me/dohack.me:staging
+    build:
+      context: ..
+      dockerfile: docker/production/Dockerfile
+    container_name: dohackme
+    restart: no
+    env_file:
+      - ../.env
+    ports:
+      - "3000:3000"
   database:
     image: postgres
     container_name: dohackme_db

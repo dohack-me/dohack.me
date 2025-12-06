@@ -19,10 +19,9 @@ import {AppWindow, Home, LogOut, Swords} from "lucide-react"
 import {ModeToggle} from "@/src/components/ModeToggle"
 import DashboardLoadingPage from "@/src/app/dashboard/loading"
 import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading"
-import {auth, signOut} from "@/src/lib/auth/auth"
 import {redirect} from "next/navigation"
-import {getUserRole} from "@/src/lib/auth/users"
-import {UserRole} from "@/src/lib/prisma"
+import {getUserRole, getUserSession} from "@/src/lib/auth/users"
+import {authClient} from "@/src/lib/auth/client";
 
 const topItems = [
     {
@@ -41,7 +40,7 @@ export default async function DashboardLayout({children, breadcrumbs}: {
     children: React.ReactNode,
     breadcrumbs: React.ReactNode
 }) {
-    const session = await auth()
+    const session = await getUserSession()
     if (!session) {
         redirect("/login")
     }
@@ -49,7 +48,7 @@ export default async function DashboardLayout({children, breadcrumbs}: {
     const cookieStore = await cookies()
     const defaultOpen = cookieStore.get("sidebar:state")?.value === "true"
 
-    const admin = (await getUserRole()) == UserRole.ADMIN
+    const admin = (await getUserRole()) == "admin"
 
     return (
         <SidebarProvider defaultOpen={defaultOpen} className={"grow"}>
@@ -93,7 +92,7 @@ export default async function DashboardLayout({children, breadcrumbs}: {
                                 <SidebarMenuItem key={"Log Out"}>
                                     <form action={async () => {
                                         "use server"
-                                        await signOut()
+                                        await authClient.signOut()
                                     }}>
                                         <SidebarMenuButton type={"submit"}>
                                             <LogOut/>
