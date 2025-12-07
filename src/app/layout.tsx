@@ -13,12 +13,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({children}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <html lang="en" className={"h-fit w-full min-h-screen max-w-screen flex flex-col"} suppressHydrationWarning>
-            <head>
-                <title>dohack.me</title>
-                <meta name="google-adsense-account" content="ca-pub-1971189389097192"/>
-            </head>
-            <body className={"antialiased grow flex flex-col"}>
+        <html lang={"en"} className={"min-h-screen max-w-screen h-fit w-full flex"} suppressHydrationWarning>
+            <body className={"antialiased grow-col"}>
                 <PostHogProvider>
                     <ThemeProvider
                         attribute={"class"}

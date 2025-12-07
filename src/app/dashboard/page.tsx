@@ -1,5 +1,5 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
-import RandomChallenge from "@/src/app/dashboard/_components/RandomChallenge"
+import RandomChallengeView from "@/src/app/dashboard/_components/RandomChallengeView"
 import React, {Suspense} from "react"
 import LoadingTitleCard from "@/src/components/skeletons/LoadingTitleCard"
 import SolvesCategoriesChartView from "@/src/app/dashboard/_components/charts/SolvesCategoriesChartView"
@@ -17,7 +17,7 @@ export default async function DashboardPage() {
     }
 
     return (
-        <div className={"grow padding column"}>
+        <div className={"padding column"}>
             <Card>
                 <CardHeader>
                     <CardTitle
@@ -27,7 +27,7 @@ export default async function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <Suspense fallback={<LoadingTitleCard/>}>
-                        <RandomChallenge/>
+                        <RandomChallengeView/>
                     </Suspense>
                 </CardContent>
             </Card>

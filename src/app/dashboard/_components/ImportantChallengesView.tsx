@@ -10,6 +10,7 @@ import {readUserServiceInstances} from "@/src/lib/orchestrator/serviceinstances"
 import {shutdownServiceInstance} from "@/src/lib/orchestrator/services"
 import {Challenge} from "@/src/lib/prisma"
 import {readRepository} from "@/src/lib/database/repositories"
+import {Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@/src/components/ui/empty";
 
 export default async function ImportantChallengesView() {
     const serviceInstances = (await readUserServiceInstances())!
@@ -17,15 +18,15 @@ export default async function ImportantChallengesView() {
 
     if (serviceInstances.length === 0 && bookmarkedChallenges.length === 0) {
         return (
-            <div className={"grow small-column"}>
-                <Card className={"grow-col"}>
-                    <CardHeader className={"grow flex items-center justify-center"}>
+            <Empty className={"border border-solid"}>
+                <EmptyHeader>
+                    <EmptyMedia variant="icon">
                         <BookDashedIcon/>
-                        <CardHeader className={"p-0"}>There&apos;s nothing here...</CardHeader>
-                        <CardDescription>Bookmark a challenge to return to it later!</CardDescription>
-                    </CardHeader>
-                </Card>
-            </div>
+                    </EmptyMedia>
+                    <EmptyTitle>There&apos;s nothing here...</EmptyTitle>
+                    <EmptyDescription>Bookmark a challenge to return to it later!</EmptyDescription>
+                </EmptyHeader>
+            </Empty>
         )
     }
 
