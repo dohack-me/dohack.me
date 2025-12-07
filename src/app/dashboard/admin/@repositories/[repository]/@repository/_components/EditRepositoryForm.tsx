@@ -6,12 +6,20 @@ import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {updateRepository} from "@/src/lib/database/repositories"
 import {useRouter} from "next/navigation"
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {SaveIcon} from "lucide-react"
 import React from "react"
 import {Switch} from "@/src/components/ui/switch"
 import {Repository} from "@/src/lib/prisma"
-import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldSeparator
+} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
 import {toast} from "sonner";
 
@@ -56,114 +64,125 @@ export default function EditRepositoryForm({repository}: { repository: Repositor
     }
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardHeader className={"flex flex-row justify-between"}>
-                <div className={"flex flex-col gap-y-1.5"}>
+        <Card>
+            <CardHeader>
                     <CardTitle>Organization Details</CardTitle>
                     <CardDescription>Edit repository details here</CardDescription>
-                </div>
-                <Button type={"submit"}>
-                    <SaveIcon/>
-                    <p className={"hidden sm:block"}>Save</p>
-                </Button>
+                <CardAction>
+                    <Button type={"submit"} form={"edit-repository-form"}>
+                        <SaveIcon/>
+                        <p className={"hidden sm:block"}>Save</p>
+                    </Button>
+                </CardAction>
             </CardHeader>
             <CardContent className={"small-column"}>
-                <Controller
-                    name={"name"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Repository Name</FieldLabel>
-                                <FieldDescription>The display name of this repository.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"sourceLink"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Repository Source</FieldLabel>
-                                <FieldDescription>The link to your repository&apos;s source code.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"organization"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Organization Name</FieldLabel>
-                                <FieldDescription>The name of the organization this repository comes
-                                    from.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"organizationLink"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Organization Link</FieldLabel>
-                                <FieldDescription>The link to your organization&apos;s socials.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"visible"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Repository Visibility</FieldLabel>
-                                <FieldDescription>Whether to show this repository to normal
-                                    users.</FieldDescription>
-                            </FieldContent>
-                            <Switch
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
+                <form onSubmit={form.handleSubmit(onSubmit)} id={"edit-repository-form"}>
+                    <FieldGroup className={"gap-y-2"}>
+                        <Controller
+                            name={"name"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Repository Name</FieldLabel>
+                                        <FieldDescription>The display name of this repository.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"sourceLink"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Repository Source</FieldLabel>
+                                        <FieldDescription>The link to your repository&apos;s source
+                                            code.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                        <Controller
+                            name={"visible"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field orientation={"horizontal"} data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Repository Visibility</FieldLabel>
+                                        <FieldDescription>Whether to show this repository to normal
+                                            users.</FieldDescription>
+                                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                    </FieldContent>
+                                    <Switch
+                                        name={field.name}
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                        <Controller
+                            name={"organization"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Organization Name</FieldLabel>
+                                        <FieldDescription>The name of the organization this repository comes
+                                            from.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"organizationLink"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Organization Link</FieldLabel>
+                                        <FieldDescription>The link to your organization&apos;s
+                                            socials.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                    </FieldGroup>
+                </form>
             </CardContent>
-        </form>
+        </Card>
+
     )
 }
