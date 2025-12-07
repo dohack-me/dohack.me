@@ -4,11 +4,9 @@ import {auth} from "@/src/lib/auth/auth"
 import {headers} from "next/headers";
 
 export async function getUserSession() {
-    const session = await auth.api.getSession({
+    return await auth.api.getSession({
         headers: await headers()
-    })
-    console.log(session)
-    return session;
+    });
 }
 
 export async function getUserRole(): Promise<null | "user" | "admin"> {
