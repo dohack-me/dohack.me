@@ -5,7 +5,7 @@ import {Controller, useForm} from "react-hook-form"
 import {z} from "zod"
 import {createRepository} from "@/src/lib/database/repositories"
 import {PlusIcon} from "lucide-react"
-import React from "react"
+import React, {useState} from "react"
 import {useRouter} from "next/navigation"
 import {Switch} from "@/src/components/ui/switch"
 import {Button} from "@/src/components/ui/button"
@@ -50,6 +50,7 @@ const formSchema = z.object({
 
 export default function CreateRepositoryButton() {
     const router = useRouter()
+    const [open, setOpen] = useState(false)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -69,11 +70,12 @@ export default function CreateRepositoryButton() {
             success: "Successfully created repository.",
             error: "Something went wrong while trying to create a new repository.",
         })
+        setOpen(false)
         router.refresh()
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button>
                     <PlusIcon/>
@@ -90,6 +92,7 @@ export default function CreateRepositoryButton() {
                 </DialogHeader>
                 <form onSubmit={form.handleSubmit(onSubmit)} id={"create-repository-form"}>
                     <FieldGroup className={"gap-y-2"}>
+                        <FieldSeparator/>
                         <Controller
                             name={"name"}
                             control={form.control}
@@ -110,15 +113,13 @@ export default function CreateRepositoryButton() {
                             )}
                         />
                         <Controller
-                            name={"sourceLink"}
+                            name={"organization"}
                             control={form.control}
                             render={({field, fieldState}) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldContent>
-                                        <FieldLabel htmlFor={field.name}>Repository Source</FieldLabel>
-                                        <FieldDescription>The link to your repository&apos;s source
-                                            code.</FieldDescription>
-                                    </FieldContent>
+                                    <FieldLabel htmlFor={field.name}>Organization Name</FieldLabel>
+                                    <FieldDescription>The name of the organization this repository comes
+                                        from.</FieldDescription>
                                     <Input
                                         {...field}
                                         id={field.name}
@@ -152,13 +153,15 @@ export default function CreateRepositoryButton() {
                         />
                         <FieldSeparator/>
                         <Controller
-                            name={"organization"}
+                            name={"sourceLink"}
                             control={form.control}
                             render={({field, fieldState}) => (
                                 <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor={field.name}>Organization Name</FieldLabel>
-                                    <FieldDescription>The name of the organization this repository comes
-                                        from.</FieldDescription>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Repository Source</FieldLabel>
+                                        <FieldDescription>The link to your repository&apos;s source
+                                            code.</FieldDescription>
+                                    </FieldContent>
                                     <Input
                                         {...field}
                                         id={field.name}
@@ -189,15 +192,14 @@ export default function CreateRepositoryButton() {
                                 </Field>
                             )}
                         />
+                        <FieldSeparator/>
                     </FieldGroup>
                 </form>
                 <DialogFooter>
                     <DialogClose asChild>
                         <Button variant={"outline"}>Cancel</Button>
                     </DialogClose>
-                    <DialogClose asChild>
-                        <Button type={"submit"} form={"create-repository-form"}>Submit</Button>
-                    </DialogClose>
+                    <Button type={"submit"} form={"create-repository-form"}>Submit</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
