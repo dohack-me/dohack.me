@@ -5,7 +5,7 @@ import Link from "next/link"
 export default function ErrorPage() {
     return (
         <div className={"grow flex items-center justify-center"}>
-            <Card>
+            <Card className={"w-full max-w-xl"}>
                 <CardHeader className={"text-center"}>
                     <CardTitle>Sorry, something went wrong.</CardTitle>
                     <CardDescription>Please try again later.</CardDescription>
