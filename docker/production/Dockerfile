@@ -23,6 +23,47 @@ COPY --from=deps /app/src/lib/prisma ./src/lib/prisma
 
 COPY . .
 
+RUN --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_KEY,required=true \
+    echo "NEXT_PUBLIC_POSTHOG_KEY=$(cat /run/secrets/NEXT_PUBLIC_POSTHOG_KEY)" >> .env.production
+RUN --mount=type=secret,id=NEXT_PUBLIC_POSTHOG_HOST,required=true \
+    echo "NEXT_PUBLIC_POSTHOG_HOST=$(cat /run/secrets/NEXT_PUBLIC_POSTHOG_HOST)" >> .env.production
+
+RUN --mount=type=secret,id=BACKEND_URL,required=true \
+    echo "BACKEND_URL=$(cat /run/secrets/BACKEND_URL)" >> .env.production
+RUN --mount=type=secret,id=BACKEND_SECRET_KEY,required=true \
+    echo "BACKEND_SECRET_KEY=$(cat /run/secrets/BACKEND_SECRET_KEY)" >> .env.production
+
+RUN --mount=type=secret,id=DATABASE_URL,required=true \
+    echo "DATABASE_URL=$(cat /run/secrets/DATABASE_URL)" >> .env.production
+
+RUN --mount=type=secret,id=AUTH_TRUST_HOST,required=true \
+    echo "BETTER_AUTH_SECRET=$(cat /run/secrets/BETTER_AUTH_SECRET)" >> .env.production
+RUN --mount=type=secret,id=AUTH_URL,required=true \
+    echo "BETTER_AUTH_URL=$(cat /run/secrets/BETTER_AUTH_URL)" >> .env.production
+RUN --mount=type=secret,id=AUTH_GITHUB_ID,required=true \
+    echo "AUTH_GITHUB_ID=$(cat /run/secrets/AUTH_GITHUB_ID)" >> .env.production
+RUN --mount=type=secret,id=AUTH_GITHUB_SECRET,required=true \
+    echo "AUTH_GITHUB_SECRET=$(cat /run/secrets/AUTH_GITHUB_SECRET)" >> .env.production
+RUN --mount=type=secret,id=AUTH_DISCORD_ID,required=true \
+    echo "AUTH_DISCORD_ID=$(cat /run/secrets/AUTH_DISCORD_ID)" >> .env.production
+RUN --mount=type=secret,id=AUTH_DISCORD_SECRET,required=true \
+    echo "AUTH_DISCORD_SECRET=$(cat /run/secrets/AUTH_DISCORD_SECRET)" >> .env.production
+RUN --mount=type=secret,id=AUTH_GOOGLE_ID,required=true \
+    echo "AUTH_GOOGLE_ID=$(cat /run/secrets/AUTH_GOOGLE_ID)" >> .env.production
+RUN --mount=type=secret,id=AUTH_GOOGLE_SECRET,required=true \
+    echo "AUTH_GOOGLE_SECRET=$(cat /run/secrets/AUTH_GOOGLE_SECRET)" >> .env.production
+
+RUN --mount=type=secret,id=S3_ENDPOINT,required=true \
+    echo "S3_ENDPOINT=$(cat /run/secrets/S3_ENDPOINT)" >> .env.production
+RUN --mount=type=secret,id=S3_REGION,required=true \
+    echo "S3_REGION=$(cat /run/secrets/S3_REGION)" >> .env.production
+RUN --mount=type=secret,id=S3_ACCESS_KEY,required=true \
+    echo "S3_ACCESS_KEY=$(cat /run/secrets/S3_ACCESS_KEY)" >> .env.production
+RUN --mount=type=secret,id=S3_SECRET_KEY,required=true \
+    echo "S3_SECRET_KEY=$(cat /run/secrets/S3_SECRET_KEY)" >> .env.production
+RUN --mount=type=secret,id=S3_BUCKET,required=true \
+    echo "S3_BUCKET=$(cat /run/secrets/S3_BUCKET)" >> .env.production
+
 RUN corepack enable pnpm && pnpm run build
 
 # 3. Production image, copy all the files and run next
