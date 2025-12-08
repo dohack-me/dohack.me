@@ -30,7 +30,7 @@ jobs:
         with:
           file: ./docker/production/Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           tags: dohackme.azurecr.io/dohack.me/dohack.me:latest
           secrets: |
             "NEXT_PUBLIC_POSTHOG_KEY=${{ secrets.NEXT_PUBLIC_POSTHOG_KEY }}"
