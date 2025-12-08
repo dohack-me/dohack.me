@@ -36,9 +36,9 @@ RUN --mount=type=secret,id=BACKEND_SECRET_KEY,required=true \
 RUN --mount=type=secret,id=DATABASE_URL,required=true \
     echo "DATABASE_URL=$(cat /run/secrets/DATABASE_URL)" >> .env.production
 
-RUN --mount=type=secret,id=AUTH_TRUST_HOST,required=true \
+RUN --mount=type=secret,id=BETTER_AUTH_SECRET,required=true \
     echo "BETTER_AUTH_SECRET=$(cat /run/secrets/BETTER_AUTH_SECRET)" >> .env.production
-RUN --mount=type=secret,id=AUTH_URL,required=true \
+RUN --mount=type=secret,id=BETTER_AUTH_URL,required=true \
     echo "BETTER_AUTH_URL=$(cat /run/secrets/BETTER_AUTH_URL)" >> .env.production
 RUN --mount=type=secret,id=AUTH_GITHUB_ID,required=true \
     echo "AUTH_GITHUB_ID=$(cat /run/secrets/AUTH_GITHUB_ID)" >> .env.production
