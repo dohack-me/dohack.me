@@ -6,11 +6,22 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import {Hint, updateHint} from "@/src/lib/database/hints"
 import {useRouter} from "next/navigation"
 import React, {useState} from "react"
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu";
-import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {Field, FieldContent, FieldDescription, FieldError, FieldGroup, FieldLabel} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
 import {toast} from "sonner";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/src/components/ui/dialog";
+import {Textarea} from "@/src/components/ui/textarea";
+import {Button} from "@/src/components/ui/button";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -49,56 +60,65 @@ export default function EditHintButton({hint}: { hint: Hint }) {
     }
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
                 <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Edit</DropdownMenuItem>
-            </SheetTrigger>
-            <SheetContent className={"small-column"}>
-                <SheetHeader>
-                    <SheetTitle>Editing challenge hint</SheetTitle>
-                    <SheetDescription>Edit the hint details</SheetDescription>
-                </SheetHeader>
-                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
-                    <Controller
-                        name={"title"}
-                        control={form.control}
-                        render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldContent>
-                                    <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
-                                    <FieldDescription>The title of the hint</FieldDescription>
-                                </FieldContent>
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                    autoComplete={"off"}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}
-                    />
-                    <Controller
-                        name={"title"}
-                        control={form.control}
-                        render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldContent>
-                                    <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
-                                    <FieldDescription>The hint to give to players</FieldDescription>
-                                </FieldContent>
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                    autoComplete={"off"}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}
-                    />
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Editing challenge hint</DialogTitle>
+                    <DialogDescription>
+                        Edit the hint details
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} id={"edit-hint-form"}>
+                    <FieldGroup className={"gap-y-2"}>
+                        <Controller
+                            name={"title"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
+                                        <FieldDescription>The title of the hint</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"hint"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
+                                        <FieldDescription>The hint to give to players</FieldDescription>
+                                    </FieldContent>
+                                    <Textarea
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                    </FieldGroup>
                 </form>
-            </SheetContent>
-        </Sheet>
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button variant={"outline"}>Cancel</Button>
+                    </DialogClose>
+                    <Button type={"submit"} form={"edit-hint-form"}>Submit</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     )
 }

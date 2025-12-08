@@ -1,4 +1,4 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
 import DeleteServiceButton
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/DeleteServiceButton"
@@ -20,15 +20,13 @@ export default async function ChallegeServicesView({challengeId}: { challengeId:
 
     return (
         <Card className={"grow-col"}>
-            <CardHeader className={"header-with-button"}>
-                <div className={"header-with-button-description"}>
-                    <CardTitle>Challenge Services</CardTitle>
-                    <CardDescription>Services are add itional programs users need to run to solve a
-                        challenge</CardDescription>
-                </div>
-                <div className={"flex flex-row gap-x-2"}>
+            <CardHeader>
+                <CardTitle>Challenge Services</CardTitle>
+                <CardDescription>Services are add itional programs users need to run to solve a
+                    challenge</CardDescription>
+                <CardAction>
                     <CreateServiceButton challengeId={challengeId}/>
-                </div>
+                </CardAction>
             </CardHeader>
             <CardContent className={"grow-col"}>
                 <Table>

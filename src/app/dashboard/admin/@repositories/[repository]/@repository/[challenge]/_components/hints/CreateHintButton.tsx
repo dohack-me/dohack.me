@@ -8,12 +8,29 @@ import React, {useState} from "react"
 import {useRouter} from "next/navigation"
 import {createHint, Hint} from "@/src/lib/database/hints"
 import {Challenge} from "@/src/lib/prisma"
-import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger} from "@/src/components/ui/sheet";
 import {Button} from "@/src/components/ui/button";
-import {Field, FieldContent, FieldDescription, FieldError, FieldLabel} from "@/src/components/ui/field";
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldSeparator
+} from "@/src/components/ui/field";
 import {Input} from "@/src/components/ui/input";
 import {Textarea} from "@/src/components/ui/textarea";
 import {toast} from "sonner";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/src/components/ui/dialog";
 
 const formSchema = z.object({
     title: z.string().min(1, {
@@ -38,7 +55,6 @@ export default function CreateHintButton({challenge}: { challenge: Challenge }) 
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        setOpen(false)
         toast.promise<Hint>(createHint({
             challenge: challenge,
             title: values.title,
@@ -48,66 +64,76 @@ export default function CreateHintButton({challenge}: { challenge: Challenge }) 
             success: "Successfully created hint.",
             error: "Something went wrong while creating a new hint.",
         })
+        setOpen(false)
         router.refresh()
     }
 
     return (
-        <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
                 <Button>
                     <PlusIcon/>
                     <p className={"hidden lg:block"}>Add Hint</p>
                     <p className={"hidden sm:block lg:hidden"}>Add</p>
                 </Button>
-            </SheetTrigger>
-            <SheetContent className={"small-column"}>
-                <SheetHeader>
-                    <SheetTitle>Creating challenge hint</SheetTitle>
-                    <SheetDescription>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Creating challenge hint</DialogTitle>
+                    <DialogDescription>
                         Fill in the hint details as required
-                    </SheetDescription>
-                </SheetHeader>
-                <form onSubmit={form.handleSubmit(onSubmit)} className={"space-y-6"}>
-                    <Controller
-                        name={"title"}
-                        control={form.control}
-                        render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldContent>
-                                    <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
-                                    <FieldDescription>The title of the hint</FieldDescription>
-                                </FieldContent>
-                                <Input
-                                    {...field}
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                    autoComplete={"off"}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}
-                    />
-                    <Controller
-                        name={"title"}
-                        control={form.control}
-                        render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldContent>
-                                    <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
-                                    <FieldDescription>The hint to give to players</FieldDescription>
-                                </FieldContent>
-                                <Textarea
-                                    {...field}
-                                    id={field.name}
-                                    aria-invalid={fieldState.invalid}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}
-                    />
-                    <Button type="submit">Submit</Button>
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} id={"create-hint-form"}>
+                    <FieldGroup className={"gap-y-2"}>
+                        <FieldSeparator/>
+                        <Controller
+                            name={"title"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
+                                        <FieldDescription>The title of the hint</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"hint"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
+                                        <FieldDescription>The hint to give to players</FieldDescription>
+                                    </FieldContent>
+                                    <Textarea
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                    </FieldGroup>
                 </form>
-            </SheetContent>
-        </Sheet>
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button variant={"outline"}>Cancel</Button>
+                    </DialogClose>
+                    <Button type={"submit"} form={"create-hint-form"}>Submit</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     )
 }

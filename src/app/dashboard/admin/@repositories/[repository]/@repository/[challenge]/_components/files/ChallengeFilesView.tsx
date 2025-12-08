@@ -9,15 +9,13 @@ import ReadChallengeFilesView
 export default async function ChallengeFilesView({challengeId}: { challengeId: string }) {
     return (
         <Card className={"grow-col"}>
-            <CardHeader className={"flex flex-row justify-between"}>
-                <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle>Distributed Files</CardTitle>
-                    <CardDescription>Distributed files are available to all users, used in order to solve
-                        challenges</CardDescription>
-                </div>
+            <CardHeader>
+                <CardTitle>Distributed Files</CardTitle>
+                <CardDescription>Distributed files are available to all users, used in order to solve
+                    challenges</CardDescription>
             </CardHeader>
             <CardContent className={"grow-col"}>
-                <Card className={"grow-col"}>
+                <Card className={"grow-col py-0"}>
                     <ResizablePanelGroup direction={"horizontal"} className={"flex-1"}>
                         <ResizablePanel defaultSize={20}>
                             <UploadChallengeFilesView challengeId={challengeId}/>

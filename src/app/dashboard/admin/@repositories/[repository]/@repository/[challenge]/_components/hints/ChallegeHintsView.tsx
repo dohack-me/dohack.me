@@ -1,4 +1,4 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {notFound} from "next/navigation"
 import React from "react"
@@ -28,14 +28,12 @@ export default async function ChallengeHintsView({challengeId}: { challengeId: s
 
     return (
         <Card className={"grow-col"}>
-            <CardHeader className={"header-with-button"}>
-                <div className={"header-with-button-description"}>
-                    <CardTitle>Challenge Hints</CardTitle>
-                    <CardDescription>Hints are optional clues that help players solve a challenge</CardDescription>
-                </div>
-                <div className={"flex flex-row gap-x-2"}>
+            <CardHeader>
+                <CardTitle>Challenge Hints</CardTitle>
+                <CardDescription>Hints are optional clues that help players solve a challenge</CardDescription>
+                <CardAction>
                     <CreateHintButton challenge={challenge}/>
-                </div>
+                </CardAction>
             </CardHeader>
             <CardContent className={"grow-col"}>
                 <Table>

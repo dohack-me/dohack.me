@@ -7,7 +7,7 @@ import ChallengeFilesView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/ChallengeFilesView"
 import AdminChallengeOverviewLoading
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/loading"
-import {Card, CardContent, CardHeader} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardHeader} from "@/src/components/ui/card"
 import TitleCardTextSkeleton from "@/src/components/skeletons/TitleCardTextSkeleton"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
@@ -28,17 +28,19 @@ export default async function AdminChallengeOverviewPage({params}: {
     return (
         <Tabs className={"h-full w-full flex flex-col gap-y-4"} defaultValue={"details"}>
             <Card>
-                <CardHeader className={"header-with-button"}>
+                <CardHeader>
                     <Suspense fallback={<TitleCardTextSkeleton/>}>
                         <ChallengeTitleView challengeId={challengeId}/>
                     </Suspense>
-                    <Button asChild>
-                        <Link href={`/dashboard/admin/${repositoryId}`}>
-                            <ChevronLeftIcon/>
-                            <p className={"hidden lg:block"}>Back to Repository</p>
-                            <p className={"hidden sm:block lg:hidden"}>Back</p>
-                        </Link>
-                    </Button>
+                    <CardAction>
+                        <Button asChild>
+                            <Link href={`/dashboard/admin/${repositoryId}`}>
+                                <ChevronLeftIcon/>
+                                <p className={"hidden lg:block"}>Back to Repository</p>
+                                <p className={"hidden sm:block lg:hidden"}>Back</p>
+                            </Link>
+                        </Button>
+                    </CardAction>
                 </CardHeader>
                 <CardContent>
                     <TabsList className={"tabs-list grid-cols-3"}>

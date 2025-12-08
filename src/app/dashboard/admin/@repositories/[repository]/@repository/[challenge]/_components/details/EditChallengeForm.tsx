@@ -6,7 +6,7 @@ import {z} from "zod"
 import {Button} from "@/src/components/ui/button"
 import {Input} from "@/src/components/ui/input"
 import {useRouter} from "next/navigation"
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {PlusIcon, SaveIcon, XIcon} from "lucide-react"
 import React from "react"
 import {Category, Challenge} from "@/src/lib/prisma"
@@ -21,6 +21,7 @@ import {
     FieldGroup,
     FieldLabel,
     FieldLegend,
+    FieldSeparator,
     FieldSet
 } from "@/src/components/ui/field";
 import {Textarea} from "@/src/components/ui/textarea";
@@ -93,178 +94,189 @@ export default function EditChallengeForm({challenge}: { challenge: Challenge })
     })
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-            <CardHeader className={"flex flex-row justify-between"}>
-                <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle>Challenge Details</CardTitle>
-                    <CardDescription>Edit challenge details here</CardDescription>
-                </div>
-                <Button type={"submit"}>
-                    <SaveIcon/>
-                    Save
-                </Button>
+        <Card>
+            <CardHeader>
+                <CardTitle>Challenge Details</CardTitle>
+                <CardDescription>Edit challenge details here</CardDescription>
+                <CardAction>
+                    <Button type={"submit"} form={"edit-repository-form"}>
+                        <SaveIcon/>
+                        Save
+                    </Button>
+                </CardAction>
             </CardHeader>
             <CardContent className={"small-column"}>
-                <Controller
-                    name={"name"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Challenge Name</FieldLabel>
-                                <FieldDescription>The display name of this challenge.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"description"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Challenge Description</FieldLabel>
-                                <FieldDescription>The challenge&apos;s description.</FieldDescription>
-                            </FieldContent>
-                            <Textarea
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"category"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field orientation={"responsive"} data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Challenge Category</FieldLabel>
-                                <FieldDescription>The challenge&apos;s category.</FieldDescription>
-                            </FieldContent>
-                            <Select name={field.name} value={field.value} onValueChange={field.onChange}>
-                                <SelectTrigger aria-invalid={fieldState.invalid}>
-                                    <SelectValue placeholder="Select"/>
-                                </SelectTrigger>
-                                <SelectContent position="item-aligned">
-                                    {categories.map((category) => (
-                                        <SelectItem key={category} value={category}>
-                                            {category}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"answer"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Challenge Answer</FieldLabel>
-                                <FieldDescription>The answer to the challenge.</FieldDescription>
-                            </FieldContent>
-                            <Input
-                                {...field}
-                                id={field.name}
-                                aria-invalid={fieldState.invalid}
-                                autoComplete={"off"}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <Controller
-                    name={"visible"}
-                    control={form.control}
-                    render={({field, fieldState}) => (
-                        <Field data-invalid={fieldState.invalid}>
-                            <FieldContent>
-                                <FieldLabel htmlFor={field.name}>Challenge Visibility</FieldLabel>
-                                <FieldDescription>Whether to show this challenge to normal users.</FieldDescription>
-                            </FieldContent>
-                            <Switch
-                                checked={field.value}
-                                onCheckedChange={field.onChange}
-                            />
-                            {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                        </Field>
-                    )}
-                />
-                <FieldSet className={"gap-4"}>
-                    <FieldLegend variant={"label"}>Challenge Authors</FieldLegend>
-                    <FieldDescription>
-                        The authors of this challenge.
-                    </FieldDescription>
-                    <FieldGroup className={"gap-4"}>
-                        {fields.map((field, index) => (
-                            <Controller
-                                key={field.id}
-                                name={`authors.${index}.value`}
-                                control={form.control}
-                                render={({field: controllerField, fieldState}) => (
-                                    <Field
-                                        orientation={"horizontal"}
-                                        data-invalid={fieldState.invalid}
-                                    >
-                                        <FieldContent>
-                                            <InputGroup>
-                                                <InputGroupInput
-                                                    {...controllerField}
-                                                    aria-invalid={fieldState.invalid}
-                                                    placeholder={"John Doe"}
-                                                    type={"text"}
-                                                />
-                                                {fields.length > 1 && (
-                                                    <InputGroupAddon align={"inline-end"}>
-                                                        <InputGroupButton
-                                                            type={"button"}
-                                                            variant={"ghost"}
-                                                            size={"icon-xs"}
-                                                            onClick={() => remove(index)}
-                                                            aria-label={`Remove author ${index + 1}`}
-                                                        >
-                                                            <XIcon/>
-                                                        </InputGroupButton>
-                                                    </InputGroupAddon>
-                                                )}
-                                            </InputGroup>
-                                            {fieldState.invalid && (
-                                                <FieldError errors={[fieldState.error]}/>
-                                            )}
-                                        </FieldContent>
-                                    </Field>
-                                )}
-                            />
-                        ))}
-                        <Button
-                            type={"button"}
-                            variant={"outline"}
-                            size={"sm"}
-                            onClick={() => append({value: ""})}
-                            disabled={fields.length >= 5}
-                        >
-                            <PlusIcon/>
-                            Add Author
-                        </Button>
+                <form onSubmit={form.handleSubmit(onSubmit)} id={"edit-challenge-form"}>
+                    <FieldGroup className={"gap-y-2"}>
+                        <FieldSeparator/>
+                        <Controller
+                            name={"name"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Challenge Name</FieldLabel>
+                                        <FieldDescription>The display name of this challenge.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"description"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Challenge Description</FieldLabel>
+                                        <FieldDescription>The challenge&apos;s description.</FieldDescription>
+                                    </FieldContent>
+                                    <Textarea
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                        <Controller
+                            name={"answer"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Challenge Answer</FieldLabel>
+                                        <FieldDescription>The answer to the challenge.</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"category"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field orientation={"responsive"} data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Challenge Category</FieldLabel>
+                                        <FieldDescription>The challenge&apos;s category.</FieldDescription>
+                                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                    </FieldContent>
+                                    <Select name={field.name} value={field.value} onValueChange={field.onChange}>
+                                        <SelectTrigger aria-invalid={fieldState.invalid}>
+                                            <SelectValue placeholder={"Select"}/>
+                                        </SelectTrigger>
+                                        <SelectContent position={"item-aligned"}>
+                                            {categories.map((category) => (
+                                                <SelectItem key={category} value={category}>
+                                                    {category}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"visible"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field orientation={"horizontal"} data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Challenge Visibility</FieldLabel>
+                                        <FieldDescription>Whether to show this challenge to normal
+                                            users.</FieldDescription>
+                                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                    </FieldContent>
+                                    <Switch
+                                        name={field.name}
+                                        checked={field.value}
+                                        onCheckedChange={field.onChange}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                        <FieldSet className={"gap-y-2"}>
+                            <FieldLegend variant={"label"}>Challenge Authors</FieldLegend>
+                            <FieldDescription>
+                                The authors of this challenge.
+                            </FieldDescription>
+                            <FieldGroup className={"gap-y-2"}>
+                                {fields.map((field, index) => (
+                                    <Controller
+                                        key={field.id}
+                                        name={`authors.${index}.value`}
+                                        control={form.control}
+                                        render={({field: controllerField, fieldState}) => (
+                                            <Field
+                                                orientation={"horizontal"}
+                                                data-invalid={fieldState.invalid}
+                                            >
+                                                <FieldContent>
+                                                    <InputGroup>
+                                                        <InputGroupInput
+                                                            {...controllerField}
+                                                            aria-invalid={fieldState.invalid}
+                                                            placeholder={"John Doe"}
+                                                            type={"text"}
+                                                        />
+                                                        {fields.length > 1 && (
+                                                            <InputGroupAddon align={"inline-end"}>
+                                                                <InputGroupButton
+                                                                    type={"button"}
+                                                                    variant={"ghost"}
+                                                                    size={"icon-xs"}
+                                                                    onClick={() => remove(index)}
+                                                                    aria-label={`Remove author ${index + 1}`}
+                                                                >
+                                                                    <XIcon/>
+                                                                </InputGroupButton>
+                                                            </InputGroupAddon>
+                                                        )}
+                                                    </InputGroup>
+                                                    {fieldState.invalid && (
+                                                        <FieldError errors={[fieldState.error]}/>
+                                                    )}
+                                                </FieldContent>
+                                            </Field>
+                                        )}
+                                    />
+                                ))}
+                                <Button
+                                    type={"button"}
+                                    variant={"outline"}
+                                    size={"sm"}
+                                    onClick={() => append({value: ""})}
+                                    disabled={fields.length >= 5}
+                                >
+                                    <PlusIcon/>
+                                    Add Author
+                                </Button>
+                            </FieldGroup>
+                            {form.formState.errors.authors?.root && (
+                                <FieldError errors={[form.formState.errors.authors.root]}/>
+                            )}
+                            <FieldSeparator/>
+                        </FieldSet>
                     </FieldGroup>
-                    {form.formState.errors.authors?.root && (
-                        <FieldError errors={[form.formState.errors.authors.root]}/>
-                    )}
-                </FieldSet>
+                </form>
             </CardContent>
-        </form>
+        </Card>
     )
 }
