@@ -7,12 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate",
-    "migrate-dev-local": "dotenv -e .env.local -- npx prisma migrate dev",
-    "migrate-deploy-staging": "dotenv -e .env.staging -- npx prisma migrate deploy",
-    "migrate-deploy-production": "dotenv -e .env.production -- npx prisma migrate deploy",
-    "db-push": "dotenv -e .env.local -- pnpm dlx prisma db push",
-    "generate": "dotenv -e .env.local -- pnpm dlx prisma generate"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.943.0",
