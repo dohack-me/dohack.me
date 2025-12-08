@@ -28,8 +28,6 @@ export default async function RandomChallengeView() {
         },
     })) as Challenge[]
 
-    console.log("Challenges: ", challenges)
-
     if (challenges.length <= 0) return (
         <Card>
             <CardHeader>

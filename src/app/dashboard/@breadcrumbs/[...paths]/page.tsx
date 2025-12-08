@@ -13,7 +13,7 @@ import {notFound} from "next/navigation"
 import {isUUID} from "@/src/lib/utils"
 
 export default async function BreadcrumbsSlot({params}: { params: Promise<{ paths: string[] }> }) {
-    const paths = (await params).paths
+    const paths = ["dashboard", ...(await params).paths]
 
     async function getBreadcrumbItem(path: string, index: number) {
         let name
