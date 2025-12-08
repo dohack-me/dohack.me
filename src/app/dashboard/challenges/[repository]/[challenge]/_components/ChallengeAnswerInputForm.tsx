@@ -10,7 +10,7 @@ import {hasSolvedChallenge, submitChallengeAnswer} from "@/src/lib/users"
 import React, {useState} from "react"
 import {TConductorInstance} from "react-canvas-confetti/src/types"
 import Fireworks from "react-canvas-confetti/dist/presets/fireworks"
-import {Field, FieldError} from "@/src/components/ui/field";
+import {Field} from "@/src/components/ui/field";
 import {toast} from "sonner";
 
 const formSchema = z.object({
@@ -69,16 +69,14 @@ export default function ChallengeAnswerInputForm({challengeId}: { challengeId: s
             <Controller
                 name={"answer"}
                 control={form.control}
-                render={({field, fieldState}) => (
-                    <Field data-invalid={fieldState.invalid}>
+                render={({field}) => (
+                    <Field>
                         <Input
                             {...field}
                             id={field.name}
-                            aria-invalid={fieldState.invalid}
                             autoComplete={"off"}
                             placeholder={"Flag"}
                         />
-                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
                 )}
             />
