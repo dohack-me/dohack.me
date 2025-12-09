@@ -14,11 +14,13 @@ export default async function Credits() {
             <Card>
                 <CardHeader>
                     <CardTitle>Repository Credits</CardTitle>
-                    <CardDescription>This website wouldn&apos;t have been possible without these organizations
-                        open sourcing their challenges. Thank you!</CardDescription>
-                    <CardDescription>Want to suggest a repository? Make an issue <Link
-                        href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"}
-                        className={"underline"} target={"_blank"}>here</Link>.</CardDescription>
+                    <div>
+                        <CardDescription>This website wouldn&apos;t have been possible without these organizations
+                            open sourcing their challenges. Thank you!</CardDescription>
+                        <CardDescription>Want to suggest a repository? Make an issue <Link
+                            href={"https://github.com/dohack-me/repositories-archive/issues/new?title=Repository+Suggestion"}
+                            className={"underline"} target={"_blank"}>here</Link>.</CardDescription>
+                    </div>
                     <CardAction>
                         <div className={"small-row"}>
                             <Button asChild>

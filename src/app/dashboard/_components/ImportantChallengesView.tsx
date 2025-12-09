@@ -1,4 +1,4 @@
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import Link from "next/link"
 import React from "react"
 import {Button} from "@/src/components/ui/button"
@@ -93,19 +93,19 @@ async function ServiceChallengeWrapper({challenge, children}: { challenge: Chall
 
     return (
         <Card>
-            <CardHeader className={"header-with-button"}>
-                <div className={"header-with-button-description"}>
-                    <CardTitle>{challenge.name}</CardTitle>
-                    <CardDescription>
-                        {`${challenge.category} challenge in `}
-                        <Link href={`/dashboard/challenges/${challenge.repositoryId}`}
-                              className={"underline"}>{repository.name}</Link>
-                        {" by "}
-                        <Link href={repository.organizationLink}
-                              className={"underline"}>{repository.organization}</Link>
-                    </CardDescription>
-                </div>
-                {children}
+            <CardHeader>
+                <CardTitle>{challenge.name}</CardTitle>
+                <CardDescription>
+                    {`${challenge.category} challenge in `}
+                    <Link href={`/dashboard/challenges/${challenge.repositoryId}`}
+                          className={"underline"}>{repository.name}</Link>
+                    {" by "}
+                    <Link href={repository.organizationLink}
+                          className={"underline"}>{repository.organization}</Link>
+                </CardDescription>
+                <CardAction>
+                    {children}
+                </CardAction>
             </CardHeader>
         </Card>
     )
