@@ -35,7 +35,8 @@ export default function ChallengeBookmarkButton({hasBookmark, challengeId}: {
                 router.refresh()
             }}>
                 <BookmarkMinusIcon/>
-                <p>Delete Bookmark</p>
+                <p className={"hidden lg:block"}>Delete Bookmark</p>
+                <p className={"hidden sm:block lg:hidden"}>Delete</p>
             </Button>
         )
     }
