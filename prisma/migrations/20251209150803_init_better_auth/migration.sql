@@ -1,7 +1,4 @@
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'USER');
-
--- CreateEnum
 CREATE TYPE "Category" AS ENUM ('CRYPTO', 'FORENSICS', 'WEB', 'REV', 'PWN', 'MISC');
 
 -- CreateEnum
@@ -86,62 +83,65 @@ CREATE TABLE "bookmark" (
 );
 
 -- CreateTable
-CREATE TABLE "custom_user" (
+CREATE TABLE "user"
+(
     "id" UUID NOT NULL,
-    "userId" TEXT NOT NULL,
-    "role" "UserRole" NOT NULL DEFAULT 'USER',
-
-    CONSTRAINT "custom_user_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "user" (
-    "id" TEXT NOT NULL,
-    "name" TEXT,
+    "name"          TEXT    NOT NULL,
     "email" TEXT NOT NULL,
-    "emailVerified" TIMESTAMP(3),
+    "emailVerified" BOOLEAN NOT NULL DEFAULT false,
     "image" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "role"          TEXT    NOT NULL DEFAULT 'user',
 
     CONSTRAINT "user_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
+CREATE TABLE "session"
+(
+    "id"        UUID         NOT NULL,
+    "expiresAt" TIMESTAMP(3) NOT NULL,
+    "token"     TEXT         NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "ipAddress" TEXT,
+    "userAgent" TEXT,
+    "userId"    UUID         NOT NULL,
+
+    CONSTRAINT "session_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "account" (
-    "userId" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
-    "provider" TEXT NOT NULL,
-    "providerAccountId" TEXT NOT NULL,
-    "refresh_token" TEXT,
-    "access_token" TEXT,
-    "expires_at" INTEGER,
-    "token_type" TEXT,
+                           "id"                    UUID NOT NULL,
+                           "accountId"             TEXT NOT NULL,
+                           "providerId"            TEXT NOT NULL,
+                           "userId"                UUID NOT NULL,
+                           "accessToken"           TEXT,
+                           "refreshToken"          TEXT,
+                           "idToken"               TEXT,
+                           "accessTokenExpiresAt"  TIMESTAMP(3),
+                           "refreshTokenExpiresAt" TIMESTAMP(3),
     "scope" TEXT,
-    "id_token" TEXT,
-    "session_state" TEXT,
+                           "password"              TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "account_pkey" PRIMARY KEY ("provider","providerAccountId")
+                           CONSTRAINT "account_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "session" (
-    "sessionToken" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
+CREATE TABLE "verification"
+(
+    "id"         UUID         NOT NULL,
+    "identifier" TEXT         NOT NULL,
+    "value"      TEXT         NOT NULL,
+    "expiresAt"  TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL
-);
+    "updatedAt"  TIMESTAMP(3) NOT NULL,
 
--- CreateTable
-CREATE TABLE "verification_token" (
-    "identifier" TEXT NOT NULL,
-    "token" TEXT NOT NULL,
-    "expires" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "verification_token_pkey" PRIMARY KEY ("identifier","token")
+    CONSTRAINT "verification_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -163,16 +163,19 @@ CREATE UNIQUE INDEX "service_instance_userId_serviceId_key" ON "service_instance
 CREATE UNIQUE INDEX "hint_id_key" ON "hint"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "custom_user_id_key" ON "custom_user"("id");
+CREATE UNIQUE INDEX "user_email_key" ON "user" ("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "custom_user_userId_key" ON "custom_user"("userId");
+CREATE INDEX "session_userId_idx" ON "session" ("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+CREATE UNIQUE INDEX "session_token_key" ON "session" ("token");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "session_sessionToken_key" ON "session"("sessionToken");
+CREATE INDEX "account_userId_idx" ON "account" ("userId");
+
+-- CreateIndex
+CREATE INDEX "verification_identifier_idx" ON "verification" ("identifier");
 
 -- AddForeignKey
 ALTER TABLE "challenge" ADD CONSTRAINT "challenge_repositoryId_fkey" FOREIGN KEY ("repositoryId") REFERENCES "repository"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -181,13 +184,15 @@ ALTER TABLE "challenge" ADD CONSTRAINT "challenge_repositoryId_fkey" FOREIGN KEY
 ALTER TABLE "service" ADD CONSTRAINT "service_challengeId_fkey" FOREIGN KEY ("challengeId") REFERENCES "challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "service_instance" ADD CONSTRAINT "service_instance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "custom_user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "service_instance"
+    ADD CONSTRAINT "service_instance_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "service_instance" ADD CONSTRAINT "service_instance_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "service"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "solve" ADD CONSTRAINT "solve_userId_fkey" FOREIGN KEY ("userId") REFERENCES "custom_user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "solve"
+    ADD CONSTRAINT "solve_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "solve" ADD CONSTRAINT "solve_challengeId_fkey" FOREIGN KEY ("challengeId") REFERENCES "challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -196,16 +201,15 @@ ALTER TABLE "solve" ADD CONSTRAINT "solve_challengeId_fkey" FOREIGN KEY ("challe
 ALTER TABLE "hint" ADD CONSTRAINT "hint_challengeId_fkey" FOREIGN KEY ("challengeId") REFERENCES "challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "bookmark" ADD CONSTRAINT "bookmark_userId_fkey" FOREIGN KEY ("userId") REFERENCES "custom_user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "bookmark"
+    ADD CONSTRAINT "bookmark_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "bookmark" ADD CONSTRAINT "bookmark_challengeId_fkey" FOREIGN KEY ("challengeId") REFERENCES "challenge"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "custom_user" ADD CONSTRAINT "custom_user_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "session"
+    ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user" ("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "account" ADD CONSTRAINT "account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "session" ADD CONSTRAINT "session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
