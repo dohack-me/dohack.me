@@ -5,8 +5,6 @@
 
 # development
 .idea
-run
-docker
 .env
 .env.*
 
@@ -15,6 +13,11 @@ docker
 node_modules
 /src/lib/prisma
 
+# docker
+.dockerignore
+docker-compose.yml
+docker-compose_deps.yml
+Dockerfile
+
 # others
 README.md
-.dockerignore

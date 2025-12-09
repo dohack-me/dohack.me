@@ -1,9 +1,8 @@
 services:
   dohackme:
-    image: dohackme.azurecr.io/dohack.me/dohack.me:staging
+    image: dohack.me/dohack.me:staging
     build:
-      context: ..
-      dockerfile: docker/production/Dockerfile
+      dockerfile: Dockerfile
     container_name: dohackme
     restart: no
     env_file:
