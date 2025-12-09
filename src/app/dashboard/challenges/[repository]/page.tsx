@@ -2,7 +2,7 @@ import RepositoryTitleView from "@/src/app/dashboard/challenges/[repository]/_co
 import React, {Suspense} from "react"
 import RepositoryChallengeView from "@/src/app/dashboard/challenges/[repository]/_components/RepositoryChallengeView"
 import {ChevronLeftIcon} from "lucide-react"
-import {Card, CardHeader} from "@/src/components/ui/card"
+import {Card, CardAction, CardHeader} from "@/src/components/ui/card"
 import TitleCardTextSkeleton from "@/src/components/skeletons/TitleCardTextSkeleton"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
@@ -31,17 +31,19 @@ export default async function RepositoryPage({params}: { params: Promise<{ repos
     return (
         <div className={"grow padding small-column"}>
             <Card>
-                <CardHeader className={"header-with-button"}>
+                <CardHeader>
                     <Suspense fallback={<TitleCardTextSkeleton/>}>
                         <RepositoryTitleView repositoryId={repositoryId}/>
                     </Suspense>
-                    <Button asChild>
-                        <Link href={`/dashboard/challenges`}>
-                            <ChevronLeftIcon/>
-                            <p className={"hidden lg:block"}>Back to Repositories</p>
-                            <p className={"hidden sm:block lg:hidden"}>Back</p>
-                        </Link>
-                    </Button>
+                    <CardAction>
+                        <Button asChild>
+                            <Link href={`/dashboard/challenges`}>
+                                <ChevronLeftIcon/>
+                                <p className={"hidden lg:block"}>Back to Repositories</p>
+                                <p className={"hidden sm:block lg:hidden"}>Back</p>
+                            </Link>
+                        </Button>
+                    </CardAction>
                 </CardHeader>
             </Card>
             <Suspense fallback={<Skeleton className={"grow"}/>}>

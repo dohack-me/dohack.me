@@ -1,6 +1,6 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {readRepositoryChallenges} from "@/src/lib/database/challenges"
-import {Category, Challenge, UserRole} from "@prisma/client"
+import {Category, Challenge} from "@/src/lib/prisma"
 import {BookDashedIcon} from "lucide-react"
 import {hasSolvedChallenge} from "@/src/lib/users"
 import {Button} from "@/src/components/ui/button"
@@ -10,7 +10,7 @@ import {getUserRole} from "@/src/lib/auth/users"
 export default async function RepositoryChallengeView({repositoryId}: { repositoryId: string }) {
     const allChallenges = await readRepositoryChallenges(repositoryId)
     let challenges: Challenge[]
-    if ((await getUserRole())! !== UserRole.ADMIN) {
+    if ((await getUserRole())! !== "admin") {
         challenges = allChallenges.filter((challenge) => challenge.visible)
     } else {
         challenges = allChallenges.map((challenge) => ((challenge.visible ? challenge : {

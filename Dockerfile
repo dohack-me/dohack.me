@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:24-alpine AS base
 
 # 1. Install dependencies only when needed
 FROM base AS deps
@@ -19,6 +19,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/src/lib/prisma ./src/lib/prisma
 
 COPY . .
 
@@ -34,15 +35,11 @@ RUN --mount=type=secret,id=BACKEND_SECRET_KEY,required=true \
 
 RUN --mount=type=secret,id=DATABASE_URL,required=true \
     echo "DATABASE_URL=$(cat /run/secrets/DATABASE_URL)" >> .env.production
-RUN --mount=type=secret,id=DIRECT_URL,required=true \
-    echo "DIRECT_URL=$(cat /run/secrets/DIRECT_URL)" >> .env.production
 
-RUN --mount=type=secret,id=AUTH_TRUST_HOST,required=true \
-    echo "AUTH_TRUST_HOST=$(cat /run/secrets/AUTH_TRUST_HOST)" >> .env.production
-RUN --mount=type=secret,id=AUTH_URL,required=true \
-    echo "AUTH_URL=$(cat /run/secrets/AUTH_URL)" >> .env.production
-RUN --mount=type=secret,id=AUTH_SECRET,required=true \
-    echo "AUTH_SECRET=$(cat /run/secrets/AUTH_SECRET)" >> .env.production
+RUN --mount=type=secret,id=BETTER_AUTH_SECRET,required=true \
+    echo "BETTER_AUTH_SECRET=$(cat /run/secrets/BETTER_AUTH_SECRET)" >> .env.production
+RUN --mount=type=secret,id=BETTER_AUTH_URL,required=true \
+    echo "BETTER_AUTH_URL=$(cat /run/secrets/BETTER_AUTH_URL)" >> .env.production
 RUN --mount=type=secret,id=AUTH_GITHUB_ID,required=true \
     echo "AUTH_GITHUB_ID=$(cat /run/secrets/AUTH_GITHUB_ID)" >> .env.production
 RUN --mount=type=secret,id=AUTH_GITHUB_SECRET,required=true \

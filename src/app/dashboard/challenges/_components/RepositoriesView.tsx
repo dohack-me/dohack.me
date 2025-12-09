@@ -1,14 +1,15 @@
-import {Card, CardDescription, CardHeader} from "@/src/components/ui/card"
+import {Card, CardHeader} from "@/src/components/ui/card"
 import {readRepositories} from "@/src/lib/database/repositories"
 import RepositoriesInteractiveView from "@/src/app/dashboard/challenges/_components/RepositoriesInteractiveView"
 import {BookDashedIcon} from "lucide-react"
 import {getUserRole} from "@/src/lib/auth/users"
-import {Repository, UserRole} from "@prisma/client"
+import {Repository} from "@/src/lib/prisma"
+import {Empty, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle} from "@/src/components/ui/empty";
 
 export default async function RepositoriesView() {
     const allRepositories = await readRepositories()
     let repositories: Repository[]
-    if ((await getUserRole()) !== UserRole.ADMIN) {
+    if ((await getUserRole()) !== "admin") {
         repositories = allRepositories.filter((repository) => repository.visible)
     } else {
         repositories = allRepositories.map((repository) => ((repository.visible ? repository : {
@@ -24,13 +25,15 @@ export default async function RepositoriesView() {
     }
 
     if (repositories.length <= 0) return (
-        <Card className={"grow-col"}>
-            <CardHeader className={"grow-col items-center justify-center"}>
-                <BookDashedIcon/>
-                <CardHeader className={"p-0"}>There&apos;s nothing here...</CardHeader>
-                <CardDescription>Come back later!</CardDescription>
-            </CardHeader>
-        </Card>
+        <Empty className={"border border-solid"}>
+            <EmptyHeader>
+                <EmptyMedia variant="icon">
+                    <BookDashedIcon/>
+                </EmptyMedia>
+                <EmptyTitle>There&apos;s nothing here...</EmptyTitle>
+                <EmptyDescription>Come back later!</EmptyDescription>
+            </EmptyHeader>
+        </Empty>
     )
 
     return (

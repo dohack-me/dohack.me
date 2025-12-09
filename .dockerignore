@@ -1,10 +1,23 @@
-.dockerignore
-node_modules
-README.md
-.next
+# git
 .git
-.idea
-run
+.github
 .gitea
-docker
+
+# development
+.idea
+.env
 .env.*
+
+# dependencies
+.next
+node_modules
+/src/lib/prisma
+
+# docker
+.dockerignore
+docker-compose.yml
+docker-compose_deps.yml
+Dockerfile
+
+# others
+README.md

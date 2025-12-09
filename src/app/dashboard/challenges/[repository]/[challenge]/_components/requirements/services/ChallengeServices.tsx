@@ -2,8 +2,9 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/c
 import React, {Suspense} from "react"
 import {Button} from "@/src/components/ui/button"
 import {Loader2Icon} from "lucide-react"
-import ChallengeInstanceButtonView from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeInstanceButtonView"
-import {Service} from "@prisma/client"
+import ChallengeInstanceButtonView
+    from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/ChallengeInstanceButtonView"
+import {Service} from "@/src/lib/prisma"
 
 export default async function ChallengeServices({services}: { services: Service[] }) {
     return (

@@ -1,21 +1,23 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
-import RandomChallenge from "@/src/app/dashboard/_components/RandomChallenge"
+import RandomChallengeView from "@/src/app/dashboard/_components/RandomChallengeView"
 import React, {Suspense} from "react"
 import LoadingTitleCard from "@/src/components/skeletons/LoadingTitleCard"
 import SolvesCategoriesChartView from "@/src/app/dashboard/_components/charts/SolvesCategoriesChartView"
 import {Skeleton} from "@/src/components/ui/skeleton"
-import {auth} from "@/src/lib/auth/auth"
 import {redirect} from "next/navigation"
 import Link from "next/link"
 import ImportantChallengesView from "@/src/app/dashboard/_components/ImportantChallengesView"
 import SolvesTotalChartView from "@/src/app/dashboard/_components/charts/SolvesTotalChartView"
+import {getUserSession} from "@/src/lib/auth/users";
 
 export default async function DashboardPage() {
-    const session = await auth()
-    if (!session) redirect("/")
+    const session = await getUserSession()
+    if (!session) {
+        redirect("/login")
+    }
 
     return (
-        <div className={"grow padding column"}>
+        <div className={"padding column"}>
             <Card>
                 <CardHeader>
                     <CardTitle
@@ -25,7 +27,7 @@ export default async function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <Suspense fallback={<LoadingTitleCard/>}>
-                        <RandomChallenge/>
+                        <RandomChallengeView/>
                     </Suspense>
                 </CardContent>
             </Card>

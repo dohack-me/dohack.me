@@ -2,7 +2,7 @@
 
 import {prisma} from "@/src/lib/globals"
 import {readChallenge} from "@/src/lib/database/challenges"
-import {Challenge} from "@prisma/client"
+import {Challenge} from "@/src/lib/prisma"
 
 export type Hint = {
     id: string

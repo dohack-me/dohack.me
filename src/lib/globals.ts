@@ -1,10 +1,16 @@
-import {PrismaClient} from "@prisma/client"
+import {PrismaPg} from '@prisma/adapter-pg'
+import {PrismaClient} from "@/src/lib/prisma/client"
 import {S3Client} from "@aws-sdk/client-s3"
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
-const globalForS3 = globalThis as unknown as { S3: S3Client }
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
+const globalForS3 = global as unknown as { S3: S3Client }
 
-export const prisma = globalForPrisma.prisma || new PrismaClient()
+const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL
+})
+export const prisma = globalForPrisma.prisma || new PrismaClient({
+    adapter
+})
 
 export const S3 = globalForS3.S3 || new S3Client({
     endpoint: process.env.S3_ENDPOINT!,

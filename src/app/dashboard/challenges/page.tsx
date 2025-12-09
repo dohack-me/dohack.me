@@ -1,6 +1,6 @@
 import React, {Suspense} from "react"
 import RepositoriesView from "@/src/app/dashboard/challenges/_components/RepositoriesView"
-import {Card, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import {ChevronLeftIcon} from "lucide-react"
@@ -10,20 +10,20 @@ export default async function ChallengesPage() {
     return (
         <div className={"grow padding small-column"}>
             <Card>
-                <CardHeader className={"header-with-button"}>
-                    <div className={"header-with-button-description"}>
-                        <CardTitle>Select A Repository</CardTitle>
-                        <CardDescription>Repositories are publicly available <Link
-                            href={"https://github.com/dohack-me/repositories-archive"}
-                            className={"underline"} target={"_blank"}>here</Link></CardDescription>
-                    </div>
-                    <Button asChild>
-                        <Link href={`/dashboard`}>
-                            <ChevronLeftIcon/>
-                            <p className={"hidden lg:block"}>Back to Dashboard</p>
-                            <p className={"hidden sm:block lg:hidden"}>Back</p>
-                        </Link>
-                    </Button>
+                <CardHeader>
+                    <CardTitle>Select A Repository</CardTitle>
+                    <CardDescription>Repositories are publicly available <Link
+                        href={"https://github.com/dohack-me/repositories-archive"}
+                        className={"underline"} target={"_blank"}>here</Link></CardDescription>
+                    <CardAction>
+                        <Button asChild>
+                            <Link href={`/dashboard`}>
+                                <ChevronLeftIcon/>
+                                <p className={"hidden lg:block"}>Back to Dashboard</p>
+                                <p className={"hidden sm:block lg:hidden"}>Back</p>
+                            </Link>
+                        </Button>
+                    </CardAction>
                 </CardHeader>
             </Card>
             <Suspense fallback={<Skeleton className={"grow"}/>}>

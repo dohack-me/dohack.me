@@ -5,7 +5,7 @@ import React from "react"
 
 export default async function Home() {
     return (
-        <div className={"grow padding column justify-center"}>
+        <div className={"padding column justify-center"}>
             <Card>
                 <CardHeader className={"text-center"}>
                     <CardTitle>Welcome to dohack.me</CardTitle>

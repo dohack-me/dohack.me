@@ -8,9 +8,9 @@ export default async function ChallengeTitleView({challengeId}: { challengeId: s
     if (!challenge) notFound()
 
     return (
-        <div className={"header-with-button-description"}>
+        <>
             <CardTitle>{`Viewing Challenge: ${challenge.name}`}</CardTitle>
             <CardDescription>{`Authored by: ${challenge.authors.join(", ")}`}</CardDescription>
-        </div>
+        </>
     )
 }

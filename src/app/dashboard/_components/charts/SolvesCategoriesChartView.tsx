@@ -1,8 +1,9 @@
 import {readUserSolves} from "@/src/lib/database/solves"
 import {readChallenge} from "@/src/lib/database/challenges"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 import SolvesCategoriesChart from "@/src/app/dashboard/_components/charts/SolvesCategoriesChart"
-import {Card, CardHeader} from "@/src/components/ui/card"
+import {Empty, EmptyDescription, EmptyHeader, EmptyTitle} from "@/src/components/ui/empty";
+import React from "react";
 
 export default async function SolvesCategoriesChartView() {
     const solves = (await Promise.all(
@@ -11,12 +12,12 @@ export default async function SolvesCategoriesChartView() {
     ))
 
     if (solves.length === 0) return (
-        <Card className={"aspect-square flex flex-col"}>
-            <CardHeader className={"grow-col items-center justify-center"}>
-                <p className={"text-3xl font-bold"}>No solves</p>
-                <p className={"text-muted-foreground"}>Try a challenge!</p>
-            </CardHeader>
-        </Card>
+        <Empty className={"border border-solid aspect-square"}>
+            <EmptyHeader>
+                <EmptyTitle>No solves</EmptyTitle>
+                <EmptyDescription>Try a challenge!</EmptyDescription>
+            </EmptyHeader>
+        </Empty>
     )
 
     const categoriesFrequency = new Map<Category, number>

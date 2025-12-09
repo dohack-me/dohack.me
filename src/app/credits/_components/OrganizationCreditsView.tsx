@@ -2,7 +2,7 @@ import {readRepositories} from "@/src/lib/database/repositories"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import Link from "next/link"
 import {prisma} from "@/src/lib/globals"
-import {Repository} from "@prisma/client"
+import {Repository} from "@/src/lib/prisma"
 
 export default async function OrganizationCreditsView() {
     const repositories = await readRepositories()

@@ -4,22 +4,20 @@ import {Button} from "@/src/components/ui/button"
 import React from "react"
 import {BookmarkMinusIcon, BookmarkPlusIcon} from "lucide-react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
 import {createBookmark, deleteBookmark} from "@/src/lib/database/bookmarks"
+import {toast} from "sonner";
 
 export default function ChallengeBookmarkButton({hasBookmark, challengeId}: {
     hasBookmark: boolean,
     challengeId: string
 }) {
     const router = useRouter()
-    const {toast} = useToast()
 
     if (!hasBookmark) {
         return (
             <Button onClick={async () => {
                 await createBookmark(challengeId)
-                toast({
-                    title: "Created bookmark.",
+                toast.success("Created bookmark.", {
                     description: "You can now return to this challenge in the home menu.",
                 })
                 router.refresh()
@@ -33,13 +31,12 @@ export default function ChallengeBookmarkButton({hasBookmark, challengeId}: {
         return (
             <Button onClick={async () => {
                 await deleteBookmark(challengeId)
-                toast({
-                    title: "Deleted bookmark.",
-                })
+                toast.success("Deleted bookmark.")
                 router.refresh()
             }}>
                 <BookmarkMinusIcon/>
-                <p>Delete Bookmark</p>
+                <p className={"hidden lg:block"}>Delete Bookmark</p>
+                <p className={"hidden sm:block lg:hidden"}>Delete</p>
             </Button>
         )
     }

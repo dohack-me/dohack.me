@@ -1,0 +1,33 @@
+services:
+  database:
+    image: postgres
+    container_name: dohackme_db
+    restart: no
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - dohackme_database:/var/lib/postgresql
+    ports:
+      - "5432:5432"
+  storage:
+    image: rustfs/rustfs
+    container_name: dohackme_storage
+    restart: no
+    environment:
+      RUSTFS_CONSOLE_ENABLE: true
+    volumes:
+      - dohackme_storage:/data
+      - dohackme_storage-logs:/logs
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+volumes:
+  dohackme_database:
+    name: dohackme_database
+  dohackme_storage:
+    name: dohackme_storage
+  dohackme_storage-logs:
+    name: dohackme_storage-logs
+networks:
+  default:
+    name: dohackme

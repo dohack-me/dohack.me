@@ -1,12 +1,20 @@
 "use client"
 
 import {useRouter} from "next/navigation"
-import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/src/components/ui/dialog"
 import {Button} from "@/src/components/ui/button"
 import React, {useState} from "react"
-import {useToast} from "@/src/hooks/use-toast"
 import {useForm} from "react-hook-form"
-import {Form} from "@/src/components/ui/form"
+import {toast} from "sonner"
 
 export default function DialogButton({
                                          title,
@@ -32,20 +40,15 @@ export default function DialogButton({
     children: React.ReactNode
 }) {
     const [open, setOpen] = useState(false)
-    const {toast} = useToast()
     const router = useRouter()
     const form = useForm()
 
     async function onSubmit() {
-        toast({
-            title: startingTitle,
-            description: startingDescription,
-        })
         setOpen(false)
-        const success = await callback()
-        toast({
-            title: (success ? endingSuccess : "Something went wrong."),
-            description: (success ? null : endingFail),
+        toast.promise<boolean>(callback, {
+            loading: startingTitle,
+            success: endingSuccess,
+            error: endingFail,
         })
         router.refresh()
     }
@@ -62,11 +65,9 @@ export default function DialogButton({
                 </DialogHeader>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Form {...form}>
-                            <form onSubmit={form.handleSubmit(onSubmit)}>
-                                <Button variant={variant} type={"submit"}>{confirm}</Button>
-                            </form>
-                        </Form>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <Button variant={variant} type={"submit"}>{confirm}</Button>
+                        </form>
                     </DialogClose>
                     <DialogClose asChild>
                         <Button>Close</Button>

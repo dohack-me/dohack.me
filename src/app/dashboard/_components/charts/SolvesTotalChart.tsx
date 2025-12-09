@@ -2,7 +2,7 @@
 
 import {type ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent} from "@/src/components/ui/chart"
 import React, {useMemo} from "react"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 import {PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart} from "recharts"
 import {Card, CardFooter, CardHeader} from "@/src/components/ui/card"
 

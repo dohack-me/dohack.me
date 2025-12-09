@@ -1,5 +1,5 @@
 "use client"
-import {useEffect, useState} from "react";
+import {useEffect, useEffectEvent, useState} from "react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {Button} from "@/src/components/ui/button";
 import {usePostHog} from "posthog-js/react";
@@ -10,9 +10,9 @@ export default function CookieConsentBanner() {
     const [consentGiven, setConsentGiven] = useState("")
     const posthog = usePostHog()
 
-    useEffect(() => {
+    useEffectEvent(() => {
         setConsentGiven(cookieConsentGiven())
-    }, [])
+    })
 
     useEffect(() => {
         if (consentGiven !== '') {

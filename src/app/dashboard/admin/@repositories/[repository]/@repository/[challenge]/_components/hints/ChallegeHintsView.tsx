@@ -1,15 +1,24 @@
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
+import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {notFound} from "next/navigation"
 import React from "react"
-import CreateHintButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/CreateHintButton"
-import DeleteHintButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/DeleteHintButton"
+import CreateHintButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/CreateHintButton"
+import DeleteHintButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/DeleteHintButton"
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/src/components/ui/table"
-import {DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger} from "@/src/components/ui/dropdown-menu"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger
+} from "@/src/components/ui/dropdown-menu"
 import {EllipsisVerticalIcon} from "lucide-react"
 import {deleteHint, readChallengeHints} from "@/src/lib/database/hints"
 import MarkdownContent from "@/src/components/MarkdownContent"
-import EditHintButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/EditHintButton"
+import EditHintButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/EditHintButton"
 
 export default async function ChallengeHintsView({challengeId}: { challengeId: string }) {
     const challenge = await readChallenge(challengeId)
@@ -19,14 +28,12 @@ export default async function ChallengeHintsView({challengeId}: { challengeId: s
 
     return (
         <Card className={"grow-col"}>
-            <CardHeader className={"header-with-button"}>
-                <div className={"header-with-button-description"}>
-                    <CardTitle>Challenge Hints</CardTitle>
-                    <CardDescription>Hints are optional clues that help players solve a challenge</CardDescription>
-                </div>
-                <div className={"flex flex-row gap-x-2"}>
+            <CardHeader>
+                <CardTitle>Challenge Hints</CardTitle>
+                <CardDescription>Hints are optional clues that help players solve a challenge</CardDescription>
+                <CardAction>
                     <CreateHintButton challenge={challenge}/>
-                </div>
+                </CardAction>
             </CardHeader>
             <CardContent className={"grow-col"}>
                 <Table>

@@ -1,28 +1,47 @@
 "use client"
 
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useForm} from "react-hook-form"
+import {Controller, useForm} from "react-hook-form"
 import {z} from "zod"
 import {PlusIcon} from "lucide-react"
 import React, {useState} from "react"
 import {useRouter} from "next/navigation"
-import {useToast} from "@/src/hooks/use-toast"
-import CreateSheetButton from "@/src/components/sheet/CreateSheetButton"
-import CreateSheetForm from "@/src/components/sheet/CreateSheetForm"
-import {createHint} from "@/src/lib/database/hints"
-import {Challenge} from "@prisma/client"
+import {createHint, Hint} from "@/src/lib/database/hints"
+import {Challenge} from "@/src/lib/prisma"
+import {Button} from "@/src/components/ui/button";
+import {
+    Field,
+    FieldContent,
+    FieldDescription,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
+    FieldSeparator
+} from "@/src/components/ui/field";
+import {Input} from "@/src/components/ui/input";
+import {Textarea} from "@/src/components/ui/textarea";
+import {toast} from "sonner";
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/src/components/ui/dialog";
 
 const formSchema = z.object({
     title: z.string().min(1, {
-        message: "Hint title is required",
+        error: "Hint title is required",
     }),
     hint: z.string().min(1, {
-        message: "Hint message is required",
+        error: "Hint message is required",
     }),
 })
 
 export default function CreateHintButton({challenge}: { challenge: Challenge }) {
-    const {toast} = useToast()
     const router = useRouter()
     const [open, setOpen] = useState(false)
 
@@ -36,43 +55,85 @@ export default function CreateHintButton({challenge}: { challenge: Challenge }) 
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        await createHint({
+        toast.promise<Hint>(createHint({
             challenge: challenge,
             title: values.title,
             hint: values.hint,
+        }), {
+            loading: "Creating new hint...",
+            success: "Successfully created hint.",
+            error: "Something went wrong while creating a new hint.",
         })
         setOpen(false)
         router.refresh()
-        toast({
-            title: "Successfully created hint.",
-        })
     }
 
     return (
-        <CreateSheetButton
-            form={form}
-            open={open}
-            changeOpen={setOpen}
-            icon={<PlusIcon/>}
-            longName={"Add Hint"}
-            shortName={"Add"}
-            title={"Creating challenge hint"}
-            description={"Fill in the hint details as required"}
-        >
-            <CreateSheetForm form={form} inputs={[
-                {
-                    name: "title",
-                    title: "Hint Title",
-                    description: "The title of the hint",
-                    type: "input",
-                },
-                {
-                    name: "hint",
-                    title: "Hint message",
-                    description: "The hint to give to players",
-                    type: "textarea",
-                },
-            ]} onSubmit={onSubmit}/>
-        </CreateSheetButton>
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button>
+                    <PlusIcon/>
+                    <p className={"hidden lg:block"}>Add Hint</p>
+                    <p className={"hidden sm:block lg:hidden"}>Add</p>
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Creating challenge hint</DialogTitle>
+                    <DialogDescription>
+                        Fill in the hint details as required
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={form.handleSubmit(onSubmit)} id={"create-hint-form"}>
+                    <FieldGroup className={"gap-y-2"}>
+                        <FieldSeparator/>
+                        <Controller
+                            name={"title"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint Title</FieldLabel>
+                                        <FieldDescription>The title of the hint</FieldDescription>
+                                    </FieldContent>
+                                    <Input
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                        autoComplete={"off"}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <Controller
+                            name={"hint"}
+                            control={form.control}
+                            render={({field, fieldState}) => (
+                                <Field data-invalid={fieldState.invalid}>
+                                    <FieldContent>
+                                        <FieldLabel htmlFor={field.name}>Hint message</FieldLabel>
+                                        <FieldDescription>The hint to give to players</FieldDescription>
+                                    </FieldContent>
+                                    <Textarea
+                                        {...field}
+                                        id={field.name}
+                                        aria-invalid={fieldState.invalid}
+                                    />
+                                    {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                </Field>
+                            )}
+                        />
+                        <FieldSeparator/>
+                    </FieldGroup>
+                </form>
+                <DialogFooter>
+                    <DialogClose asChild>
+                        <Button variant={"outline"}>Cancel</Button>
+                    </DialogClose>
+                    <Button type={"submit"} form={"create-hint-form"}>Submit</Button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     )
 }

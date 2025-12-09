@@ -1,12 +1,21 @@
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
-import CreateChallengeButton from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton"
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle
+} from "@/src/components/ui/card"
+import CreateChallengeButton
+    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/CreateChallengeButton"
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
 import {deleteChallenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
 import React from "react"
-import {Category} from "@prisma/client"
+import {Category} from "@/src/lib/prisma"
 
 export default async function ChallengesView({repositoryId}: { repositoryId: string }) {
     const challenges = await readRepositoryChallenges(repositoryId)
@@ -14,15 +23,15 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
 
     return (
         <Card>
-            <CardHeader className={"flex flex-row justify-between"}>
-                <div className={"flex flex-col gap-y-1.5"}>
-                    <CardTitle>Challenges</CardTitle>
-                    <CardDescription>
-                        Challenges make up the bulk of repositories, where users must solve puzzles for an
-                        answer to submit
-                    </CardDescription>
-                </div>
-                <CreateChallengeButton repositoryId={repositoryId}/>
+            <CardHeader>
+                <CardTitle>Challenges</CardTitle>
+                <CardDescription>
+                    Challenges make up the bulk of repositories, where users must solve puzzles for an
+                    answer to submit
+                </CardDescription>
+                <CardAction>
+                    <CreateChallengeButton repositoryId={repositoryId}/>
+                </CardAction>
             </CardHeader>
             <CardContent>
                 <Tabs defaultValue={categories[0]} className={"small-column"}>

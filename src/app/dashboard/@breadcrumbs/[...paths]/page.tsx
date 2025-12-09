@@ -1,4 +1,11 @@
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/src/components/ui/breadcrumb"
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator
+} from "@/src/components/ui/breadcrumb"
 import React from "react"
 import {readRepository} from "@/src/lib/database/repositories"
 import {readChallenge} from "@/src/lib/database/challenges"
@@ -6,7 +13,7 @@ import {notFound} from "next/navigation"
 import {isUUID} from "@/src/lib/utils"
 
 export default async function BreadcrumbsSlot({params}: { params: Promise<{ paths: string[] }> }) {
-    const paths = (await params).paths
+    const paths = ["dashboard", ...(await params).paths]
 
     async function getBreadcrumbItem(path: string, index: number) {
         let name

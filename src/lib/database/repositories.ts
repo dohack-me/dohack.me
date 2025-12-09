@@ -2,7 +2,7 @@
 
 import {prisma} from "@/src/lib/globals"
 import {deleteFolder, readFolderFiles} from "@/src/lib/storage"
-import {Repository} from "@prisma/client"
+import {Repository} from "@/src/lib/prisma"
 
 export type EditableRepository = {
     name: string

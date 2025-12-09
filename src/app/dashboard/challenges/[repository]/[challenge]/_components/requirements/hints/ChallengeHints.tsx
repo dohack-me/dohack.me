@@ -1,6 +1,13 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import React from "react"
-import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from "@/src/components/ui/dialog"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/src/components/ui/dialog"
 import {Button} from "@/src/components/ui/button"
 import MarkdownContent from "@/src/components/MarkdownContent"
 import {Hint} from "@/src/lib/database/hints"
