@@ -26,7 +26,7 @@ export default async function ChallengeFiles({files}: { files: BucketFile[] }) {
                                 </Link>
                             </Button>
                         )
-                    },
+                    }
                 )}
             </CardContent>
         </Card>

@@ -41,7 +41,6 @@ export default async function ChallengeHints({hints}: { hints: Hint[] }) {
                             </DialogHeader>
                         </DialogContent>
                     </Dialog>
-
                 ))}
             </CardContent>
         </Card>

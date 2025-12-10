@@ -23,6 +23,7 @@ import {
     DropdownMenuTrigger
 } from "@/src/components/ui/dropdown-menu";
 import {useTheme} from "next-themes";
+import {redirect} from "next/navigation";
 
 const topItems = [
     {
@@ -90,7 +91,13 @@ export default function AppSidebar() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={async () => await authClient.signOut()}>
+                                <SidebarMenuButton onClick={async () => await authClient.signOut({
+                                    fetchOptions: {
+                                        onSuccess: () => {
+                                            redirect("/login")
+                                        }
+                                    }
+                                })}>
                                     <LogOut/>
                                     <span>Log Out</span>
                                 </SidebarMenuButton>
