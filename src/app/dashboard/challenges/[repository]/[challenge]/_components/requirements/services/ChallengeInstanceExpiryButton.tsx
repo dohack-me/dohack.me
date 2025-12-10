@@ -5,9 +5,9 @@ import {ClockIcon} from "lucide-react"
 import React, {useEffect, useState} from "react"
 import DialogButton from "@/src/components/dialog/DialogButton"
 
-export default function ChallengeInstanceExpiryButton({expiry, renewInstance}: {
+export default function ChallengeInstanceExpiryButton({expiry, renewInstanceFunction}: {
     expiry: Date,
-    renewInstance(): Promise<boolean>
+    renewInstanceFunction(): Promise<void>
 }) {
 
     const [timeLeft, setTimeLeft] = useState<number>(0)
@@ -46,43 +46,28 @@ export default function ChallengeInstanceExpiryButton({expiry, renewInstance}: {
             return `${minutes}:${remainingSeconds.toString().padStart(2, "0")}`
         }
     }
-
-    if (expired) {
-        return (
-            <DialogButton
-                title={"Renew this instance?"}
-                description={"This will reset the expiry time of the instance."}
-                variant={"default"}
-                confirm={"Renew"}
-                startingTitle={"Requesting instance renewal..."}
-                startingDescription={"Please be patient!"}
-                endingSuccess={"The instance has been renewed."}
-                endingFail={"Could not renew the instance. Please try again later."}
-                callback={renewInstance}
-            >
-                <Button>
-                    <ClockIcon/>
-                    Expired
-                </Button>
-            </DialogButton>
-        )
-    }
     return (
         <DialogButton
             title={"Renew this instance?"}
             description={"This will reset the expiry time of the instance."}
-            variant={"default"}
+            confirmVariant={"secondary"}
             confirm={"Renew"}
             startingTitle={"Requesting instance renewal..."}
-            startingDescription={"Please be patient!"}
             endingSuccess={"The instance has been renewed."}
-            endingFail={"Could not renew the instance. Please try again later."}
-            callback={renewInstance}
+            callback={renewInstanceFunction}
         >
-            <Button>
-                <ClockIcon/>
-                {`${formatTime(timeLeft)}`}
-            </Button>
+            {(expired
+                    ?
+                    <Button>
+                        <ClockIcon/>
+                        Expired
+                    </Button>
+                    :
+                    <Button>
+                        <ClockIcon/>
+                        {`${formatTime(timeLeft)}`}
+                    </Button>
+            )}
         </DialogButton>
     )
 }

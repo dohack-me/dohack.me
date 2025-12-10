@@ -60,10 +60,9 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                                                 <DeleteDialogButton
                                                     description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
                                                     confirmation={"Successfully deleted challenge."}
-                                                    fail={"Could not delete challenge. Please try again later."}
                                                     callback={async () => {
                                                         "use server"
-                                                        return (await deleteChallenge(challenge.id)) != null
+                                                        await deleteChallenge(challenge.id)
                                                     }}>
                                                     <Button variant={"destructive"}>Delete</Button>
                                                 </DeleteDialogButton>

@@ -29,27 +29,16 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
                         <ChallengeWebsiteInstanceButton endpoint={instance.endpoint}/>
                 )
             }
-            <ChallengeInstanceExpiryButton expiry={instance.expiry} renewInstance={async () => {
+            <ChallengeInstanceExpiryButton expiry={instance.expiry} renewInstanceFunction={async () => {
                 "use server"
-                try {
-                    await requestRenewServiceInstance(instance.service.id)
-                    return true
-                } catch {
-                    return false
-                }
+                await requestRenewServiceInstance(instance.service.id)
             }}/>
             <DeleteDialogButton
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
                 confirmation={"Successfully deleted instance."}
-                fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
                     "use server"
-                    try {
-                        await shutdownServiceInstance(service.id)
-                        return true
-                    } catch {
-                        return false
-                    }
+                    await shutdownServiceInstance(service.id)
                 }}
             >
                 <Button>

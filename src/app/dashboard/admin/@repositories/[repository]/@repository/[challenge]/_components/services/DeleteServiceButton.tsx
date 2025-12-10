@@ -7,13 +7,12 @@ import {ServiceType} from "@/src/lib/prisma"
 
 export default function DeleteServiceButton({type, callback}: {
     type: ServiceType,
-    callback(): Promise<boolean>
+    callback(): Promise<void>
 }) {
     return (
         <DeleteDialogButton
             description={`This action cannot be undone. This will permanently delete the ${type} service.`}
             confirmation={`Successfully deleted ${type} service.`}
-            fail={`Could not delete ${type} service. Please try again later.`}
             callback={callback}>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 Delete

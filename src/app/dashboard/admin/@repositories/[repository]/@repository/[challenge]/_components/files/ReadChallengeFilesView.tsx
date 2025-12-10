@@ -43,7 +43,6 @@ export default async function ReadChallengeFilesView({challengeId}: { challengeI
                                 <DeleteChallengeFileButton name={file.name} callback={async () => {
                                     "use server"
                                     await deleteFile(file.path)
-                                    return true
                                 }}/>
                                 <DownloadChallengeFileButton
                                     filePath={file.path}

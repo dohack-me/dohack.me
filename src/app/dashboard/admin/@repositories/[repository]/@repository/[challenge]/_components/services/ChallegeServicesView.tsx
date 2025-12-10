@@ -53,7 +53,6 @@ export default async function ChallegeServicesView({challengeId}: { challengeId:
                                             <DeleteServiceButton type={service.type} callback={async () => {
                                                 "use server"
                                                 await deleteService(service.id)
-                                                return true
                                             }}/>
                                         </DropdownMenuContent>
                                     </DropdownMenu>

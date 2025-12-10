@@ -26,15 +26,9 @@ export default async function RepositoriesView() {
                             <DeleteDialogButton
                                 description={`This action cannot be undone. This will permanently delete "${repository.name}" and all associated challenges.`}
                                 confirmation={"Successfully deleted repository."}
-                                fail={"Could not delete repository. Please try again later"}
                                 callback={async () => {
                                     "use server"
-                                    try {
-                                        await deleteRepository(repository.id)
-                                        return true
-                                    } catch {
-                                        return false
-                                    }
+                                    await deleteRepository(repository.id)
                                 }}>
                                 <Button variant={"destructive"}>Delete</Button>
                             </DeleteDialogButton>

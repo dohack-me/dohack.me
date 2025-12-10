@@ -19,24 +19,22 @@ import {toast} from "sonner"
 export default function DialogButton({
                                          title,
                                          description,
-                                         variant,
+                                         confirmVariant = "default",
+                                         closeVariant = "default",
                                          confirm,
                                          startingTitle,
-                                         startingDescription,
                                          endingSuccess,
-                                         endingFail,
                                          callback,
                                          children,
                                      }: {
     title: string;
     description: string,
-    variant: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost",
+    confirmVariant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost",
+    closeVariant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost",
     confirm: string,
     startingTitle: string,
-    startingDescription: string,
     endingSuccess: string,
-    endingFail: string,
-    callback(): Promise<boolean>,
+    callback(): Promise<void>,
     children: React.ReactNode
 }) {
     const [open, setOpen] = useState(false)
@@ -45,10 +43,10 @@ export default function DialogButton({
 
     async function onSubmit() {
         setOpen(false)
-        toast.promise<boolean>(callback, {
+        toast.promise<void>(callback, {
             loading: startingTitle,
             success: endingSuccess,
-            error: endingFail,
+            error: (error: Error) => error.message,
         })
         router.refresh()
     }
@@ -66,11 +64,11 @@ export default function DialogButton({
                 <DialogFooter>
                     <DialogClose asChild>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <Button variant={variant} type={"submit"}>{confirm}</Button>
+                            <Button variant={confirmVariant} type={"submit"}>{confirm}</Button>
                         </form>
                     </DialogClose>
                     <DialogClose asChild>
-                        <Button>Close</Button>
+                        <Button variant={closeVariant}>Close</Button>
                     </DialogClose>
                 </DialogFooter>
             </DialogContent>

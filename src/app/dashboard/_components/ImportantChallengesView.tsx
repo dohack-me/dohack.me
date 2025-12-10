@@ -36,8 +36,7 @@ export default async function ImportantChallengesView() {
                 <ServiceChallengeView key={instance.id} challengeId={instance.service.challengeId}
                                       deleteCallback={async () => {
                                           "use server"
-                                          const {error} = await shutdownServiceInstance(instance.service.id)
-                                          return error === null
+                                          await shutdownServiceInstance(instance.service.id)
                                       }}/>
             ))}
             {bookmarkedChallenges.map(async ({challengeId}) => {
@@ -59,7 +58,7 @@ export default async function ImportantChallengesView() {
 
 async function ServiceChallengeView({challengeId, deleteCallback}: {
     challengeId: string,
-    deleteCallback(): Promise<boolean>
+    deleteCallback(): Promise<void>
 }) {
     const challenge = (await readChallenge(challengeId))!
 
@@ -75,7 +74,6 @@ async function ServiceChallengeView({challengeId, deleteCallback}: {
                 <DeleteDialogButton
                     description={`This action cannot be undone, and you will lose any progress on the instance.`}
                     confirmation={"Successfully deleted instance."}
-                    fail={"Could not delete your instance. Please try again later."}
                     callback={deleteCallback}
                 >
                     <Button>

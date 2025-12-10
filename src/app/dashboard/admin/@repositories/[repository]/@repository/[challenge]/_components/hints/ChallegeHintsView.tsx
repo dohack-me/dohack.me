@@ -66,7 +66,6 @@ export default async function ChallengeHintsView({challengeId}: { challengeId: s
                                                 <DeleteHintButton callback={async () => {
                                                     "use server"
                                                     await deleteHint(hint.id)
-                                                    return true
                                                 }}/>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
