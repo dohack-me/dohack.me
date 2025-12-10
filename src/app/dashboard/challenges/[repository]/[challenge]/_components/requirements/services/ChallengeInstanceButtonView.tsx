@@ -19,6 +19,7 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
     if (!instance) return (
         <CreateServiceInstanceButton service={service}/>
     )
+
     return (
         <div className={"w-full small-row justify-between"}>
             {
@@ -30,8 +31,12 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
             }
             <ChallengeInstanceExpiryButton expiry={instance.expiry} renewInstance={async () => {
                 "use server"
-                const {error} = await requestRenewServiceInstance(instance.service.id)
-                return error == null
+                try {
+                    await requestRenewServiceInstance(instance.service.id)
+                    return true
+                } catch {
+                    return false
+                }
             }}/>
             <DeleteDialogButton
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
@@ -39,8 +44,12 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
                 fail={"Could not delete your instance. Please try again later."}
                 callback={async () => {
                     "use server"
-                    const {error} = await shutdownServiceInstance(service.id)
-                    return error == null
+                    try {
+                        await shutdownServiceInstance(service.id)
+                        return true
+                    } catch {
+                        return false
+                    }
                 }}
             >
                 <Button>
