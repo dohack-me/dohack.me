@@ -5,8 +5,6 @@ import EditChallengeView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/details/EditChallengeView"
 import ChallengeFilesView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/files/ChallengeFilesView"
-import AdminChallengeOverviewLoading
-    from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/loading"
 import {Card, CardAction, CardContent, CardHeader} from "@/src/components/ui/card"
 import TitleCardTextSkeleton from "@/src/components/skeletons/TitleCardTextSkeleton"
 import {Button} from "@/src/components/ui/button"
@@ -17,6 +15,7 @@ import ChallegeServicesView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/services/ChallegeServicesView"
 import ChallengeHintsView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/[challenge]/_components/hints/ChallegeHintsView"
+import {Skeleton} from "@/src/components/ui/skeleton";
 
 export default async function AdminChallengeOverviewPage({params}: {
     params: Promise<{ repository: string, challenge: string }>
@@ -53,28 +52,28 @@ export default async function AdminChallengeOverviewPage({params}: {
             </Card>
             <TabsContent value={"details"} className={"grow mt-0"}>
                 <div className={"h-full w-full flex flex-col"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                    <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
                         <EditChallengeView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>
             <TabsContent value={"files"} className={"grow mt-0"}>
                 <div className={"h-full w-full flex flex-col"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                    <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
                         <ChallengeFilesView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>
             <TabsContent value={"services"} className={"grow mt-0"}>
                 <div className={"h-full w-full small-column"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                    <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
                         <ChallegeServicesView challengeId={challengeId}/>
                     </Suspense>
                 </div>
             </TabsContent>
             <TabsContent value={"hints"} className={"grow mt-0"}>
                 <div className={"h-full w-full small-column"}>
-                    <Suspense fallback={<AdminChallengeOverviewLoading/>}>
+                    <Suspense fallback={<Skeleton className={"h-full w-full"}/>}>
                         <ChallengeHintsView challengeId={challengeId}/>
                     </Suspense>
                 </div>

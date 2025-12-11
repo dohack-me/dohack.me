@@ -4,12 +4,12 @@ import RepositoryTitleView
 import EditRepositoriesView
     from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/EditRepositoriesView"
 import ChallengesView from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/_components/ChallengesView"
-import AdminRepositoryOverviewLoading from "@/src/app/dashboard/admin/@repositories/[repository]/@repository/loading"
 import {Card, CardAction, CardHeader} from "@/src/components/ui/card"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import {ChevronLeftIcon} from "lucide-react"
 import TitleCardTextSkeleton from "@/src/components/skeletons/TitleCardTextSkeleton"
+import {Skeleton} from "@/src/components/ui/skeleton";
 
 export default async function AdminRepositoryOverviewPage({params}: { params: Promise<{ repository: string }> }) {
     const repositoryId = (await params).repository
@@ -32,10 +32,10 @@ export default async function AdminRepositoryOverviewPage({params}: { params: Pr
                     </CardAction>
                 </CardHeader>
             </Card>
-            <Suspense fallback={<AdminRepositoryOverviewLoading/>}>
+            <Suspense fallback={<Skeleton className={"grow min-h-48"}/>}>
                 <ChallengesView repositoryId={repositoryId}/>
             </Suspense>
-            <Suspense fallback={<AdminRepositoryOverviewLoading/>}>
+            <Suspense fallback={<Skeleton className={"grow min-h-48"}/>}>
                 <EditRepositoriesView repositoryId={repositoryId}/>
             </Suspense>
         </div>

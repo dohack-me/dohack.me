@@ -15,7 +15,7 @@ export default async function ChallengesPage({params}: { params: Promise<{ repos
     }
 
     return (
-        <div className={"grow padding small-column"}>
+        <div className={"grow small-column"}>
             <Suspense fallback={<Skeleton className={"grow"}/>}>
                 <ChallengeView repositoryId={repositoryId} challengeId={challengeId}/>
             </Suspense>

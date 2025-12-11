@@ -17,7 +17,7 @@ export default async function DashboardPage() {
     }
 
     return (
-        <div className={"padding column"}>
+        <div className={"column"}>
             <Card>
                 <CardHeader>
                     <CardTitle

@@ -29,7 +29,7 @@ export default async function RepositoryPage({params}: { params: Promise<{ repos
     }
 
     return (
-        <div className={"grow padding small-column"}>
+        <div className={"grow small-column"}>
             <Card>
                 <CardHeader>
                     <Suspense fallback={<TitleCardTextSkeleton/>}>

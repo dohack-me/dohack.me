@@ -1,8 +1,8 @@
 import React, {Suspense} from "react"
 import RepositoriesView from "@/src/app/dashboard/admin/@repositories/_components/RepositoriesView"
-import AdminRepositoriesLoading from "@/src/app/dashboard/admin/@repositories/loading"
 import {Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import CreateRepositoryButton from "@/src/app/dashboard/admin/@repositories/_components/CreateRepositoryButton"
+import {Skeleton} from "@/src/components/ui/skeleton";
 
 export default async function AdminRepositoriesPage() {
     return (
@@ -16,7 +16,7 @@ export default async function AdminRepositoriesPage() {
                 </CardAction>
             </CardHeader>
             <CardContent className={"grow-col"}>
-                <Suspense fallback={<AdminRepositoriesLoading/>}>
+                <Suspense fallback={<Skeleton className={"grow"}/>}>
                     <RepositoriesView/>
                 </Suspense>
             </CardContent>
