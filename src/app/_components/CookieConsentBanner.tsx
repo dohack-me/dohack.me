@@ -1,39 +1,31 @@
 "use client"
-import {useEffect, useEffectEvent, useState} from "react";
+import {useEffect, useState} from "react";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {Button} from "@/src/components/ui/button";
-import {usePostHog} from "posthog-js/react";
-import {cookieConsentGiven} from "@/src/lib/posthog/cookies";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 export default function CookieConsentBanner() {
-    const [consentGiven, setConsentGiven] = useState("")
-    const posthog = usePostHog()
-
-    useEffectEvent(() => {
-        setConsentGiven(cookieConsentGiven())
-    })
+    const [consentGiven, setConsentGiven] = useState("");
 
     useEffect(() => {
-        if (consentGiven !== '') {
-            posthog.set_config({persistence: consentGiven === 'yes' ? 'localStorage+cookie' : 'memory'});
-        }
-    }, [posthog, consentGiven]);
+        setConsentGiven(posthog.get_explicit_consent_status());
+    }, []);
 
     const handleAcceptCookies = () => {
-        localStorage.setItem("cookie_consent", "yes")
-        setConsentGiven("yes")
-    }
+        posthog.opt_in_capturing();
+        setConsentGiven('granted');
+    };
 
     const handleDeclineCookies = () => {
-        localStorage.setItem("cookie_consent", "no")
-        setConsentGiven("no")
-    }
+        posthog.opt_out_capturing();
+        setConsentGiven('denied');
+    };
 
     return (
         <div>
-            {consentGiven === "undecided" && (
-                <Card className={"fixed bottom-0 sm:bottom-4 sm:right-4 w-full sm:max-w-128"}>
+            {consentGiven === "pending" && (
+                <Card className={"fixed bottom-0 sm:bottom-4 sm:right-4 w-full sm:max-w-lg"}>
                     <CardHeader>
                         <CardTitle>Cookie Consent</CardTitle>
                         <div>

@@ -3,9 +3,9 @@ import {readRepositoryChallenges} from "@/src/lib/database/challenges"
 import {Category, Challenge} from "@/src/lib/prisma"
 import {BookDashedIcon} from "lucide-react"
 import {hasSolvedChallenge} from "@/src/lib/users"
-import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
 import {getUserRole} from "@/src/lib/auth/users"
+import PostHogButton from "@/src/components/PostHogButton";
 
 export default async function RepositoryChallengeView({repositoryId}: { repositoryId: string }) {
     const allChallenges = await readRepositoryChallenges(repositoryId)
@@ -79,10 +79,13 @@ export default async function RepositoryChallengeView({repositoryId}: { reposito
                         {
                             challenges
                                 .map(async ({solved, challenge}) => (
-                                    <Button key={challenge.id} asChild variant={solved ? "outline" : "default"}>
+                                    <PostHogButton key={challenge.id} variant={solved ? "outline" : "default"}
+                                                   eventName={"Visited challenge"} properties={{
+                                        challenge: challenge,
+                                    }}>
                                         <Link href={`/dashboard/challenges/${repositoryId}/${challenge.id}`}
                                               className={solved ? "line-through" : undefined}>{challenge.name}</Link>
-                                    </Button>
+                                    </PostHogButton>
                                 ))
                         }
                     </CardContent>

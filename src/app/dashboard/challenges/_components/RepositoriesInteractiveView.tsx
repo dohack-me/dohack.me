@@ -3,9 +3,9 @@
 import {Input} from "@/src/components/ui/input"
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card"
 import Link from "next/link"
-import {Button} from "@/src/components/ui/button"
 import {useState} from "react"
 import {Repository} from "@/src/lib/prisma"
+import PostHogButton from "@/src/components/PostHogButton";
 
 export default function RepositoriesInteractiveView({repositories}: { repositories: Repository[] }) {
     const [finalRepositories, setFinalRepositories] = useState(repositories)
@@ -29,9 +29,11 @@ export default function RepositoriesInteractiveView({repositories}: { repositori
                                                                className={"underline"}>{repository.organization}</Link></CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <Button className={"w-full"} asChild>
+                            <PostHogButton className={"w-full"} eventName={"Visited repository"} properties={{
+                                repository: repository,
+                            }}>
                                 <Link href={`/dashboard/challenges/${repository.id}`}>Open Repository</Link>
-                            </Button>
+                            </PostHogButton>
                         </CardContent>
                     </Card>
                 ))}

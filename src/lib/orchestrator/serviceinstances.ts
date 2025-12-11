@@ -3,7 +3,7 @@
 import {getUserId} from "@/src/lib/auth/users"
 import {prisma} from "@/src/lib/globals"
 import {readService} from "@/src/lib/database/services"
-import getServerPostHogClient from "@/src/lib/posthog/PostHog"
+import PostHogClient from "@/src/lib/posthog/posthog"
 import {Service} from "@/src/lib/prisma"
 
 export type ServiceInstance = {
@@ -82,7 +82,7 @@ export async function createServiceInstance(service: Service) {
 
     const instance = await objectToServiceInstance(result)
 
-    getServerPostHogClient().capture({
+    PostHogClient().capture({
         event: "Service instance created",
         distinctId: userId,
         properties: {
@@ -163,7 +163,7 @@ export async function renewServiceInstance(instance: ServiceInstance) {
 
     if (!response.ok && response.status != 404) return null
 
-    getServerPostHogClient().capture({
+    PostHogClient().capture({
         event: "Service instance renewed",
         distinctId: userId,
         properties: {
@@ -204,7 +204,7 @@ export async function deleteServiceInstance(instance: ServiceInstance) {
 
     if (!response.ok && response.status != 404) return null
 
-    getServerPostHogClient().capture({
+    PostHogClient().capture({
         event: "Service instance deleted",
         distinctId: userId,
         properties: {

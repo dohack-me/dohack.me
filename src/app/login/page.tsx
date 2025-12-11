@@ -12,7 +12,7 @@ export default function LoginPage() {
     async function oauthLogin(type: "github" | "discord" | "google") {
         await authClient.signIn.social({
             provider: type,
-            callbackURL: "/dashboard"
+            callbackURL: "/dashboard",
         })
     }
     return (

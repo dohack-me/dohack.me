@@ -1,7 +1,6 @@
 import "./globals.css"
 
 import {ThemeProvider} from "@/src/components/ThemeProvider"
-import PostHogProvider from "@/src/app/posthog/PostHogProvider"
 import {Metadata} from "next"
 import CookieConsentBanner from "@/src/app/_components/CookieConsentBanner";
 import {Toaster} from "@/src/components/ui/sonner";
@@ -15,18 +14,16 @@ export default async function RootLayout({children}: Readonly<{ children: React.
     return (
         <html lang={"en"} className={"min-h-screen max-w-screen h-fit w-full flex"} suppressHydrationWarning>
             <body className={"antialiased grow-col"}>
-                <PostHogProvider>
-                    <ThemeProvider
-                        attribute={"class"}
-                        defaultTheme={"system"}
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        {children}
-                        <CookieConsentBanner/>
-                    </ThemeProvider>
-                    <Toaster/>
-                </PostHogProvider>
+                <ThemeProvider
+                    attribute={"class"}
+                    defaultTheme={"system"}
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    {children}
+                    <CookieConsentBanner/>
+                </ThemeProvider>
+                <Toaster/>
             </body>
         </html>
     )

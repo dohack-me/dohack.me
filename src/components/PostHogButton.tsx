@@ -1,15 +1,20 @@
 "use client"
 
-import {Properties} from "posthog-js"
+import {posthog, Properties} from "posthog-js"
 import {Button} from "@/src/components/ui/button"
 import React from "react"
-import {usePostHog} from "posthog-js/react";
 
-export default function PostHogButton({eventName, properties, children}: {eventName: string, properties?: Properties | null, children: React.ReactNode}) {
-    const posthog = usePostHog()
-
+export default function PostHogButton({eventName, properties, className, variant = "default", children}: {
+    eventName: string,
+    properties?: Properties | null,
+    className?: string,
+    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost",
+    children: React.ReactNode
+}) {
     return (
-        <Button asChild onClick={() => {posthog.capture(eventName, properties)}}>
+        <Button className={className} variant={variant} asChild onClick={() => {
+            posthog.capture(eventName, properties)
+        }}>
             {children}
         </Button>
     )
