@@ -3,6 +3,6 @@ import React from "react"
 
 export default function DashboardLoadingPage() {
     return (
-        <Skeleton className={"grow margin"}/>
+        <Skeleton className={"w-full h-full"}/>
     )
 }

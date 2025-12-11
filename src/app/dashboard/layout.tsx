@@ -1,9 +1,7 @@
 import {SidebarProvider, SidebarTrigger} from "@/src/components/ui/sidebar"
 import {cookies} from "next/headers"
 import {Separator} from "@/src/components/ui/separator"
-import React, {Suspense} from "react"
-import DashboardLoadingPage from "@/src/app/dashboard/loading"
-import BreadcrumbsLoading from "@/src/app/dashboard/@breadcrumbs/loading"
+import React from "react"
 import {redirect} from "next/navigation"
 import {getUserSession} from "@/src/lib/auth/users"
 import AppSidebar from "@/src/components/AppSidebar";
@@ -28,14 +26,10 @@ export default async function DashboardLayout({children, breadcrumbs}: {
                     className={"sticky top-0 h-12 p-2 small-row items-center bg-background border-b-2"}>
                     <SidebarTrigger/>
                     <Separator orientation={"vertical"}/>
-                    <Suspense fallback={<BreadcrumbsLoading/>}>
-                        {breadcrumbs}
-                    </Suspense>
+                    {breadcrumbs}
                 </header>
-                <main className={"grow-col"}>
-                    <Suspense fallback={<DashboardLoadingPage/>}>
-                        {children}
-                    </Suspense>
+                <main className={"margin grow-col"}>
+                    {children}
                 </main>
             </div>
         </SidebarProvider>

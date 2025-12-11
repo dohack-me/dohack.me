@@ -8,7 +8,7 @@ import {Skeleton} from "@/src/components/ui/skeleton"
 
 export default async function ChallengesPage() {
     return (
-        <div className={"grow padding small-column"}>
+        <div className={"grow small-column"}>
             <Card>
                 <CardHeader>
                     <CardTitle>Select A Repository</CardTitle>
