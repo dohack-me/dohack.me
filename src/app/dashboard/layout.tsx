@@ -5,6 +5,7 @@ import React from "react"
 import {redirect} from "next/navigation"
 import {getUserSession} from "@/src/lib/auth/users"
 import AppSidebar from "@/src/components/AppSidebar";
+import PostHogIdentify from "@/src/app/dashboard/_components/PostHogIdentify";
 
 export default async function DashboardLayout({children, breadcrumbs}: {
     children: React.ReactNode,
@@ -32,6 +33,9 @@ export default async function DashboardLayout({children, breadcrumbs}: {
                     {children}
                 </main>
             </div>
+            <footer>
+                <PostHogIdentify userId={session.user.id} email={session.user.email} name={session.user.name}/>
+            </footer>
         </SidebarProvider>
     )
 }

@@ -24,6 +24,7 @@ import {
 } from "@/src/components/ui/dropdown-menu";
 import {useTheme} from "next-themes";
 import {redirect} from "next/navigation";
+import posthog from "posthog-js";
 
 const topItems = [
     {
@@ -91,13 +92,16 @@ export default function AppSidebar() {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <SidebarMenuItem>
-                                <SidebarMenuButton onClick={async () => await authClient.signOut({
-                                    fetchOptions: {
-                                        onSuccess: () => {
-                                            redirect("/login")
+                                <SidebarMenuButton onClick={async () => {
+                                    await authClient.signOut({
+                                        fetchOptions: {
+                                            onSuccess: () => {
+                                                posthog.reset()
+                                                redirect("/login")
+                                            }
                                         }
-                                    }
-                                })}>
+                                    })
+                                }}>
                                     <LogOut/>
                                     <span>Log Out</span>
                                 </SidebarMenuButton>

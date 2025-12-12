@@ -9,6 +9,7 @@ export default function CookieConsentBanner() {
     const [consentGiven, setConsentGiven] = useState("");
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setConsentGiven(posthog.get_explicit_consent_status());
     }, []);
 

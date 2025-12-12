@@ -1,10 +1,11 @@
 import {betterAuth} from "better-auth";
 import {prismaAdapter} from "better-auth/adapters/prisma";
 import {prisma} from "@/src/lib/globals";
+import {nextCookies} from "better-auth/next-js";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
-        provider: "postgresql", // or "mysql", "postgresql", ...etc
+        provider: "postgresql"
     }),
     emailAndPassword: {
         enabled: false,
@@ -37,5 +38,6 @@ export const auth = betterAuth({
         database: {
             generateId: "uuid"
         }
-    }
+    },
+    plugins: [nextCookies()]
 });
