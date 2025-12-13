@@ -74,6 +74,9 @@ model Service {
   image       String
   tag         String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   serviceInstances ServiceInstance[]
 
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
@@ -102,6 +105,9 @@ model Solve {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@id([userId, challengeId])
   @@map("solve")
 }
@@ -112,6 +118,9 @@ model Hint {
   title       String
   hint        String
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   @@map("hint")
@@ -120,6 +129,9 @@ model Hint {
 model Bookmark {
   userId      String @db.Uuid
   challengeId String @db.Uuid
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
