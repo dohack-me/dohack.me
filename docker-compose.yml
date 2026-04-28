@@ -1,12 +1,11 @@
 services:
   dohackme:
-    image: dohack.me/dohack.me:staging
     build:
       dockerfile: Dockerfile
     container_name: dohackme
     restart: no
     env_file:
-      - ../.env
+      - .env.docker
     ports:
       - "3000:3000"
   database:
