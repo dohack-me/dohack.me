@@ -1,4 +1,4 @@
-import {PrismaPg} from '@prisma/adapter-pg'
+import {PrismaPg} from "@prisma/adapter-pg"
 import {PrismaClient} from "@/src/lib/prisma/client"
 import {S3Client} from "@aws-sdk/client-s3"
 

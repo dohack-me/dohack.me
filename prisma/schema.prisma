@@ -38,7 +38,7 @@ model Repository {
   challenges Challenge[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@map("repository")
 }
@@ -58,7 +58,7 @@ model Challenge {
   bookmarks Bookmark[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   repositoryId String @db.Uuid
 
@@ -75,7 +75,7 @@ model Service {
   tag         String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   serviceInstances ServiceInstance[]
 
@@ -106,7 +106,7 @@ model Solve {
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@id([userId, challengeId])
   @@map("solve")
@@ -119,7 +119,7 @@ model Hint {
   hint        String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
 
@@ -131,7 +131,7 @@ model Bookmark {
   challengeId String @db.Uuid
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
 
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   challenge Challenge @relation(fields: [challengeId], references: [id], onDelete: Cascade)
@@ -147,7 +147,7 @@ model User {
   emailVerified    Boolean           @default(false)
   image            String?
   createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
+  updatedAt        DateTime          @default(now()) @updatedAt
   role             String            @default("user")
   sessions         Session[]
   accounts         Account[]
@@ -164,7 +164,7 @@ model Session {
   expiresAt DateTime
   token     String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt
   ipAddress String?
   userAgent String?
   userId    String   @db.Uuid
@@ -189,7 +189,7 @@ model Account {
   scope                 String?
   password              String?
   createdAt             DateTime  @default(now())
-  updatedAt             DateTime  @updatedAt
+  updatedAt             DateTime  @default(now()) @updatedAt
 
   @@index([userId])
   @@map("account")
@@ -201,7 +201,7 @@ model Verification {
   value      String
   expiresAt  DateTime
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt  DateTime @default(now()) @updatedAt
 
   @@index([identifier])
   @@map("verification")
