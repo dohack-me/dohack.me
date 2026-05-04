@@ -1,6 +1,6 @@
 "use client"
 
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu"
 import React from "react"
 import {ServiceType} from "@/src/lib/prisma"
@@ -10,13 +10,13 @@ export default function DeleteServiceButton({type, callback}: {
     callback(): Promise<void>
 }) {
     return (
-        <DeleteDialogButton
+        <DeleteActionAlertDialog
             description={`This action cannot be undone. This will permanently delete the ${type} service.`}
             confirmation={`Successfully deleted ${type} service.`}
             callback={callback}>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 Delete
             </DropdownMenuItem>
-        </DeleteDialogButton>
+        </DeleteActionAlertDialog>
     )
 }

@@ -3,7 +3,7 @@ import Link from "next/link"
 import React from "react"
 import {Button} from "@/src/components/ui/button"
 import {BookDashedIcon, SwordIcon, XIcon} from "lucide-react"
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import {readUserBookmarks} from "@/src/lib/database/bookmarks"
 import {readChallenge} from "@/src/lib/database/challenges"
 import {readUserServiceInstances} from "@/src/lib/orchestrator/serviceinstances"
@@ -71,7 +71,7 @@ async function ServiceChallengeView({challengeId, deleteCallback}: {
                         <p>Return</p>
                     </Link>
                 </Button>
-                <DeleteDialogButton
+                <DeleteActionAlertDialog
                     description={`This action cannot be undone, and you will lose any progress on the instance.`}
                     confirmation={"Successfully deleted instance."}
                     callback={deleteCallback}
@@ -80,7 +80,7 @@ async function ServiceChallengeView({challengeId, deleteCallback}: {
                         <XIcon/>
                         <p>Delete</p>
                     </Button>
-                </DeleteDialogButton>
+                </DeleteActionAlertDialog>
             </div>
         </ServiceChallengeWrapper>
     )

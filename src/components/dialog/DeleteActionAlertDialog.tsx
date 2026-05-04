@@ -1,16 +1,16 @@
 "use client"
 
 import React from "react"
-import DialogButton from "@/src/components/dialog/DialogButton"
+import ActionAlertDialog from "@/src/components/dialog/ActionAlertDialog"
 
-export default function DeleteDialogButton({description, confirmation, callback, children}: {
+export default function DeleteActionAlertDialog({description, confirmation, callback, children}: {
     description: string,
     confirmation: string,
     callback(): Promise<void>,
     children: React.ReactNode
 }) {
     return (
-        <DialogButton
+        <ActionAlertDialog
             title={"Are you absolutely sure?"}
             description={description}
             confirmVariant={"destructive"}
@@ -19,6 +19,6 @@ export default function DeleteDialogButton({description, confirmation, callback,
             endingSuccess={confirmation}
             callback={callback}>
             {children}
-        </DialogButton>
+        </ActionAlertDialog>
     )
 }

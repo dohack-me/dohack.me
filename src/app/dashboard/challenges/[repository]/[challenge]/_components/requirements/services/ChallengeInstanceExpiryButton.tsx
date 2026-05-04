@@ -3,7 +3,7 @@
 import {Button} from "@/src/components/ui/button"
 import {ClockIcon} from "lucide-react"
 import React, {useEffect, useState} from "react"
-import DialogButton from "@/src/components/dialog/DialogButton"
+import ActionAlertDialog from "@/src/components/dialog/ActionAlertDialog";
 
 export default function ChallengeInstanceExpiryButton({expiry, renewInstanceFunction}: {
     expiry: Date,
@@ -47,7 +47,7 @@ export default function ChallengeInstanceExpiryButton({expiry, renewInstanceFunc
         }
     }
     return (
-        <DialogButton
+        <ActionAlertDialog
             title={"Renew this instance?"}
             description={"This will reset the expiry time of the instance."}
             confirmVariant={"secondary"}
@@ -68,6 +68,6 @@ export default function ChallengeInstanceExpiryButton({expiry, renewInstanceFunc
                         {`${formatTime(timeLeft)}`}
                     </Button>
             )}
-        </DialogButton>
+        </ActionAlertDialog>
     )
 }

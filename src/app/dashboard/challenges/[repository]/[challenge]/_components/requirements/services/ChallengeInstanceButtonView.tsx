@@ -1,6 +1,6 @@
 import {Button} from "@/src/components/ui/button"
 import {XIcon} from "lucide-react"
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import React from "react"
 import CreateServiceInstanceButton
     from "@/src/app/dashboard/challenges/[repository]/[challenge]/_components/requirements/services/CreateServiceInstanceButton"
@@ -33,7 +33,7 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
                 "use server"
                 await requestRenewServiceInstance(instance.service.id)
             }}/>
-            <DeleteDialogButton
+            <DeleteActionAlertDialog
                 description={`This action cannot be undone, and you will lose any progress on the instance.`}
                 confirmation={"Successfully deleted instance."}
                 callback={async () => {
@@ -44,7 +44,7 @@ export default async function ChallengeInstanceButtonView({service}: { service: 
                 <Button>
                     <XIcon/>
                 </Button>
-            </DeleteDialogButton>
+            </DeleteActionAlertDialog>
         </div>
     )
 }

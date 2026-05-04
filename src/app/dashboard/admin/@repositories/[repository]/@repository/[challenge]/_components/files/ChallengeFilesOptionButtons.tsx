@@ -2,19 +2,19 @@
 
 import React from "react"
 import {DropdownMenuItem} from "@/src/components/ui/dropdown-menu"
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import {toast} from "sonner";
 
 export function DeleteChallengeFileButton({name, callback}: { name: string, callback(): Promise<void> }) {
     return (
-        <DeleteDialogButton
+        <DeleteActionAlertDialog
             description={`This action cannot be undone. This will permanently delete "${name}".`}
             confirmation={"Successfully deleted file."}
             callback={callback}>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 Delete
             </DropdownMenuItem>
-        </DeleteDialogButton>
+        </DeleteActionAlertDialog>
     )
 }
 

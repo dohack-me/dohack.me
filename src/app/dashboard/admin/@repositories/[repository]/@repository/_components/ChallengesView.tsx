@@ -12,7 +12,7 @@ import CreateChallengeButton
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/src/components/ui/tabs"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import {deleteChallenge, readRepositoryChallenges} from "@/src/lib/database/challenges"
 import React from "react"
 import {Category} from "@/src/lib/prisma"
@@ -57,7 +57,7 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                                                     <Link
                                                         href={`/dashboard/admin/${repositoryId}/${challenge.id}`}>Open</Link>
                                                 </Button>
-                                                <DeleteDialogButton
+                                                <DeleteActionAlertDialog
                                                     description={`This action cannot be undone. This will permanently delete "${challenge.name}".`}
                                                     confirmation={"Successfully deleted challenge."}
                                                     callback={async () => {
@@ -65,7 +65,7 @@ export default async function ChallengesView({repositoryId}: { repositoryId: str
                                                         await deleteChallenge(challenge.id)
                                                     }}>
                                                     <Button variant={"destructive"}>Delete</Button>
-                                                </DeleteDialogButton>
+                                                </DeleteActionAlertDialog>
                                             </CardFooter>
                                         </Card>
                                     ))}

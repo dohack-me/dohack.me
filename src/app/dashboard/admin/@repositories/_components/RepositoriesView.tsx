@@ -1,7 +1,7 @@
 import {Card, CardDescription, CardFooter, CardHeader, CardTitle} from "@/src/components/ui/card"
 import {Button} from "@/src/components/ui/button"
 import Link from "next/link"
-import DeleteDialogButton from "@/src/components/dialog/DeleteDialogButton"
+import DeleteActionAlertDialog from "@/src/components/dialog/DeleteActionAlertDialog"
 import {deleteRepository, readRepositories} from "@/src/lib/database/repositories"
 import React from "react"
 
@@ -23,7 +23,7 @@ export default async function RepositoriesView() {
                             <Button asChild>
                                 <Link href={`/dashboard/admin/${repository.id}`}>Open</Link>
                             </Button>
-                            <DeleteDialogButton
+                            <DeleteActionAlertDialog
                                 description={`This action cannot be undone. This will permanently delete "${repository.name}" and all associated challenges.`}
                                 confirmation={"Successfully deleted repository."}
                                 callback={async () => {
@@ -31,7 +31,7 @@ export default async function RepositoriesView() {
                                     await deleteRepository(repository.id)
                                 }}>
                                 <Button variant={"destructive"}>Delete</Button>
-                            </DeleteDialogButton>
+                            </DeleteActionAlertDialog>
                         </CardFooter>
                     </Card>
                 ))}
