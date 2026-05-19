@@ -153,8 +153,8 @@ importers:
         specifier: ^1.373.3
         version: 1.373.3
       posthog-node:
-        specifier: ^5.34.0
-        version: 5.34.0
+        specifier: ^5.34.6
+        version: 5.34.6
       radix-ui:
         specifier: ^1.4.3
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -1180,8 +1180,14 @@ packages:
   '@posthog/core@1.29.0':
     resolution: {integrity: sha512-tkTO1vnbSR8HdBM6MFieQX5SbeupA1LXGYHQARtFpFLF3kXr1V4S75eec49MBYPRQnYczSICWS7akL0M75K3Ag==}
 
+  '@posthog/core@1.29.5':
+    resolution: {integrity: sha512-Jm5AE95EwBRqO6J8+skDufyf5rnEcmOvjYArCKCOzD4mWdH1xGpfcRXj5TEyZII3mD04Kr7pw9aP2ZbAHQGu2A==}
+
   '@posthog/types@1.373.3':
     resolution: {integrity: sha512-nuHXMtielw/oJTh3GIYGNHKiexE5sqQuhPISVAf9Nj8dnPJDaYr26iY9qnv1aRo0VFLmubCrFISg7vwEfmFitQ==}
+
+  '@posthog/types@1.374.2':
+    resolution: {integrity: sha512-ZghQSFMi+HFJNPvPjBoyY/jWQ+q6mSQVtWQxOHMSbBidUZjsyYbxYxBFbHy2qWLNe4mEpX+Wqir2Q4I/4AVvJQ==}
 
   '@prisma/adapter-pg@7.8.0':
     resolution: {integrity: sha512-ygb3UkerK3v8MDpXVgCISdRNDozpxh6+JVJgiIGbSr5KBgz10LLf5ejUskPGoXlsIjxsOu6nuy1JVQr2EKGSlg==}
@@ -2072,6 +2078,7 @@ packages:
   '@smithy/core@3.24.1':
     resolution: {integrity: sha512-3mT7o4qQyUWttYnVK3A0Z/u3Xha3E81tXn32Tz6vjZiUXhBrkEivpw1hBYfh84iFF9CSzkBU9Y1DJ3Q6RQ231g==}
     engines: {node: '>=18.0.0'}
+    deprecated: Deprecated due to bug in browser bundling instructions https://github.com/smithy-lang/smithy-typescript/issues/2025
 
   '@smithy/credential-provider-imds@4.3.1':
     resolution: {integrity: sha512-0S/acwHnqX4WrjXzhdiDRxsG2s9SC0cpPIK9nZ1R6UOHd+j7uL28+4bHu22urbLk2TVw3fkp6na/+fkUt/pLNQ==}
@@ -4111,8 +4118,8 @@ packages:
   posthog-js@1.373.3:
     resolution: {integrity: sha512-Met+IC9Gtyn7UlxBckasSx8318dmV2E2hGgwjnkQergEFLkh+Ib2QE6oxuVhh8EAfYChdhxIuy+tl3MqoNejPQ==}
 
-  posthog-node@5.34.0:
-    resolution: {integrity: sha512-0cC5+QFJBEx1/oEuEjTsdyx1C0YAYcXN0pyUGsrxrkqQLHKkmQKv9JFpDYtT6eqBJmRlH8d4/SrBN3X+5IT9JA==}
+  posthog-node@5.34.6:
+    resolution: {integrity: sha512-oDjagFRkmCbWJBxG1FVU3kOGC6dxNpR849q8ARrZSBK3zWz4zJox6V5EjrATKM9RXKvAmbCSFoxYaOYTzp3phA==}
     engines: {node: ^20.20.0 || >=22.22.0}
     peerDependencies:
       rxjs: ^7.0.0
@@ -5808,7 +5815,13 @@ snapshots:
     dependencies:
       '@posthog/types': 1.373.3
 
+  '@posthog/core@1.29.5':
+    dependencies:
+      '@posthog/types': 1.374.2
+
   '@posthog/types@1.373.3': {}
+
+  '@posthog/types@1.374.2': {}
 
   '@prisma/adapter-pg@7.8.0':
     dependencies:
@@ -9031,9 +9044,9 @@ snapshots:
       query-selector-shadow-dom: 1.0.1
       web-vitals: 5.2.0
 
-  posthog-node@5.34.0:
+  posthog-node@5.34.6:
     dependencies:
-      '@posthog/core': 1.29.0
+      '@posthog/core': 1.29.5
 
   preact@10.29.1: {}
 
